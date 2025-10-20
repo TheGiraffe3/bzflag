@@ -1,9 +1,9 @@
-lib_LTLIBRARIES = p.la
+lib_LTLIBRARIES = tem.la
 
-p_la_SOURCES = p.cpp
-p_la_CPPFLAGS= -I$(top_srcdir)/include -I$(top_srcdir)/plugins/plugin_utils
-p_la_LDFLAGS = -module -avoid-version -shared
-p_la_LIBADD = $(top_builddir)/plugins/plugin_utils/libplugin_utils.la
+tem_la_SOURCES = tem.cpp
+tem_la_CPPFLAGS= -I$(top_srcdir)/include -I$(top_srcdir)/plugins/plugin_utils
+tem_la_LDFLAGS = -module -avoid-version -shared
+tem_la_LIBADD = $(top_builddir)/plugins/plugin_utils/libplugin_utils.la
 
 AM_CPPFLAGS = $(CONF_CPPFLAGS)
 AM_CFLAGS = $(CONF_CFLAGS)

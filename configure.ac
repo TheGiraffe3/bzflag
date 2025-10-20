@@ -1000,6 +1000,7 @@ AC_CONFIG_FILES([
 	plugins/Kamikaze/Makefile
 	plugins/Makefile
 	plugins/NoLossOnSW/Makefile
+	plugins/PhantomZoneFlagOnSpawn/Makefile
 	plugins/Phoenix/Makefile
 	plugins/PointLessSelfKills/Makefile
 	plugins/RemoteDetonationFlag/Makefile
@@ -1008,6 +1009,7 @@ AC_CONFIG_FILES([
 	plugins/RogueGenocide/Makefile
 	plugins/SAMPLE_PLUGIN/Makefile
 	plugins/ScoreRestorer/Makefile
+	plugins/ShootingGallery/Makefile
 	plugins/UselessMine/Makefile
 	plugins/WhackyWeapons/Makefile
 	plugins/airspawn/Makefile
@@ -1019,6 +1021,7 @@ AC_CONFIG_FILES([
 	plugins/bzfscron/Makefile
 	plugins/bzGunGameStyle/Makefile
 	plugins/chathistory/Makefile
+	plugins/ctfOverseer/Makefile
 	plugins/customflagsample/Makefile
 	plugins/customPollTypeSample/Makefile
 	plugins/CustomZoneSample/Makefile
@@ -1033,6 +1036,7 @@ AC_CONFIG_FILES([
 	plugins/givePoint/Makefile
         plugins/grenadeFlag/Makefile
         plugins/gruesomeKillerFlag/Makefile
+	plugins/incrementPoint/Makefile
 	plugins/keepaway/Makefile
 	plugins/killall/Makefile
 	plugins/koth/Makefile
@@ -1048,10 +1052,13 @@ AC_CONFIG_FILES([
 	plugins/recordmatch/Makefile
 	plugins/regFlag/Makefile
 	plugins/riskygeno/Makefile
+	plugins/rrTurret/Makefile
 	plugins/serverControl/Makefile
 	plugins/serverSidePlayerSample/Makefile
+	plugins/ShockwaveCommand/Makefile
 	plugins/shockwaveDeath/Makefile
         plugins/skyfireFlag/Makefile
+	plugins/SneakPlugin/Makefile
 	plugins/spawnFacingCenter/Makefile
 	plugins/superLaserFlag/Makefile
 	plugins/superUser/Makefile

@@ -10,7 +10,7 @@ class SuperUser : public bz_Plugin
 public:
     virtual const char* Name ()
     {
-        return "SuperUser";
+        return "Super User";
     }
     virtual void Init ( const char* config );
 

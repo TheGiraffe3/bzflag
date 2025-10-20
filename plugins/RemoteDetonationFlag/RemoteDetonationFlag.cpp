@@ -8,7 +8,7 @@ class RemoteDetonationFlag : public bz_Plugin
 {
 	virtual const char* Name()
 	{
-		return "Remote Detonation Flag";
+		return "Remote Detonation Flag 1.3.1";
 	}
 	virtual void Init(const char*);
 	virtual void Event(bz_EventData*);
@@ -52,10 +52,11 @@ void RemoteDetonationFlag::Event(bz_EventData *eventData)
 				vel[0] = 0;
 				vel[1] = 0;
 				vel[2] = 0;
-				uint32_t remoteDetonationShotID = bz_fireServerShot("SW", pos, vel, bz_getPlayerTeam(data->playerID));
-				bz_setShotMetaData(remoteDetonationShotID, "type", bz_getPlayerFlag(data->playerID));
-				bz_setShotMetaData(remoteDetonationShotID, "owner", data->playerID);
+				uint32_t shockwaveGUID = bz_fireServerShot("SW", pos, vel, playerRecord->team);
+				bz_setShotMetaData(shockwaveGUID, "type", bz_getPlayerFlag(data->playerID));
+				bz_setShotMetaData(shockwaveGUID, "owner", data->playerID);
 			}
+
 			bz_freePlayerRecord(playerRecord);
 		} break;
 		case bz_ePlayerDieEvent:
@@ -65,16 +66,15 @@ void RemoteDetonationFlag::Event(bz_EventData *eventData)
 
 			if (bz_shotHasMetaData(shotGUID, "type") && bz_shotHasMetaData(shotGUID, "owner"))
 			{
-			    std::string flagType = bz_getShotMetaDataS(shotGUID, "type");
+				std::string flagType = bz_getShotMetaDataS(shotGUID, "type");
 
-			    if (flagType == "RD")
-			    {
-			        data->killerID = bz_getShotMetaDataI(shotGUID, "owner");
-			        data->killerTeam = bz_getPlayerTeam(data->killerID);
-			    }
+				if (flagType == "RD")
+				{
+					data->killerID = bz_getShotMetaDataI(shotGUID, "owner");
+					data->killerTeam = bz_getPlayerTeam(data->killerID);
+				}
 			}
 		} break;
-
 		default:
 			break;
 	}

@@ -14,6 +14,7 @@ SUBDIRS = \
 	CascadeFlag \
 	chathistory \
 	Checkpoint \
+	ctfOverseer \
 	customflagsample \
 	customPollTypeSample \
 	CustomZoneSample \
@@ -31,6 +32,7 @@ SUBDIRS = \
 	grenadeFlag \
 	gruesomeKillerFlag \
 	HoldTheFlag \
+	incrementPoint \
 	Kamikaze \
 	keepaway \
 	killall \
@@ -41,6 +43,7 @@ SUBDIRS = \
 	nagware \
 	neutralZones \
 	NoLossOnSW \
+	PhantomZoneFlagOnSpawn \
 	Phoenix \
 	playHistoryTracker \
 	PointLessSelfKills \
@@ -53,12 +56,16 @@ SUBDIRS = \
 	ReverseGeno \
 	riskygeno \
 	RogueGenocide \
+	rrTurret \
 	SAMPLE_PLUGIN \
 	ScoreRestorer \
 	serverControl \
 	serverSidePlayerSample \
+	ShockwaveCommand \
 	shockwaveDeath \
+	ShootingGallery \
 	skyfireFlag \
+	SneakPlugin \
 	spawnFacingCenter \
 	superLaserFlag \
 	superUser \

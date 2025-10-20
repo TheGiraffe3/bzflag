@@ -20,7 +20,7 @@
 class PointLessSelfKills : public bz_Plugin
 {
 public:
-  virtual const char* Name() { return "PointLessSelfKills"; }
+  virtual const char* Name() { return "Pointless Self Kills"; }
   virtual void Init(const char* /*config*/);
   virtual void Event(bz_EventData *eventData);
   virtual void Cleanup(void);
@@ -28,7 +28,7 @@ public:
 
 BZ_PLUGIN(PointLessSelfKills)
 
-void PointLessSelfKills::Init(const char*config)
+void PointLessSelfKills::Init(const char*)
 {
   Register(bz_ePlayerDieEvent);
 }
