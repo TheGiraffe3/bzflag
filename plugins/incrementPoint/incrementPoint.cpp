@@ -5,7 +5,6 @@ class incrementPoint : public bz_Plugin, public bz_CustomSlashCommandHandler
 	virtual const char* Name ();
 	virtual void Init (const char*);
 	virtual void Cleanup ();
-//virtual void Event (bz_EventData* eventData);
 	virtual bool SlashCommand (int playerID, bz_ApiString command, bz_ApiString /*message*/, bz_APIStringList *params);
 };
 
@@ -50,6 +49,32 @@ bool incrementPoint::SlashCommand (int playerID, bz_ApiString command, bz_ApiStr
 		{
 			bz_incrementPlayerLosses(receiverID->playerID, -1);
 			bz_sendTextMessagef(BZ_SERVER, fromPlayer->playerID, "Decreased %s's losses by one.", bz_getPlayerCallsign(receiverID->playerID));
+		}
+		bz_freePlayerRecord(receiverID);
+		bz_freePlayerRecord(fromPlayer);
+
+		return true;
+	}
+	if (command == "decrementPoint")
+	{
+		bz_BasePlayerRecord *fromPlayer = bz_getPlayerByIndex(playerID);
+		if (params->size() != 1)
+		{
+			bz_sendTextMessage(BZ_SERVER, playerID, "/decrementPoint <player ID|callsign>");
+			return true;
+		}
+
+		bz_BasePlayerRecord* receiverID;
+		receiverID = bz_getPlayerBySlotOrCallsign(params->get(0).c_str());
+
+		if (!receiverID)
+		{
+			bz_sendTextMessagef(BZ_SERVER, playerID, "player \"%s\" not found", receiverID);
+		}
+		else
+		{
+			bz_incrementPlayerWins(receiverID->playerID, -1);
+			bz_sendTextMessagef(BZ_SERVER, fromPlayer->playerID, "Decreased %s's wins by one.", bz_getPlayerCallsign(receiverID->playerID));
 		}
 		bz_freePlayerRecord(receiverID);
 		bz_freePlayerRecord(fromPlayer);

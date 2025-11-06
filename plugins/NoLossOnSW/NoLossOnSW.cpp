@@ -21,14 +21,14 @@ class NoLossOnSW : public bz_Plugin
 {
 public:
   virtual const char* Name() { return "NoLossOnSW"; }
-  virtual void Init(const char* /*config*/);
+  virtual void Init(const char*);
   virtual void Event(bz_EventData *eventData);
   virtual void Cleanup(void);
 };
 
 BZ_PLUGIN(NoLossOnSW)
 
-void NoLossOnSW::Init(const char*config) {
+void NoLossOnSW::Init(const char*) {
   Register(bz_ePlayerDieEvent);
 }
 

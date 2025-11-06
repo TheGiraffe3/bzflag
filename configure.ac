@@ -1053,6 +1053,7 @@ AC_CONFIG_FILES([
 	plugins/regFlag/Makefile
 	plugins/riskygeno/Makefile
 	plugins/rrTurret/Makefile
+	plugins/SandybeesServerAdministration/Makefile
 	plugins/serverControl/Makefile
 	plugins/serverSidePlayerSample/Makefile
 	plugins/ShockwaveCommand/Makefile
@@ -1060,6 +1061,7 @@ AC_CONFIG_FILES([
         plugins/skyfireFlag/Makefile
 	plugins/SneakPlugin/Makefile
 	plugins/spawnFacingCenter/Makefile
+	plugins/superBulletBackwards/Makefile
 	plugins/superLaserFlag/Makefile
 	plugins/superUser/Makefile
 	plugins/teamflaggeno/Makefile

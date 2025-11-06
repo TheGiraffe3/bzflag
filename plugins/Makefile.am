@@ -58,6 +58,7 @@ SUBDIRS = \
 	RogueGenocide \
 	rrTurret \
 	SAMPLE_PLUGIN \
+	SandybeesServerAdministration \
 	ScoreRestorer \
 	serverControl \
 	serverSidePlayerSample \
@@ -67,6 +68,7 @@ SUBDIRS = \
 	skyfireFlag \
 	SneakPlugin \
 	spawnFacingCenter \
+	superBulletBackwards \
 	superLaserFlag \
 	superUser \
 	teamflaggeno \
