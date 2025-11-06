@@ -1965,7 +1965,7 @@ bz_MaterialInfo* bz_anewMaterial ( void );
 void bz_deleteMaterial ( bz_MaterialInfo *material );
 
 BZF_API bool bz_addWorldBox ( float *pos, float rot, float* scale, bz_WorldObjectOptions options );
-BZF_API bool bz_addWorldPyramid ( float *pos, float rot, float* scale, bool fliped, bz_WorldObjectOptions options );
+BZF_API bool bz_addWorldPyramid ( float *pos, float rot, float* scale, bool flipped, bz_WorldObjectOptions options );
 BZF_API bool bz_addWorldBase( float *pos, float rot, float* scale, bz_eTeamType team, bz_WorldObjectOptions options );
 BZF_API bool bz_addWorldTeleporter ( float *pos, float rot, float* scale, float border, bz_WorldObjectOptions options );
 BZF_API bool bz_addWorldWaterLevel( float level, bz_MaterialInfo *material );

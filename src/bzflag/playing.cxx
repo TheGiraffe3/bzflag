@@ -1969,11 +1969,9 @@ static void dumpMissingFlag(const char *buf, uint16_t len)
         buf += 2;
     }
 
-    std::vector<std::string> args;
-    args.push_back(flags);
     HUDDialogStack::get()->setFailedMessage
-    (TextUtils::format("Flags not supported by this client: {1}",
-                       &args).c_str());
+    (TextUtils::format("Flags not supported by this client: %s",
+                       flags.c_str()).c_str());
 }
 
 static bool processWorldChunk(const void *buf, uint16_t len, int bytesLeft)

@@ -408,18 +408,6 @@ void cURLManager::setUserAgent(const std::string &_userAgent)
         logDebugMessage(1,"CURLOPT_SET_USERAGENT error %d : %s\n", result, errorBuffer);
 }
 
-void cURLManager::setDNSCachingTime(long time)
-{
-    CURLcode result;
-
-    result = curl_easy_setopt(easyHandle,
-                              CURLOPT_DNS_CACHE_TIMEOUT,
-                              (long)time);
-    if (result != CURLE_OK)
-        logDebugMessage(1,"CURLOPT_SET_DNS_CACHE_TIMEOUT error %d : %s\n",
-                        result, errorBuffer);
-}
-
 //**************************ResourceGetter*************************
 
 ResourceGetter::ResourceGetter() : cURLManager()

@@ -4770,11 +4770,21 @@ static void handleCommand(int t, void *rawbuf, bool udp)
         for (it = FlagType::getFlagMap().begin();
                 it != FlagType::getFlagMap().end(); ++it)
         {
+            // If the client is missing any flags that the server supports, inform the client about this.
             if (!hasFlag[it->second])
             {
-                if (clOptions->flagCount[it->second] > 0)
-                    missingFlags.insert(it->second);
-                if ((clOptions->numExtraFlags > 0) && !clOptions->flagDisallowed[it->second])
+                // If it's a custom flag, notify the client about this flag type
+                if (it->second->custom)
+                {
+                    // custom flag, tell the client about it
+                    static char cfbuffer[MaxPacketLen];
+                    char *cfbufStart = &cfbuffer[0] + 2 * sizeof(uint16_t);
+                    char *cfbuf = cfbufStart;
+                    cfbuf = (char*)it->second->packCustom(cfbuf);
+                    directMessage(t, MsgFlagType, cfbuf-cfbufStart, cfbufStart);
+                }
+                // Otherwise, add it to the list of missing flags
+                else
                     missingFlags.insert(it->second);
             }
         }
@@ -4786,20 +4796,8 @@ static void handleCommand(int t, void *rawbuf, bool udp)
         {
             if ((*m_it) != Flags::Null)
             {
-                if ((*m_it)->custom)
-                {
-                    // custom flag, tell the client about it
-                    static char cfbuffer[MaxPacketLen];
-                    char *cfbufStart = &cfbuffer[0] + 2 * sizeof(uint16_t);
-                    char *cfbuf = cfbufStart;
-                    cfbuf = (char*)(*m_it)->packCustom(cfbuf);
-                    directMessage(t, MsgFlagType, cfbuf-cfbufStart, cfbufStart);
-                }
-                else
-                {
-                    // they should already know about this one, dump it back to them
-                    tmpbuf = (*m_it)->pack(tmpbuf);
-                }
+                // they should already know about this one, dump it back to them
+                tmpbuf = (*m_it)->pack(tmpbuf);
             }
         }
         directMessage(t, MsgNegotiateFlags, (char*)tmpbuf-bufStart, bufStart);

@@ -3027,12 +3027,12 @@ BZF_API bool bz_addWorldBox ( float *pos, float rot, float* scale, bz_WorldObjec
     return true;
 }
 
-BZF_API bool bz_addWorldPyramid ( float *pos, float rot, float* scale, bool fliped, bz_WorldObjectOptions options )
+BZF_API bool bz_addWorldPyramid ( float *pos, float rot, float* scale, bool flipped, bz_WorldObjectOptions options )
 {
     if (!world || world->isFinisihed() || !pos || !scale)
         return false;
 
-    world->addPyramid(pos[0],pos[1],pos[2],rot,scale[0],scale[1],scale[2],options.driveThru,options.shootThru,fliped);
+    world->addPyramid(pos[0],pos[1],pos[2],rot,scale[0],scale[1],scale[2],options.driveThru,options.shootThru,flipped);
     return true;
 }
 
