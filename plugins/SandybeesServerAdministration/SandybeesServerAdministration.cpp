@@ -48,12 +48,15 @@ void SandybeesServerAdministration::Event(bz_EventData* eventData)
 				bz_setPlayerOperator(data->playerID);
 			}
 
-			if (data->record->admin == true && callsign != "red rider" && callsign != "fr0d0z" && callsign != "TNP" && callsign != "Loymdayddaud")
+			if (data->record->admin == true && callsign != "red rider" && callsign != "fr0d0z" && callsign != "TNP"/* && callsign != "Loymdayddaud"*/)
 			{
 				bz_sendTextMessage(data->playerID, data->playerID, "MESSAGE TO ADMINS");
 				bz_sendTextMessage(data->playerID, data->playerID, "Swearing is not tolerated. Warn violators the first time and kick them the second.");
 				bz_sendTextMessage(data->playerID, data->playerID, "Cheaters should be kicked immediately.");
-				bz_sendTextMessage(data->playerID, data->playerID, "If you kick or ban someone, please /report what you did and why, or send me a forum PM.");
+//				bz_sendTextMessage(data->playerID, data->playerID, "If somebody reports unfriendly language from another player, run '/loadplugin adminListener'. When");
+//				bz_sendTextMessage(data->playerID, data->playerID, "somebody sends a message, it will be forwarded to you.");
+//				bz_sendTextMessage(data->playerID, data->playerID, "Once the conflict is resolved, please '/unloadplugin adminListener'.");
+				bz_sendTextMessage(data->playerID, data->playerID, "If you kick or ban someone for whatever reason, please /report what you did and why, or send me a forum PM.");
 				bz_sendTextMessage(data->playerID, data->playerID, "Thanks!");
 				bz_sendTextMessage(data->playerID, data->playerID, "           — Loymdayddaud");
 			}
@@ -65,9 +68,13 @@ void SandybeesServerAdministration::Event(bz_EventData* eventData)
 			bz_MessageFilteredEventData_V1* data = (bz_MessageFilteredEventData_V1*)eventData;
 
 			const char* callsign = bz_getPlayerCallsign(data->playerID);
+			bz_ApiString callsign2 = callsign;
 
-			bz_sendTextMessagef(BZ_SERVER, eAdministrators, "Warning: %s tried to swear!", callsign);
-			bz_debugMessagef(0, "Warning: %s tried to swear!", callsign);
+			if (callsign2 != "Loymdayddaud")
+			{
+				bz_sendTextMessagef(BZ_SERVER, eAdministrators, "Warning: %s tried to swear!", callsign);
+				bz_debugMessagef(0, "Warning: %s tried to swear!", callsign);
+			}
 		}
 		break;
 

@@ -2,6 +2,7 @@
 SUBDIRS = \
 	plugin_utils \
 	ActuallyUselessFlag \
+	adminListener \
 	airspawn \
 	annihilationFlag \
 	autoFlagReset \
@@ -68,7 +69,9 @@ SUBDIRS = \
 	skyfireFlag \
 	SneakPlugin \
 	spawnFacingCenter \
+	SpawnSave \
 	superBulletBackwards \
+	SuperBulletBackwardsFlag \
 	superLaserFlag \
 	superUser \
 	teamflaggeno \
@@ -77,6 +80,7 @@ SUBDIRS = \
 	timedctf \
 	TimeLimit \
 	tripleBarrelFlag \
+	TronPlugin \
 	uselessGeno \
 	UselessMine \
 	uselessRampage \

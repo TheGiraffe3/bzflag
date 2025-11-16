@@ -992,8 +992,10 @@ AC_CONFIG_FILES([
 	package/win32/nsis/Makefile
 	plugins/ActuallyUselessFlag/Makefile
 	plugins/BattleCombatStrategy/Makefile
+	plugins/BombFlag/Makefile
 	plugins/CascadeFlag/Makefile
 	plugins/Checkpoint/Makefile
+	plugins/CustomZoneSample/Makefile
 	plugins/DeathBlossomFlag/Makefile
 	plugins/DemilitarizedZones/Makefile
 	plugins/HoldTheFlag/Makefile
@@ -1008,15 +1010,22 @@ AC_CONFIG_FILES([
 	plugins/ReverseGeno/Makefile
 	plugins/RogueGenocide/Makefile
 	plugins/SAMPLE_PLUGIN/Makefile
+	plugins/SandybeesServerAdministration/Makefile
 	plugins/ScoreRestorer/Makefile
+	plugins/ShockwaveCommand/Makefile
 	plugins/ShootingGallery/Makefile
+	plugins/SneakPlugin/Makefile
+	plugins/SpawnSave/Makefile
+	plugins/SuperBulletBackwardsFlag/Makefile
+	plugins/TimeLimit/Makefile
+	plugins/TronPlugin/Makefile
 	plugins/UselessMine/Makefile
 	plugins/WhackyWeapons/Makefile
+	plugins/adminListener/Makefile
 	plugins/airspawn/Makefile
 	plugins/annihilationFlag/Makefile
 	plugins/autoFlagReset/Makefile
 	plugins/avengerFlag/Makefile
-	plugins/BombFlag/Makefile
 	plugins/bountyHunter/Makefile
 	plugins/bzfscron/Makefile
 	plugins/bzGunGameStyle/Makefile
@@ -1024,7 +1033,6 @@ AC_CONFIG_FILES([
 	plugins/ctfOverseer/Makefile
 	plugins/customflagsample/Makefile
 	plugins/customPollTypeSample/Makefile
-	plugins/CustomZoneSample/Makefile
         plugins/dimensionDoorFlag/Makefile
 	plugins/doublePoint/Makefile
 	plugins/fairCTF/Makefile
@@ -1053,13 +1061,10 @@ AC_CONFIG_FILES([
 	plugins/regFlag/Makefile
 	plugins/riskygeno/Makefile
 	plugins/rrTurret/Makefile
-	plugins/SandybeesServerAdministration/Makefile
 	plugins/serverControl/Makefile
 	plugins/serverSidePlayerSample/Makefile
-	plugins/ShockwaveCommand/Makefile
 	plugins/shockwaveDeath/Makefile
         plugins/skyfireFlag/Makefile
-	plugins/SneakPlugin/Makefile
 	plugins/spawnFacingCenter/Makefile
 	plugins/superBulletBackwards/Makefile
 	plugins/superLaserFlag/Makefile
@@ -1069,7 +1074,6 @@ AC_CONFIG_FILES([
 	plugins/thiefControl/Makefile
 	plugins/timedctf/Makefile
         plugins/tripleBarrelFlag/Makefile
-	plugins/TimeLimit/Makefile
 	plugins/uselessGeno/Makefile
 	plugins/uselessRampage/Makefile
         plugins/verticalVelocityFlag/Makefile

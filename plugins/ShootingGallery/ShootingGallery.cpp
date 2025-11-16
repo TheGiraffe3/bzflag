@@ -122,16 +122,11 @@ void Turret::Event(bz_EventData *eventData ){
               bz_sendTextMessage(BZ_SERVER,playerID,"Only one tank can go inside the turret!");
             }
             else playerinturret=playerID;//otherwise - if the player in the turret is not alive, or nr, then we set the playerID to ourself
+            bz_sendTextMessage(BZ_SERVER,playerID,"Change the turret's vertical direction by driving forwards and backwards.");
+            bz_sendTextMessage(BZ_SERVER,playerID,"Aim the turret by turning your tank.");
+            bz_sendTextMessage(BZ_SERVER,playerID,"Warning! If someone gets behind the turret on the caution pad, you will be killed!");
           }
           else playerinturret=playerID;//same - duplicate else.
-        std::string message;
-        std::string callsign=std::string("UNKNOWN");
-        if (playerinturret) {callsign = getCallsign(playerinturret);}
-        message = std::string(callsign+" has the turret!");
-        bz_sendTextMessage(BZ_SERVER,playerID,"Change the turret's vertical direction by driving forwards and backwards.");
-        bz_sendTextMessage(BZ_SERVER,playerID,"Aim the turret by turning your tank.");
-        bz_sendTextMessage(BZ_SERVER,playerID,"Warning! If someone gets behind the turret on the caution pad, you will be killed!");
-        bz_sendTextMessage(BZ_SERVER,BZ_ALLUSERS,message.c_str());
       }
       else if(playerinturret==playerID) {playerinturret=-1;}
       //If the last player in the turret was us, but now we are not inside the turret, set the playerinturret to no one (-1)

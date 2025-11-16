@@ -24570,7 +24570,7 @@ fi
 LIBDIR="\$(top_srcdir)/lib"
 
 
-ac_config_files="$ac_config_files MSVC/Makefile MSVC/build/Makefile Xcode/Makefile Xcode/BZFlag.xcodeproj/Makefile Makefile bzflag.spec data/Makefile data/fonts/Makefile data/l10n/Makefile include/Makefile m4/Makefile man/Makefile misc/Makefile package/Makefile package/irix/Makefile package/linux/Makefile package/rpm/Makefile package/win32/Makefile package/win32/nsis/Makefile plugins/ActuallyUselessFlag/Makefile plugins/BattleCombatStrategy/Makefile plugins/CascadeFlag/Makefile plugins/Checkpoint/Makefile plugins/DeathBlossomFlag/Makefile plugins/DemilitarizedZones/Makefile plugins/HoldTheFlag/Makefile plugins/Kamikaze/Makefile plugins/Makefile plugins/NoLossOnSW/Makefile plugins/PhantomZoneFlagOnSpawn/Makefile plugins/Phoenix/Makefile plugins/PointLessSelfKills/Makefile plugins/RemoteDetonationFlag/Makefile plugins/Retroreflector/Makefile plugins/ReverseGeno/Makefile plugins/RogueGenocide/Makefile plugins/SAMPLE_PLUGIN/Makefile plugins/ScoreRestorer/Makefile plugins/ShootingGallery/Makefile plugins/UselessMine/Makefile plugins/WhackyWeapons/Makefile plugins/WorldBuilder/Makefile plugins/airspawn/Makefile plugins/annihilationFlag/Makefile plugins/autoFlagReset/Makefile plugins/avengerFlag/Makefile plugins/BombFlag/Makefile plugins/bountyHunter/Makefile plugins/bzfscron/Makefile plugins/bzGunGameStyle/Makefile plugins/chathistory/Makefile plugins/ctfOverseer/Makefile plugins/customflagsample/Makefile plugins/customPollTypeSample/Makefile plugins/CustomZoneSample/Makefile plugins/dimensionDoorFlag/Makefile plugins/doublePoint/Makefile plugins/fairCTF/Makefile plugins/fastmap/Makefile plugins/flagControl/Makefile plugins/flagStay/Makefile plugins/genoonce/Makefile plugins/genostats/Makefile plugins/givePoint/Makefile plugins/grenadeFlag/Makefile plugins/gruesomeKillerFlag/Makefile plugins/incrementPoint/Makefile plugins/keepaway/Makefile plugins/killall/Makefile plugins/koth/Makefile plugins/logDetail/Makefile plugins/mapchange/Makefile plugins/mappedDeathZones/Makefile plugins/nagware/Makefile plugins/neutralZones/Makefile plugins/playHistoryTracker/Makefile plugins/plugin_utils/Makefile plugins/rabbitTimer/Makefile plugins/rabidRabbit/Makefile plugins/recordmatch/Makefile plugins/regFlag/Makefile plugins/riskygeno/Makefile plugins/rrTurret/Makefile plugins/SandybeesServerAdministration/Makefile plugins/serverControl/Makefile plugins/serverSidePlayerSample/Makefile plugins/ShockwaveCommand/Makefile plugins/shockwaveDeath/Makefile plugins/skyfireFlag/Makefile plugins/SneakPlugin/Makefile plugins/spawnFacingCenter/Makefile plugins/superBulletBackwards/Makefile plugins/superLaserFlag/Makefile plugins/superUser/Makefile plugins/teamflaggeno/Makefile plugins/teamflagreset/Makefile plugins/thiefControl/Makefile plugins/timedctf/Makefile plugins/tripleBarrelFlag/Makefile plugins/TimeLimit/Makefile plugins/uselessGeno/Makefile plugins/uselessRampage/Makefile plugins/verticalVelocityFlag/Makefile plugins/wwzones/Makefile src/3D/Makefile src/Makefile src/bzadmin/Makefile src/bzflag/Makefile src/bzfs/Makefile src/common/Makefile src/date/Makefile src/game/Makefile src/geometry/Makefile src/geometry/models/Makefile src/geometry/models/tank/Makefile src/mediafile/Makefile src/net/Makefile src/obstacle/Makefile src/ogl/Makefile src/platform/Makefile src/scene/Makefile tools/Makefile tools/TextTool2/Makefile tools/TextTool2/TextTool2.xcodeproj/Makefile tools/bzwtransform/Makefile tools/modeltool/Makefile tools/modeltool/MSVC/Makefile"
+ac_config_files="$ac_config_files MSVC/Makefile MSVC/build/Makefile Xcode/Makefile Xcode/BZFlag.xcodeproj/Makefile Makefile bzflag.spec data/Makefile data/fonts/Makefile data/l10n/Makefile include/Makefile m4/Makefile man/Makefile misc/Makefile package/Makefile package/irix/Makefile package/linux/Makefile package/rpm/Makefile package/win32/Makefile package/win32/nsis/Makefile plugins/ActuallyUselessFlag/Makefile plugins/BattleCombatStrategy/Makefile plugins/BombFlag/Makefile plugins/CascadeFlag/Makefile plugins/Checkpoint/Makefile plugins/CustomZoneSample/Makefile plugins/DeathBlossomFlag/Makefile plugins/DemilitarizedZones/Makefile plugins/HoldTheFlag/Makefile plugins/Kamikaze/Makefile plugins/Makefile plugins/NoLossOnSW/Makefile plugins/PhantomZoneFlagOnSpawn/Makefile plugins/Phoenix/Makefile plugins/PointLessSelfKills/Makefile plugins/RemoteDetonationFlag/Makefile plugins/Retroreflector/Makefile plugins/ReverseGeno/Makefile plugins/RogueGenocide/Makefile plugins/SAMPLE_PLUGIN/Makefile plugins/SandybeesServerAdministration/Makefile plugins/ScoreRestorer/Makefile plugins/ShockwaveCommand/Makefile plugins/ShootingGallery/Makefile plugins/SneakPlugin/Makefile plugins/SpawnSave/Makefile plugins/SuperBulletBackwardsFlag/Makefile plugins/TimeLimit/Makefile plugins/TronPlugin/Makefile plugins/UselessMine/Makefile plugins/WhackyWeapons/Makefile plugins/adminListener/Makefile plugins/airspawn/Makefile plugins/annihilationFlag/Makefile plugins/autoFlagReset/Makefile plugins/avengerFlag/Makefile plugins/bountyHunter/Makefile plugins/bzfscron/Makefile plugins/bzGunGameStyle/Makefile plugins/chathistory/Makefile plugins/ctfOverseer/Makefile plugins/customflagsample/Makefile plugins/customPollTypeSample/Makefile plugins/dimensionDoorFlag/Makefile plugins/doublePoint/Makefile plugins/fairCTF/Makefile plugins/fastmap/Makefile plugins/flagControl/Makefile plugins/flagStay/Makefile plugins/genoonce/Makefile plugins/genostats/Makefile plugins/givePoint/Makefile plugins/grenadeFlag/Makefile plugins/gruesomeKillerFlag/Makefile plugins/incrementPoint/Makefile plugins/keepaway/Makefile plugins/killall/Makefile plugins/koth/Makefile plugins/logDetail/Makefile plugins/mapchange/Makefile plugins/mappedDeathZones/Makefile plugins/nagware/Makefile plugins/neutralZones/Makefile plugins/playHistoryTracker/Makefile plugins/plugin_utils/Makefile plugins/rabbitTimer/Makefile plugins/rabidRabbit/Makefile plugins/recordmatch/Makefile plugins/regFlag/Makefile plugins/riskygeno/Makefile plugins/rrTurret/Makefile plugins/serverControl/Makefile plugins/serverSidePlayerSample/Makefile plugins/shockwaveDeath/Makefile plugins/skyfireFlag/Makefile plugins/spawnFacingCenter/Makefile plugins/superBulletBackwards/Makefile plugins/superLaserFlag/Makefile plugins/superUser/Makefile plugins/teamflaggeno/Makefile plugins/teamflagreset/Makefile plugins/thiefControl/Makefile plugins/timedctf/Makefile plugins/tripleBarrelFlag/Makefile plugins/uselessGeno/Makefile plugins/uselessRampage/Makefile plugins/verticalVelocityFlag/Makefile plugins/wwzones/Makefile src/3D/Makefile src/Makefile src/bzadmin/Makefile src/bzflag/Makefile src/bzfs/Makefile src/common/Makefile src/date/Makefile src/game/Makefile src/geometry/Makefile src/geometry/models/Makefile src/geometry/models/tank/Makefile src/mediafile/Makefile src/net/Makefile src/obstacle/Makefile src/ogl/Makefile src/platform/Makefile src/scene/Makefile tools/Makefile tools/TextTool2/Makefile tools/TextTool2/TextTool2.xcodeproj/Makefile tools/bzwtransform/Makefile tools/modeltool/Makefile tools/modeltool/MSVC/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -25802,8 +25802,10 @@ do
     "package/win32/nsis/Makefile") CONFIG_FILES="$CONFIG_FILES package/win32/nsis/Makefile" ;;
     "plugins/ActuallyUselessFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/ActuallyUselessFlag/Makefile" ;;
     "plugins/BattleCombatStrategy/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/BattleCombatStrategy/Makefile" ;;
+    "plugins/BombFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/BombFlag/Makefile" ;;
     "plugins/CascadeFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/CascadeFlag/Makefile" ;;
     "plugins/Checkpoint/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/Checkpoint/Makefile" ;;
+    "plugins/CustomZoneSample/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/CustomZoneSample/Makefile" ;;
     "plugins/DeathBlossomFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/DeathBlossomFlag/Makefile" ;;
     "plugins/DemilitarizedZones/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/DemilitarizedZones/Makefile" ;;
     "plugins/HoldTheFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/HoldTheFlag/Makefile" ;;
@@ -25818,16 +25820,22 @@ do
     "plugins/ReverseGeno/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/ReverseGeno/Makefile" ;;
     "plugins/RogueGenocide/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/RogueGenocide/Makefile" ;;
     "plugins/SAMPLE_PLUGIN/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/SAMPLE_PLUGIN/Makefile" ;;
+    "plugins/SandybeesServerAdministration/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/SandybeesServerAdministration/Makefile" ;;
     "plugins/ScoreRestorer/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/ScoreRestorer/Makefile" ;;
+    "plugins/ShockwaveCommand/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/ShockwaveCommand/Makefile" ;;
     "plugins/ShootingGallery/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/ShootingGallery/Makefile" ;;
+    "plugins/SneakPlugin/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/SneakPlugin/Makefile" ;;
+    "plugins/SpawnSave/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/SpawnSave/Makefile" ;;
+    "plugins/SuperBulletBackwardsFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/SuperBulletBackwardsFlag/Makefile" ;;
+    "plugins/TimeLimit/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/TimeLimit/Makefile" ;;
+    "plugins/TronPlugin/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/TronPlugin/Makefile" ;;
     "plugins/UselessMine/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/UselessMine/Makefile" ;;
     "plugins/WhackyWeapons/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/WhackyWeapons/Makefile" ;;
-    "plugins/WorldBuilder/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/WorldBuilder/Makefile" ;;
+    "plugins/adminListener/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/adminListener/Makefile" ;;
     "plugins/airspawn/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/airspawn/Makefile" ;;
     "plugins/annihilationFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/annihilationFlag/Makefile" ;;
     "plugins/autoFlagReset/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/autoFlagReset/Makefile" ;;
     "plugins/avengerFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/avengerFlag/Makefile" ;;
-    "plugins/BombFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/BombFlag/Makefile" ;;
     "plugins/bountyHunter/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/bountyHunter/Makefile" ;;
     "plugins/bzfscron/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/bzfscron/Makefile" ;;
     "plugins/bzGunGameStyle/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/bzGunGameStyle/Makefile" ;;
@@ -25835,7 +25843,6 @@ do
     "plugins/ctfOverseer/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/ctfOverseer/Makefile" ;;
     "plugins/customflagsample/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/customflagsample/Makefile" ;;
     "plugins/customPollTypeSample/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/customPollTypeSample/Makefile" ;;
-    "plugins/CustomZoneSample/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/CustomZoneSample/Makefile" ;;
     "plugins/dimensionDoorFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/dimensionDoorFlag/Makefile" ;;
     "plugins/doublePoint/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/doublePoint/Makefile" ;;
     "plugins/fairCTF/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/fairCTF/Makefile" ;;
@@ -25864,13 +25871,10 @@ do
     "plugins/regFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/regFlag/Makefile" ;;
     "plugins/riskygeno/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/riskygeno/Makefile" ;;
     "plugins/rrTurret/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/rrTurret/Makefile" ;;
-    "plugins/SandybeesServerAdministration/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/SandybeesServerAdministration/Makefile" ;;
     "plugins/serverControl/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/serverControl/Makefile" ;;
     "plugins/serverSidePlayerSample/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/serverSidePlayerSample/Makefile" ;;
-    "plugins/ShockwaveCommand/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/ShockwaveCommand/Makefile" ;;
     "plugins/shockwaveDeath/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/shockwaveDeath/Makefile" ;;
     "plugins/skyfireFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/skyfireFlag/Makefile" ;;
-    "plugins/SneakPlugin/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/SneakPlugin/Makefile" ;;
     "plugins/spawnFacingCenter/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/spawnFacingCenter/Makefile" ;;
     "plugins/superBulletBackwards/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/superBulletBackwards/Makefile" ;;
     "plugins/superLaserFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/superLaserFlag/Makefile" ;;
@@ -25880,7 +25884,6 @@ do
     "plugins/thiefControl/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/thiefControl/Makefile" ;;
     "plugins/timedctf/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/timedctf/Makefile" ;;
     "plugins/tripleBarrelFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/tripleBarrelFlag/Makefile" ;;
-    "plugins/TimeLimit/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/TimeLimit/Makefile" ;;
     "plugins/uselessGeno/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/uselessGeno/Makefile" ;;
     "plugins/uselessRampage/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/uselessRampage/Makefile" ;;
     "plugins/verticalVelocityFlag/Makefile") CONFIG_FILES="$CONFIG_FILES plugins/verticalVelocityFlag/Makefile" ;;
