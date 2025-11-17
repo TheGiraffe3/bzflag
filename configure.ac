@@ -1012,6 +1012,7 @@ AC_CONFIG_FILES([
 	plugins/SAMPLE_PLUGIN/Makefile
 	plugins/SandybeesServerAdministration/Makefile
 	plugins/ScoreRestorer/Makefile
+	plugins/ShockwaveCenterFlag/Makefile
 	plugins/ShockwaveCommand/Makefile
 	plugins/ShootingGallery/Makefile
 	plugins/SneakPlugin/Makefile

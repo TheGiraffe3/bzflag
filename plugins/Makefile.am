@@ -63,6 +63,7 @@ SUBDIRS = \
 	ScoreRestorer \
 	serverControl \
 	serverSidePlayerSample \
+	ShockwaveCenterFlag \
 	ShockwaveCommand \
 	shockwaveDeath \
 	ShootingGallery \
