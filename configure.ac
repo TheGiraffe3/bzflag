@@ -1038,7 +1038,6 @@ AC_CONFIG_FILES([
 	plugins/doublePoint/Makefile
 	plugins/fairCTF/Makefile
 	plugins/fastmap/Makefile
-	plugins/flagControl/Makefile
 	plugins/flagStay/Makefile
 	plugins/genoonce/Makefile
 	plugins/genostats/Makefile

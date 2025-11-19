@@ -3793,9 +3793,9 @@ bool SayCommand::operator() (const char  *message,
     }
 
     // no anonymous messages
-    messageText += " (";
+/*    messageText += " (";
     messageText += playerData->player.getCallSign();
-    messageText += ")";
+    messageText += ")";*/
 
     // send the message
     sendMessage(ServerPlayer, AllPlayers, messageText.c_str() + messageStart );

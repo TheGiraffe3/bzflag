@@ -25,7 +25,6 @@ SUBDIRS = \
 	doublePoint \
 	fairCTF \
 	fastmap \
-	flagControl \
 	flagStay \
 	genoonce \
 	genostats \
