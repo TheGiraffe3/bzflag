@@ -40,6 +40,7 @@ SUBDIRS = \
 	logDetail \
 	mapchange \
 	mappedDeathZones \
+	MessageZones \
 	nagware \
 	neutralZones \
 	NoLossOnSW \

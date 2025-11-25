@@ -1001,6 +1001,7 @@ AC_CONFIG_FILES([
 	plugins/HoldTheFlag/Makefile
 	plugins/Kamikaze/Makefile
 	plugins/Makefile
+	plugins/MessageZones/Makefile
 	plugins/NoLossOnSW/Makefile
 	plugins/PhantomZoneFlagOnSpawn/Makefile
 	plugins/Phoenix/Makefile
