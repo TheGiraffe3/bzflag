@@ -61,6 +61,7 @@ SUBDIRS = \
 	SAMPLE_PLUGIN \
 	SandybeesServerAdministration \
 	ScoreRestorer \
+	SeerRadar \
 	serverControl \
 	serverSidePlayerSample \
 	ShockwaveCenterFlag \
@@ -71,6 +72,7 @@ SUBDIRS = \
 	SneakPlugin \
 	spawnFacingCenter \
 	SpawnSave \
+	StationCollaborationPlugin \
 	superBulletBackwards \
 	SuperBulletBackwardsFlag \
 	superLaserFlag \
@@ -87,6 +89,7 @@ SUBDIRS = \
 	uselessRampage \
 	verticalVelocityFlag \
 	WhackyWeapons \
+	WingsFlagOnSpawn \
 	wwzones \
 	@CUSTOM_PLUGIN_LIST@
 

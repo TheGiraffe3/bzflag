@@ -1013,16 +1013,19 @@ AC_CONFIG_FILES([
 	plugins/SAMPLE_PLUGIN/Makefile
 	plugins/SandybeesServerAdministration/Makefile
 	plugins/ScoreRestorer/Makefile
+	plugins/SeerRadar/Makefile
 	plugins/ShockwaveCenterFlag/Makefile
 	plugins/ShockwaveCommand/Makefile
 	plugins/ShootingGallery/Makefile
 	plugins/SneakPlugin/Makefile
 	plugins/SpawnSave/Makefile
+	plugins/StationCollaborationPlugin/Makefile
 	plugins/SuperBulletBackwardsFlag/Makefile
 	plugins/TimeLimit/Makefile
 	plugins/TronPlugin/Makefile
 	plugins/UselessMine/Makefile
 	plugins/WhackyWeapons/Makefile
+	plugins/WingsFlagOnSpawn/Makefile
 	plugins/adminListener/Makefile
 	plugins/airspawn/Makefile
 	plugins/annihilationFlag/Makefile

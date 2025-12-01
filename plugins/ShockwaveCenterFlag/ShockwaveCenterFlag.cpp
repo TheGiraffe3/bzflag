@@ -4,15 +4,15 @@
 
 using namespace std;
 
-class RemoteDetonationFlag : public bz_Plugin
+class ShockwaveCenterFlag : public bz_Plugin
 {
 	virtual const char* Name()
 	{
-		return "Remote Detonation Flag 1.3.1";
+		return "Shockwave Center Flag 1.0.0";
 	}
 	virtual void Init(const char*);
 	virtual void Event(bz_EventData*);
-	~RemoteDetonationFlag();
+	~ShockwaveCenterFlag();
 
 	virtual void Cleanup(void)
 	{
@@ -20,18 +20,18 @@ class RemoteDetonationFlag : public bz_Plugin
 	}
 };
 
-BZ_PLUGIN(RemoteDetonationFlag)
+BZ_PLUGIN(ShockwaveCenterFlag)
 
-void RemoteDetonationFlag::Init(const char*)
+void ShockwaveCenterFlag::Init(const char*)
 {
 	bz_RegisterCustomFlag("SC", "Shockwave Center", "Firing detonates a shock wave in the middle of the map. Note: you only get one shot.", 0, eGoodFlag);
 	Register(bz_eShotFiredEvent);
 	Register(bz_ePlayerDieEvent);
 }
 
-RemoteDetonationFlag::~RemoteDetonationFlag() {}
+ShockwaveCenterFlag::~ShockwaveCenterFlag() {}
 
-void RemoteDetonationFlag::Event(bz_EventData *eventData)
+void ShockwaveCenterFlag::Event(bz_EventData *eventData)
 {
 	switch (eventData->eventType)
 	{
