@@ -1,5 +1,6 @@
 #include "bzfsAPI.h"
-#include "plugin_utils.h"
+
+#include "../../src/bzfs/bzfs.h"
 
 #include <cctype>
 #include <cstdlib>
@@ -107,6 +108,12 @@ bool StationCollaborationPlugin::SlashCommand(int playerID, bz_ApiString command
 			return true;
 		}
 
+		if (pr->spawned == false)
+		{
+			bz_sendTextMessage(BZ_SERVER, playerID, "You can only teleport if you are alive!");
+			return true;
+		}
+
 		const std::string arg = bz_tolower(params->get(0).c_str());
 
 		int platform = 0;
@@ -138,8 +145,10 @@ bool StationCollaborationPlugin::SlashCommand(int playerID, bz_ApiString command
 		spawnLocation[playerID][4] = 1; // tell it we want it to change the spawn location next time
 
 		bz_killPlayer(playerID, false, -1, NULL);
+		bz_incrementTeamLosses(pr->team, -1);
 		bz_incrementPlayerLosses(playerID, -1);
 		bz_freePlayerRecord(pr);
+		playerAlive(playerID);
 
 		return true;
 	}

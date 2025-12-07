@@ -1,0 +1,236 @@
+#include "bzfsAPI.h"
+#include "../../src/bzfs/bzfs.h"
+#include <map>
+#include <vector>
+
+static void sendPlayerBZDB(int playerID, const std::string& key, const std::string& value)
+{
+	void *bufStart = getDirectMessageBuffer();
+	void *buf = nboPackUShort(bufStart, 1);
+	buf = nboPackUByte(buf, key.length());
+	buf = nboPackString(buf, key.c_str(), key.length());
+	buf = nboPackUByte(buf, value.length());
+	buf = nboPackString(buf, value.c_str(), value.length());
+	const int len = (char*)buf - (char*)bufStart;
+	directMessage(playerID, MsgSetVar, len, bufStart);
+}
+
+static void sendPlayerBZDB(int playerID, const std::string& key, const float value)
+{
+	char buf[64];
+	snprintf(buf, sizeof(buf), "%f", value);
+	sendPlayerBZDB(playerID, key, buf);
+}
+
+class CustomBZDBZone : public bz_CustomZoneObject
+{
+public:
+	CustomBZDBZone() : bz_CustomZoneObject()
+	{
+	}
+
+	std::string bzdbvariable_variable;
+	float bzdbvariable_number;
+	std::string message;
+};
+
+class CustomBZDBZones : public bz_Plugin, public bz_CustomMapObjectHandler
+{
+public:
+	virtual const char* Name();
+	virtual void Init(const char* config);
+	virtual void Cleanup();
+	virtual void Event(bz_EventData* eventData);
+	virtual bool MapObject(bz_ApiString object, bz_CustomMapObjectInfo* data);
+
+private:
+	std::vector<CustomBZDBZone> zones;
+	std::map<int, std::map<std::string, float>> playerActiveOverrides;
+	std::map<int, std::vector<int>> playerInZones;
+};
+
+BZ_PLUGIN(CustomBZDBZones)
+
+const char* CustomBZDBZones::Name()
+{
+	return "CustomBZDBZones";
+}
+
+void CustomBZDBZones::Init(const char* config)
+{
+	Register(bz_ePlayerUpdateEvent);
+	Register(bz_ePlayerPartEvent);
+	
+	bz_registerCustomMapObject("BZDBZONE", this);
+}
+
+void CustomBZDBZones::Cleanup()
+{
+	Flush();
+	
+	bz_APIIntList *playerList = bz_newIntList();
+	bz_getPlayerIndexList(playerList);
+	
+	for (unsigned int i = 0; i < playerList->size(); i++)
+	{
+		int playerID = playerList->get(i);
+		if (playerActiveOverrides.find(playerID) != playerActiveOverrides.end())
+		{
+			for (auto& pair : playerActiveOverrides[playerID])
+			{
+				float defaultValue = bz_getBZDBDouble(pair.first.c_str());
+				sendPlayerBZDB(playerID, pair.first, defaultValue);
+			}
+		}
+	}
+	
+	bz_deleteIntList(playerList);
+
+	bz_removeCustomMapObject("BZDBZONE");
+}
+
+void CustomBZDBZones::Event(bz_EventData* eventData)
+{
+	switch (eventData->eventType)
+	{
+		case bz_ePlayerUpdateEvent:
+		{
+			bz_PlayerUpdateEventData_V1* update = (bz_PlayerUpdateEventData_V1*)eventData;
+			int playerID = update->playerID;
+			
+			std::map<std::string, float> newOverrides;
+			std::vector<int> currentZones;
+			
+			for (size_t i = 0; i < zones.size(); i++)
+			{
+				if (zones[i].pointInZone(update->state.pos))
+				{
+					currentZones.push_back(i);
+					newOverrides[zones[i].bzdbvariable_variable] = zones[i].bzdbvariable_number;
+				}
+			}
+			
+			// Check for newly entered zones and send messages
+			if (playerInZones.find(playerID) != playerInZones.end())
+			{
+				for (int zoneIdx : currentZones)
+				{
+					bool wasInZone = false;
+					for (int oldZoneIdx : playerInZones[playerID])
+					{
+						if (oldZoneIdx == zoneIdx)
+						{
+							wasInZone = true;
+							break;
+						}
+					}
+					if (!wasInZone && !zones[zoneIdx].message.empty())
+					{
+						bz_sendTextMessage(BZ_SERVER, playerID, zones[zoneIdx].message.c_str());
+					}
+				}
+			}
+			else
+			{
+				// First update for this player, send messages for all zones
+				for (int zoneIdx : currentZones)
+				{
+					if (!zones[zoneIdx].message.empty())
+					{
+						bz_sendTextMessage(BZ_SERVER, playerID, zones[zoneIdx].message.c_str());
+					}
+				}
+			}
+			
+			playerInZones[playerID] = currentZones;
+			
+			if (newOverrides != playerActiveOverrides[playerID])
+			{
+				for (auto& pair : playerActiveOverrides[playerID])
+				{
+					if (newOverrides.find(pair.first) == newOverrides.end())
+					{
+						float defaultValue = bz_getBZDBDouble(pair.first.c_str());
+						sendPlayerBZDB(playerID, pair.first, defaultValue);
+					}
+				}
+				
+				for (auto& pair : newOverrides)
+				{
+					sendPlayerBZDB(playerID, pair.first, pair.second);
+				}
+				
+				playerActiveOverrides[playerID] = newOverrides;
+			}
+			break;
+		}
+		
+		case bz_ePlayerPartEvent:
+		{
+			bz_PlayerJoinPartEventData_V1* partData = (bz_PlayerJoinPartEventData_V1*)eventData;
+			int playerID = partData->playerID;
+			
+			if (playerActiveOverrides.find(playerID) != playerActiveOverrides.end())
+			{
+				for (auto& pair : playerActiveOverrides[playerID])
+				{
+					float defaultValue = bz_getBZDBDouble(pair.first.c_str());
+					sendPlayerBZDB(playerID, pair.first, defaultValue);
+				}
+			}
+			
+			playerActiveOverrides.erase(playerID);
+			playerInZones.erase(playerID);
+			break;
+		}
+		
+		default:
+			break;
+	}
+}
+
+bool CustomBZDBZones::MapObject(bz_ApiString object, bz_CustomMapObjectInfo* data)
+{
+	if (!data || object != "BZDBZONE")
+	{
+		return false;
+	}
+
+	CustomBZDBZone BZDBZone;
+	BZDBZone.handleDefaultOptions(data);
+
+	for (unsigned int i = 0; i < data->data.size(); i++)
+	{
+		std::string line = data->data.get(i);
+
+		bz_APIStringList nubs;
+		nubs.tokenize(line.c_str(), " ", 0, true);
+
+		if (nubs.size() > 0)
+		{
+			std::string key = bz_toupper(nubs.get(0).c_str());
+
+			if (key == "BZDBVARIABLE" && nubs.size() >= 3)
+			{
+				BZDBZone.bzdbvariable_variable = nubs.get(1).c_str();
+				BZDBZone.bzdbvariable_number = atof(nubs.get(2).c_str());
+			}
+			else if (key == "MESSAGE" && nubs.size() >= 2)
+			{
+				size_t pos = line.find_first_of(' ');
+				if (pos != std::string::npos)
+				{
+					pos = line.find_first_not_of(' ', pos);
+					if (pos != std::string::npos)
+					{
+						BZDBZone.message = line.substr(pos);
+					}
+				}
+			}
+		}
+	}
+
+	zones.push_back(BZDBZone);
+
+	return true;
+}

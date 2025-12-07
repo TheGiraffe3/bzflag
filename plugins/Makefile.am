@@ -18,6 +18,7 @@ SUBDIRS = \
 	ctfOverseer \
 	customflagsample \
 	customPollTypeSample \
+	CustomBZDBZones \
 	CustomZoneSample \
 	DeathBlossomFlag \
 	DemilitarizedZones \

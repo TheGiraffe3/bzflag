@@ -10,7 +10,7 @@ class SuperBulletBackwardsFlag : public bz_Plugin
 {
     virtual const char* Name ()
     {
-        return "BS Flag";
+        return "Super Bullet Backwards Flag";
     }
     virtual void Init(const char*);
 	virtual void Event(bz_EventData*);
@@ -28,7 +28,7 @@ void SuperBulletBackwardsFlag::Init(const char*) {
 	Register(bz_eShotFiredEvent);
 	Register(bz_ePlayerDieEvent);
 
-	bz_RegisterCustomFlag("BS", "Backwards Shot", "Fire a super bullet backwards in addition to your normal shot.", 0, eGoodFlag);
+	bz_RegisterCustomFlag("BA", "Backwards Shot", "Fire a super bullet backwards in addition to your normal shot.", 0, eGoodFlag);
 
 	bz_registerCustomBZDBDouble("_backwardsShotDistance", 40);
 }
@@ -44,7 +44,7 @@ void SuperBulletBackwardsFlag::Event(bz_EventData *ed)
 			bz_ShotFiredEventData_V1* data = (bz_ShotFiredEventData_V1*) ed;
 			bz_BasePlayerRecord* playerRecord = bz_getPlayerByIndex(data->playerID);
 
-			if (playerRecord && playerRecord->currentFlag == "Backwards Shot (+BS)")
+			if (playerRecord && playerRecord->currentFlag == "Backwards Shot (+BA)")
 			{
 				float pos[3];
 				pos[0] = playerRecord->lastKnownState.pos[0] - cos(playerRecord->lastKnownState.rotation)*bz_getBZDBDouble("_backwardsShotDistance");
@@ -57,7 +57,7 @@ void SuperBulletBackwardsFlag::Event(bz_EventData *ed)
 				vel[2] = 0;
 
 				uint32_t shotGUID = bz_fireServerShot("SB", pos, vel, playerRecord->team);
-				bz_setShotMetaData(shotGUID, "type", "BS");
+				bz_setShotMetaData(shotGUID, "type", "BA");
 				bz_setShotMetaData(shotGUID, "owner", data->playerID);
 			}
 
@@ -72,7 +72,7 @@ void SuperBulletBackwardsFlag::Event(bz_EventData *ed)
 			{
 			    std::string flagType = bz_getShotMetaDataS(shotGUID, "type");
 
-			    if (flagType == "BS")
+			    if (flagType == "BA")
 			    {
 			        data->killerID = bz_getShotMetaDataI(shotGUID, "owner");
 			        data->killerTeam = bz_getPlayerTeam(data->killerID);

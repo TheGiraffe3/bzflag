@@ -995,6 +995,7 @@ AC_CONFIG_FILES([
 	plugins/BombFlag/Makefile
 	plugins/CascadeFlag/Makefile
 	plugins/Checkpoint/Makefile
+	plugins/CustomBZDBZones/Makefile
 	plugins/CustomZoneSample/Makefile
 	plugins/DeathBlossomFlag/Makefile
 	plugins/DemilitarizedZones/Makefile
