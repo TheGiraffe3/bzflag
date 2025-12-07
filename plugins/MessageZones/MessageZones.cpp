@@ -9,7 +9,8 @@ class MessageZone : public bz_CustomZoneObject
 public:
 	MessageZone() : bz_CustomZoneObject() {}
 	std::string message = "If you see this, /report because the map author forgot something.";
-	std::string flag = "CL";
+	std::string flag = "";
+	bool requiresFlag = false;
 	int zoneID = 0;
 };
 
@@ -63,7 +64,10 @@ bool MessageZones::MapObject(bz_ApiString object, bz_CustomMapObjectInfo* data)
 			if (key == "MESSAGE" && nubs->size() > 1)
 				newZone.message = nubs->get(1).c_str();
 			else if (key == "FLAG" && nubs->size() > 1)
+			{
 				newZone.flag = nubs->get(1).c_str();
+				newZone.requiresFlag = true;
+			}
 		}
 		bz_deleteStringList(nubs);
 	}
@@ -89,13 +93,16 @@ void MessageZones::Event(bz_EventData* eventData)
 				if (!zone.pointInZone(update->state.pos))
 					continue;
 
-				if (bz_getPlayerFlagID(playerID) < 0)
-					continue;
+				if (zone.requiresFlag)
+				{
+					if (bz_getPlayerFlagID(playerID) < 0)
+						continue;
 
-				if (strcmp(bz_getPlayerFlag(playerID), zone.flag.c_str()) != 0)
-					continue;
+					if (strcmp(bz_getPlayerFlag(playerID), zone.flag.c_str()) != 0)
+						continue;
+				}
 
-				// Check if this player already got message from this exact zone
+				// Check if this player already got the message from this exact zone
 				bool alreadyGotIt = false;
 				for (const auto& record : playersWhoGotMessage)
 				{
