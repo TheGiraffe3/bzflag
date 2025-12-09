@@ -44,7 +44,7 @@ void SuperBulletBackwardsFlag::Event(bz_EventData *ed)
 			bz_ShotFiredEventData_V1* data = (bz_ShotFiredEventData_V1*) ed;
 			bz_BasePlayerRecord* playerRecord = bz_getPlayerByIndex(data->playerID);
 
-			if (playerRecord && playerRecord->currentFlag == "Backwards Shot (+BA)")
+			if (playerRecord && playerRecord->currentFlag == "BAckwards shot (+BA)")
 			{
 				float pos[3];
 				pos[0] = playerRecord->lastKnownState.pos[0] - cos(playerRecord->lastKnownState.rotation)*bz_getBZDBDouble("_backwardsShotDistance");

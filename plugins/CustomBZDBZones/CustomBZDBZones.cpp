@@ -29,8 +29,7 @@ public:
 	{
 	}
 
-	std::string bzdbvariable_variable;
-	float bzdbvariable_number;
+	std::map<std::string, float> bzdbvariables;
 	std::string message;
 };
 
@@ -38,7 +37,7 @@ class CustomBZDBZones : public bz_Plugin, public bz_CustomMapObjectHandler
 {
 public:
 	virtual const char* Name();
-	virtual void Init(const char* config);
+	virtual void Init(const char*);
 	virtual void Cleanup();
 	virtual void Event(bz_EventData* eventData);
 	virtual bool MapObject(bz_ApiString object, bz_CustomMapObjectInfo* data);
@@ -53,10 +52,10 @@ BZ_PLUGIN(CustomBZDBZones)
 
 const char* CustomBZDBZones::Name()
 {
-	return "CustomBZDBZones";
+	return "Custom BZDB Zones";
 }
 
-void CustomBZDBZones::Init(const char* config)
+void CustomBZDBZones::Init(const char*)
 {
 	Register(bz_ePlayerUpdateEvent);
 	Register(bz_ePlayerPartEvent);
@@ -106,7 +105,10 @@ void CustomBZDBZones::Event(bz_EventData* eventData)
 				if (zones[i].pointInZone(update->state.pos))
 				{
 					currentZones.push_back(i);
-					newOverrides[zones[i].bzdbvariable_variable] = zones[i].bzdbvariable_number;
+					for (const auto& var : zones[i].bzdbvariables)
+					{
+						newOverrides[var.first] = var.second;
+					}
 				}
 			}
 			
@@ -212,8 +214,7 @@ bool CustomBZDBZones::MapObject(bz_ApiString object, bz_CustomMapObjectInfo* dat
 
 			if (key == "BZDBVARIABLE" && nubs.size() >= 3)
 			{
-				BZDBZone.bzdbvariable_variable = nubs.get(1).c_str();
-				BZDBZone.bzdbvariable_number = atof(nubs.get(2).c_str());
+				BZDBZone.bzdbvariables[nubs.get(1).c_str()] = atof(nubs.get(2).c_str());
 			}
 			else if (key == "MESSAGE" && nubs.size() >= 2)
 			{
