@@ -1,0 +1,9 @@
+dmz
+  position 0 0 0
+  size 5 5 5
+end
+
+box
+  position 0 0 -1
+  size 5 5 1
+end

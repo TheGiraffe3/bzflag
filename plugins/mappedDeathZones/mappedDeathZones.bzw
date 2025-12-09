@@ -1,0 +1,166 @@
+options
+  -mp 5,5,5,0,0,10
+  -set _worldSize 150
+  -srvmsg "If you die inside a colored box, you'll spawn at the respective platform"
+  -srvmsg "The red and green boxes will only affect red and green tanks, respectively"
+  -srvmsg "If you die on the yellow platform, you will spawn inside the yellow box"
+end
+
+#
+# Red area
+#
+
+# Red death zone
+meshbox
+  name red_box
+  position 0 20 0
+  size 10 10 5
+  color 1 0 0 0.5
+  drivethrough
+end
+
+deathzone
+  name red_dz
+  position 0 20 0
+  size 10 10 5
+  team 1
+  spawnzone red_sz
+end
+
+# Red spawn zone
+meshbox
+  position 0 20 20
+  size 10 10 1
+  color 1 0 0 1
+end
+
+spawnzone
+  name red_sz
+  position 0 20 20
+  size 10 10 5
+end
+
+#
+# Green area
+#
+
+# Green death zone
+meshbox
+  name green_box
+  position 0 -20 0
+  size 10 10 5
+  drivethrough
+  color 0 1 0 0.5
+end
+
+deathzone
+  name green_dz
+  position 0 -20 0
+  size 10 10 5
+  team 2
+  spawnzone green_sz
+end
+
+# Green spawn zone
+meshbox
+  position 0 -20 20
+  size 10 10 1
+  color 0 1 0 1
+end
+
+spawnzone
+  name green_sz
+  position 0 -20 20
+  size 10 10 5
+end
+
+#
+# All team death zone
+#
+
+# Multi death zone
+meshbox
+  position 30 0 0
+  size 10 10 5
+  color 1 1 0 0.5
+  passable
+end
+
+deathzone
+  name all_dz
+  position 30 0 0
+  size 10 10 5
+  spawnzone all_sz
+end
+
+# Multi spawn zone
+meshbox
+  position 30 0 20
+  size 10 10 1
+  color 1 1 0 1
+end
+
+spawnzone
+  name all_sz
+  position 30 0 20
+  size 10 10 5
+end
+
+# If you die in the high yellow spawnzone, you will respawn in the floor deathzone
+deathzone
+  name all_dz_high
+  position 30 0 20
+  size 10 10 5
+  spawnzone all_sz_floor
+end
+
+spawnzone
+  name all_sz_floor
+  position 30 0 0
+  size 10 10 5
+end
+
+#
+# Random spawn zone
+#
+
+# Random death zone
+meshbox
+  position -30 0 0
+  size 10 10 5
+  color 0 1 1 0.5
+  drivethrough
+end
+
+deathzone
+  name random_dz
+  position -30 0 0
+  size 10 10 5
+  spawnzone random_dz_pos
+  spawnzone random_dz_neg
+end
+
+# Multi spawn zone
+meshbox
+  position -30 30 20
+  size 10 10 1
+  color 0 1 1 1
+end
+
+meshbox
+  position -30 -30 20
+  size 10 10 1
+  color 0 1 1 1
+end
+
+spawnzone
+  name random_dz_pos
+  position -30 30 20
+  size 10 10 5
+end
+
+spawnzone
+  name random_dz_neg
+  position -30 -30 20
+  size 10 10 5
+end
