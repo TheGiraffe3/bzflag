@@ -1,3 +1,6 @@
+// TODO: update platform coordinates
+// TODO: update location where firing a shockwave is instant death
+
 #include "bzfsAPI.h"
 
 #include "../../src/bzfs/bzfs.h"
@@ -29,6 +32,17 @@ const float platformCoords[12][3] = {
 	{11,11,0}, // 11
 };
 
+bool pointIn(float pos[3], float xmin, float xmax, float ymin, float ymax, float zmin, float zmax)
+{
+	if ( pos[0] > xmax || pos[0] < xmin )
+		return false;
+	if ( pos[1] > ymax || pos[1] < ymin )
+		return false;
+	if ( pos[2] > zmax || pos[2] < zmin )
+		return false;
+	return true;
+}
+
 class StationCollaborationPlugin : public bz_Plugin, public bz_CustomSlashCommandHandler
 {
 public:
@@ -49,6 +63,7 @@ const char* StationCollaborationPlugin::Name()
 void StationCollaborationPlugin::Init(const char*)
 {
 	Register(bz_eGetPlayerSpawnPosEvent);
+	Register(bz_eShotFiredEvent);
 
 	bz_registerCustomSlashCommand("teleport", this);
 	bz_registerCustomSlashCommand("tp", this);
@@ -84,6 +99,18 @@ void StationCollaborationPlugin::Event(bz_EventData* eventData)
 			spawnLocation[data->playerID][4] = 0; // don't mess with the spawn next time, unless they run the command again
 		}
 		break;
+
+		case bz_eShotFiredEvent:
+		{
+			bz_ShotFiredEventData_V1* data = (bz_ShotFiredEventData_V1*)eventData;
+
+			if (pointIn(data->pos, 0, 0, 0, 0, 0, 0) && data->type == "SW")
+			{
+				bz_killPlayer(data->playerID, false, BZ_SERVER, NULL);
+				bz_sendTextMessage(BZ_SERVER, data->playerID, "Congratulations on making it to the treasure chest and killing all other players on the platform!");
+				bz_incrementPlayerLosses(data->playerID, -1);
+			}
+		}
 
 		default:
 			break;
