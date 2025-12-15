@@ -1,5 +1,4 @@
-// TODO: update platform coordinates
-// TODO: update location where firing a shockwave is instant death
+// TODO: update teleport coordinates, platform names, platform coordinates
 
 #include "bzfsAPI.h"
 
@@ -11,13 +10,30 @@
 #include <string>
 
 float spawnLocation[256][5] = {0};
+int playerPlatform[256] = {0};
 
-int getRandomNumber(int min, int max)
-{
-	return min + (std::rand() % (max - min + 1));
-}
+// Platform name mapping.
+// Syntax: platformname
+const char* platformNames[14] = {
+	"none",			// 0
+	"platform1",		// 1
+	"platform2",		// 2
+	"platform3",		// 3
+	"platform4",		// 4
+	"platform5",		// 5
+	"platform6",		// 6
+	"Rusty Seabed",		// 7
+	"Kelp Forest",		// 8
+	"platform9",		// 9
+	"platform10",		// 10
+	"platform11",		// 11
+	"platform12",		// 12
+	"platform13",		// 13
+};
 
-const float platformCoords[12][3] = {
+// Location where players will teleport to if they attempt to teleport to the given platform.
+// Syntax: x, y, z
+const float platformCoords[14][3] = {
 	{0,0,0}, // 0 (unused and kept at 0)
 	{1,1,0}, // 1
 	{2,2,0}, // 2
@@ -30,7 +46,33 @@ const float platformCoords[12][3] = {
 	{9,9,0}, // 9
 	{10,10,0}, // 10
 	{11,11,0}, // 11
+	{12,12,0}, // 12
+	{13,13,0}, // 13
 };
+
+// Areas of each platform.
+// Syntax: xmin, xmax, ymin, ymax, zmin, zmax
+const float platformZones[14][6] = {
+	{0,0,0,0,1000,1000}, // 0 (unused/no platform)
+	{0, 0, 0, 0, 0, 0}, // 1
+	{0, 0, 0, 0, 0, 0}, // 2
+	{0, 0, 0, 0, 0, 0}, // 3
+	{0, 0, 0, 0, 0, 0}, // 4
+	{0, 0, 0, 0, 0, 0}, // 5
+	{0, 0, 0, 0, 0, 0}, // 6
+	{0, 0, 0, 0, 0, 0}, // 7
+	{0, 0, 0, 0, 0, 0}, // 8
+	{0, 0, 0, 0, 0, 0}, // 9
+	{0, 0, 0, 0, 0, 0}, // 10
+	{0, 0, 0, 0, 0, 0}, // 11
+	{0, 0, 0, 0, 0, 0}, // 12
+	{0, 0, 0, 0, 0, 0}, // 13
+};
+
+int getRandomNumber(int min, int max)
+{
+	return min + (std::rand() % (max - min + 1));
+}
 
 bool pointIn(float pos[3], float xmin, float xmax, float ymin, float ymax, float zmin, float zmax)
 {
@@ -41,6 +83,35 @@ bool pointIn(float pos[3], float xmin, float xmax, float ymin, float ymax, float
 	if ( pos[2] > zmax || pos[2] < zmin )
 		return false;
 	return true;
+}
+
+int getPlatform(float pos[3])
+{
+	for (int i = 1; i <= 13; i++)
+		if (pointIn(pos, platformZones[i][0], platformZones[i][1], platformZones[i][2], platformZones[i][3], platformZones[i][4], platformZones[i][5]))
+			return i;
+	return 0;
+}
+
+int getPlatformByName(const char* name)
+{
+	std::string lowerName = bz_tolower(name);
+
+	for (int i = 0; i <= 13; i++)
+		if (lowerName == bz_tolower(platformNames[i]))
+			return i;
+
+	return -1;
+}
+
+bool playerOnPlatform(int playerID, const char* platformName)
+{
+	int platformNumber = getPlatformByName(platformName);
+
+	if (platformNumber == -1)
+		return false;
+
+	return (playerPlatform[playerID] == platformNumber);
 }
 
 class StationCollaborationPlugin : public bz_Plugin, public bz_CustomSlashCommandHandler
@@ -63,6 +134,8 @@ const char* StationCollaborationPlugin::Name()
 void StationCollaborationPlugin::Init(const char*)
 {
 	Register(bz_eGetPlayerSpawnPosEvent);
+	Register(bz_ePlayerPartEvent);
+	Register(bz_ePlayerUpdateEvent);
 	Register(bz_eShotFiredEvent);
 
 	bz_registerCustomSlashCommand("teleport", this);
@@ -100,11 +173,29 @@ void StationCollaborationPlugin::Event(bz_EventData* eventData)
 		}
 		break;
 
+		case bz_ePlayerPartEvent:
+		{
+			bz_PlayerJoinPartEventData_V1* data = (bz_PlayerJoinPartEventData_V1*)eventData;
+
+			playerPlatform[data->playerID] = 0;
+		}
+		break;
+
+		case bz_ePlayerUpdateEvent:
+		{
+			bz_PlayerUpdateEventData_V1* data = (bz_PlayerUpdateEventData_V1*)eventData;
+			bz_BasePlayerRecord* pr = bz_getPlayerByIndex(data->playerID);
+
+			int currentPlatform = getPlatform(pr->lastKnownState.pos);
+			playerPlatform[data->playerID] = currentPlatform;
+		}
+		break;
+
 		case bz_eShotFiredEvent:
 		{
 			bz_ShotFiredEventData_V1* data = (bz_ShotFiredEventData_V1*)eventData;
 
-			if (pointIn(data->pos, 0, 0, 0, 0, 0, 0) && data->type == "SW")
+			if (playerOnPlatform(data->playerID, "Rusty Seabed") && data->type == "SW")
 			{
 				bz_killPlayer(data->playerID, false, BZ_SERVER, NULL);
 				bz_sendTextMessage(BZ_SERVER, data->playerID, "Congratulations on making it to the treasure chest and killing all other players on the platform!");
@@ -132,12 +223,14 @@ bool StationCollaborationPlugin::SlashCommand(int playerID, bz_ApiString command
 		if (pr->team == eObservers)
 		{
 			bz_sendTextMessage(BZ_SERVER, playerID, "Observers can't teleport!");
+			bz_freePlayerRecord(pr);
 			return true;
 		}
 
 		if (pr->spawned == false)
 		{
 			bz_sendTextMessage(BZ_SERVER, playerID, "You can only teleport if you are alive!");
+			bz_freePlayerRecord(pr);
 			return true;
 		}
 
@@ -147,7 +240,7 @@ bool StationCollaborationPlugin::SlashCommand(int playerID, bz_ApiString command
 
 		if (arg == "random")
 		{
-			platform = getRandomNumber(1,11);
+			platform = getRandomNumber(1,13);
 		}
 		else if (arg.find_first_not_of("0123456789") == std::string::npos)
 		{
@@ -159,9 +252,9 @@ bool StationCollaborationPlugin::SlashCommand(int playerID, bz_ApiString command
 			return true;
 		}
 
-		if (platform < 1 || platform > 11)
+		if (platform < 1 || platform > 13)
 		{
-			bz_sendTextMessage(BZ_SERVER, playerID, "You can only choose a platform between 1 and 11!");
+			bz_sendTextMessage(BZ_SERVER, playerID, "You can only choose a platform between 1 and 13!");
 			return true;
 		}
 
