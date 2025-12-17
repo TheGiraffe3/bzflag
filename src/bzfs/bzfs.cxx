@@ -7968,6 +7968,100 @@ void APIStateToplayerState(PlayerState &playerState, const bz_PlayerUpdateState 
     memcpy(playerState.velocity,apiState.velocity,sizeof(float)*3);
 }
 
+TeamColor eTeamTypeToTeamColor (bz_eTeamType _team)
+{
+    switch (_team)
+    {
+        case eRogueTeam:
+            return RogueTeam;
+
+        case eRedTeam:
+            return RedTeam;
+
+        case eGreenTeam:
+            return GreenTeam;
+
+        case eBlueTeam:
+            return BlueTeam;
+
+        case ePurpleTeam:
+            return PurpleTeam;
+
+        case eObservers:
+            return ObserverTeam;
+
+        case eHunterTeam:
+            return HunterTeam;
+
+        case eRabbitTeam:
+            return RabbitTeam;
+
+        default:
+            return NoTeam;
+    }
+}
+
+void fixTeamCountForSwitch()
+{
+    int playerIndex, teamNum;
+
+    for (teamNum = RogueTeam; teamNum < HunterTeam; teamNum++)
+    {
+        team[teamNum].team.size = 0;
+    }
+
+    for (playerIndex = 0; playerIndex < curMaxPlayers; playerIndex++)
+    {
+        GameKeeper::Player *p = GameKeeper::Player::getPlayerByIndex(playerIndex);
+
+        if (p && p->player.isPlaying())
+        {
+            teamNum = p->player.getTeam();
+
+            if (teamNum == HunterTeam)
+                teamNum = RogueTeam;
+
+            team[teamNum].team.size++;
+        }
+    }
+}
+
+void removePlayer(int playerIndex)
+{
+    GameKeeper::Player *playerData = GameKeeper::Player::getPlayerByIndex(playerIndex);
+
+    if (!playerData)
+        return;
+
+    void *buf, *bufStart = getDirectMessageBuffer();
+    buf = nboPackUByte(bufStart, playerIndex);
+
+    broadcastMessage(MsgRemovePlayer, (char*)buf-(char*)bufStart, bufStart);
+
+    int teamNum = int(playerData->player.getTeam());
+    --team[teamNum].team.size;
+    sendTeamUpdate(-1, teamNum);
+    fixTeamCountForSwitch();
+}
+
+void addPlayer(GameKeeper::Player *playerData)
+{
+    void *bufStart = getDirectMessageBuffer();
+    void *buf      = playerData->packPlayerUpdate(bufStart);
+
+    broadcastMessage(MsgAddPlayer, (char*)buf - (char*)bufStart, bufStart);
+
+    int teamNum = int(playerData->player.getTeam());
+    team[teamNum].team.size++;
+    sendTeamUpdate(-1, teamNum);
+    fixTeamCountForSwitch();
+}
+
+void forcePlayerSpawn(int playerID)
+{
+    playerAlive(playerID);
+}
+
 
 // Local Variables: ***
 // mode: C++ ***

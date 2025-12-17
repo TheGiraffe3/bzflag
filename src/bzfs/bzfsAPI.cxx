@@ -4615,6 +4615,846 @@ BZF_API void bz_ClearFilter(void)
     clOptions->filter.clear();
 }
 
+/*
+ * Grue: Custom methods start here
+*/
+
+// Ends a server shot prematurely
+// Parameters:
+// - uint32_t shotID: the shot's GUID
+// - bool explode: if true, the shot will end in a firey explosion
+BZF_API bool bz_endServerShot(uint32_t shotID, bool explode)
+{
+    if (ShotManager.FindShot(shotID)) {
+        ShotManager.RemoveShot(shotID);
+        void *buf, *bufStart = getDirectMessageBuffer();
+        buf = nboPackUByte(bufStart, ServerPlayer);
+        buf = nboPackShort(buf, ShotManager.FindShot(shotID)->Info.shot.id);
+        buf = nboPackUShort(buf, explode ? 0 : 1);
+        broadcastMessage(MsgShotEnd, (char*)buf-(char*)bufStart, bufStart);
+        return true;
+    }
+    else
+        return false;
+}
+
+
+// Includes the lifetime of a shot
+BZF_API uint32_t bz_fireServerShotAsPlayer(const char* shotType,
+    float origin[3], float vector[3],
+    const char* flagAbbr, int playerID,
+    float lifetime, int targetPlayerId)
+{
+    if (!shotType || !origin)
+        return INVALID_SHOT_GUID;
+
+    if (lifetime == -1)
+        lifetime = BZDB.eval(StateDatabase::BZDB_RELOADTIME);
+
+    std::string flagType = shotType;
+    FlagTypeMap &flagMap = FlagType::getFlagMap();
+
+    if (flagMap.find(flagType) == flagMap.end())
+        return INVALID_SHOT_GUID;
+
+    FlagType *flag = flagMap.find(flagType)->second;
+
+    uint32_t shotGUID = world->getWorldWeapons().fireShot(
+        flag,
+        lifetime,
+        origin,
+        vector,
+        nullptr,
+        (TeamColor)convertTeam(bz_getPlayerTeam(playerID)),
+        targetPlayerId
+    );
+
+    bz_setShotMetaData(shotGUID, "flag", flagAbbr);
+	bz_setShotMetaData(shotGUID, "playerID", playerID);
+
+    return shotGUID;
+}
+
+BZF_API float bz_randFloatBetween(float a, float b)
+{
+    float random = ((float) rand()) / (float) RAND_MAX;
+    float diff = b - a;
+    float r = random * diff;
+    return a + r;
+}
+
+BZF_API void bz_forcePlayerSpawn(int playerID)
+{
+    forcePlayerSpawn(playerID);
+    GameKeeper::Player *playerData = GameKeeper::Player::getPlayerByIndex(playerID);
+    playerData->player.setAlive();
+}
+
+BZF_API bool bz_isTeamFlag (const char* flagAbbr)
+{
+    if (flagAbbr)
+        return (strcmp(flagAbbr, "R*") == 0 ||
+                strcmp(flagAbbr, "G*") == 0 ||
+                strcmp(flagAbbr, "B*") == 0 ||
+                strcmp(flagAbbr, "P*") == 0);
+    else
+        return false;
+}
+
+BZF_API void bz_sendToTeamsExcept(bz_eTeamType _team, const char* msg, int from)
+{
+    if (_team && msg)
+    {
+        if (_team != eRedTeam)
+            bz_sendTextMessage(from, eRedTeam, msg);
+        if (_team != eGreenTeam)
+            bz_sendTextMessage(from, eGreenTeam, msg);
+        if (_team != ePurpleTeam)
+            bz_sendTextMessage(from, ePurpleTeam, msg);
+        if (_team != eBlueTeam)
+            bz_sendTextMessage(from, eBlueTeam, msg);
+    }
+}
+
+BZF_API bz_eTeamType bz_getTeamFromFlag(const char* flagAbbr)
+{
+    if (flagAbbr)
+    {
+        if      (strcmp(flagAbbr, "R*") == 0) return eRedTeam;
+        else if (strcmp(flagAbbr, "G*") == 0) return eGreenTeam;
+        else if (strcmp(flagAbbr, "B*") == 0) return eBlueTeam;
+        else if (strcmp(flagAbbr, "P*") == 0) return ePurpleTeam;
+    }
+    return eNoTeam;
+}
+
+BZF_API const char* bz_eTeamTypeLiteral(bz_eTeamType _team)
+{
+    switch (_team)
+    {
+        case eNoTeam:
+            return "No";
+
+        case eRogueTeam:
+            return "Rogue";
+
+        case eRedTeam:
+            return "Red";
+
+        case eGreenTeam:
+            return "Green";
+
+        case eBlueTeam:
+            return "Blue";
+
+        case ePurpleTeam:
+            return "Purple";
+
+        case eRabbitTeam:
+            return "Rabbit";
+
+        case eHunterTeam:
+            return "Hunter";
+
+        case eObservers:
+            return "Observer";
+
+        case eAdministrators:
+            return "Administrator";
+
+        default:
+            return "No";
+    }
+}
+
+BZF_API bool bz_changeTeam(int playerID, bz_eTeamType _team)
+{
+    GameKeeper::Player *playerData = GameKeeper::Player::getPlayerByIndex(playerID);
+
+    if (!playerData)
+    {
+        bz_debugMessagef(2, "bzToolkit -> bztk_changeTeam() :: Player ID %d not found.", playerID);
+        return false;
+    }
+    else if ((_team != eRogueTeam)  && (_team != eRedTeam)  &&
+             (_team != eGreenTeam)  && (_team != eBlueTeam) &&
+             (_team != ePurpleTeam) && (_team != eObservers))
+    {
+        bz_debugMessagef(2, "bzToolkit -> bztk_changeTeam() :: Warning! Players cannot be swapped to the %s team through this function.", bz_eTeamTypeLiteral(_team));
+        return false;
+    }
+    else if (bz_getTeamPlayerLimit(_team) <= 0)
+    {
+        bz_debugMessagef(2, "bzToolkit -> bztk_changeTeam() :: Warning! The %s team does not exist on this server.");
+        return false;
+    }
+
+    // No need to change them if they're in the same team they're being moved to
+    if (playerData->player.getTeam() == eTeamTypeToTeamColor(_team))
+    {
+        return false;
+    }
+
+    // If the player is being moved to the observer team, we need to kill them so they can't pause/shoot while in observer
+    if (_team == eObservers)
+    {
+        bz_killPlayer(playerID, false);
+        playerData->player.setDead();
+    }
+
+    removePlayer(playerID);
+
+    // If the player is currently an observer, we need to prevent them from getting idle kicked. A player's idle time can only
+    // be updated when they're alive and they can only spawn when they're marked as dead.
+    if (playerData->player.getTeam() == ObserverTeam)
+    {
+        playerData->player.setAlive();
+        playerData->player.updateIdleTime();
+        playerData->player.setDead();
+    }
+
+    playerData->player.setTeam(eTeamTypeToTeamColor(_team));
+
+    addPlayer(playerData);
+    sendPlayerInfo();
+    sendIPUpdate(-1, playerID);
+
+    if (bz_getTeamCount(_team) == 1)
+        bz_resetFlag((int) _team - 1);
+
+    return true;
+}
+
+BZF_API const char* bz_getFlagFromTeam(bz_eTeamType _team)
+{
+    switch (_team)
+    {
+        case eRedTeam:
+            return "R*";
+
+        case eGreenTeam:
+            return "G*";
+
+        case eBlueTeam:
+            return "B*";
+
+        case ePurpleTeam:
+            return "P*";
+
+        default:
+            return "";
+    }
+}
+
+BZF_API bz_ApiString bz_getPlayerFlagAbbr(int playerID)
+{
+    bz_ApiString abbr = "";
+
+    if (bz_getPlayerFlag(playerID))
+        abbr = bz_getPlayerFlag(playerID);
+
+    return abbr;
+}
+
+BZF_API bool bz_isPlayer(int playerID)
+{
+    return bz_getPlayerByIndex(playerID);
+}
+
+BZF_API bool bz_isValidSpawnPoint(float* pos)
+{
+    return DropGeometry::isValidSpawn(pos, 2, 1);
+}
+
+BZF_API float* bz_getServerShotPos(uint32_t shotID)
+{
+    if (ShotManager.FindShot(shotID))
+    {
+        float* pos = new float[3];
+
+
+        //pos[0] = ShotManager.FindShot(shotID)->LastUpdatePosition.x;
+        //pos[1] = ShotManager.FindShot(shotID)->LastUpdatePosition.y;
+        //pos[2] = ShotManager.FindShot(shotID)->LastUpdatePosition.z;
+
+
+        pos = ShotManager.FindShot(shotID)->Info.shot.pos;
+        return pos;
+    }
+    else
+        return NULL;
+}
+
+BZF_API bz_eTeamType bz_getUnbalancedTeam(bz_eTeamType team1, bz_eTeamType team2)
+{
+    bz_eTeamType team;
+
+    if (bz_getTeamCount(team1) < bz_getTeamCount(team2))
+        team = team1;
+    else if (bz_getTeamCount(team1) > bz_getTeamCount(team2))
+        team = team2;
+    else
+        team = bz_randFloatBetween(0,1) < 0.5 ? team1 : team2;
+
+    return team;
+}
+
+BZF_API void bz_setServerVariableForPlayer(int playerID, const std::string& key, const std::string& value)
+{
+    void *bufStart = getDirectMessageBuffer();
+    void *buf = nboPackUShort(bufStart, 1);
+    buf = nboPackUByte(buf, key.length());
+    buf = nboPackString(buf, key.c_str(), key.length());
+    buf = nboPackUByte(buf, value.length());
+    buf = nboPackString(buf, value.c_str(), value.length());
+    const int len = (char*)buf - (char*)bufStart;
+    directMessage(playerID, MsgSetVar, len, bufStart);
+}
+
+BZF_API bool bz_isNaturalBadFlag(const char* flagAbbr)
+{
+    const char* badFlags[14] = { "B", "BY", "CB", "FO", "JM", "LT", "M", "NJ", "O", "RC", "RO", "RT", "TR", "WA" };
+
+    for (int i = 0; i < 14; i++)
+        if (strcmp(flagAbbr, badFlags[i]) == 0)
+            return true;
+
+    return false;
+}
+
+BZF_API bz_eTeamType bz_stringToTeamType(std::string teamColor)
+{
+    teamColor = bz_tolower(teamColor.c_str());
+
+    if (teamColor == "rogue")
+    {
+        return eRogueTeam;
+    }
+    else if (teamColor == "red")
+    {
+        return eRedTeam;
+    }
+    else if (teamColor == "green")
+    {
+        return eGreenTeam;
+    }
+    else if (teamColor == "blue")
+    {
+        return eBlueTeam;
+    }
+    else if (teamColor == "purple")
+    {
+        return ePurpleTeam;
+    }
+    else if (teamColor == "rabbit")
+    {
+        return eRabbitTeam;
+    }
+    else if (teamColor == "hunter")
+    {
+        return eHunterTeam;
+    }
+    else if (teamColor == "observer")
+    {
+        return eObservers;
+    }
+    else if (teamColor == "administrator")
+    {
+        return eAdministrators;
+    }
+    else
+    {
+        return eNoTeam;
+    }
+}
+
+std::queue<std::tuple<double, int>> delayedFlagResetQueue;
+
+BZF_API bool bz_delayedFlagReset(int flagID)
+{
+    bool valid = true;
+
+    if (bz_pluginExists("Delayed Flag Reset Manager"))
+    {
+        std::tuple<double, int> data(bz_getCurrentTime(), flagID);
+        delayedFlagResetQueue.push(data);
+    }
+    else
+    {
+        bz_debugMessage(0, "Error: trying to use the bz_delayedFlagReset method without the 'Delayed Flag Reset Manager' plugin loaded.");
+    }
+
+    return valid;
+}
+
+
+/*
+BZF_API std::string bz_ltrim (std::string _str, const char* trim = " ")
+{
+    auto pos = _str.find_first_not_of(trim);
+
+    if (pos == std::string::npos)
+    {
+        return _str;
+    }
+
+    return _str.substr(pos, _str.length());
+}
+
+BZF_API std::string bz_rtrim (std::string _str, const char* trim = " ")
+{
+    auto pos = _str.find_last_not_of(trim);
+
+    if (pos == std::string::npos)
+    {
+        return _str;
+    }
+
+    return _str.substr(0, pos);
+}
+
+BZF_API std::string bz_trim (std::string _str, const char* trim = " ")
+{
+    return (bz_rtrim(bz_ltrim(_str, trim), trim));
+}
+
+// Plugin Naming + Versioning
+BZF_API const char* bztk_pluginName (std::string _name, int _major, int _minor, int _rev, int _build)
+{
+    std::ostringstream pluginBuildStream;
+    pluginBuildStream << _name << " " << _major << "." << _minor << "." << _rev << " (" << _build << ")";
+    return pluginBuildStream.str().c_str();
+}
+
+void bztk_forcePlayerSpawn (int playerID)
+{
+    forcePlayerSpawn(playerID);
+}
+
+
+
+const char* bztk_getFlagFromTeam(bz_eTeamType _team)
+{
+    switch (_team)
+    {
+        case eRedTeam:
+            return "R*";
+
+        case eGreenTeam:
+            return "G*";
+
+        case eBlueTeam:
+            return "B*";
+
+        case ePurpleTeam:
+            return "P*";
+
+        default:
+            return "";
+    }
+}
+
+bz_eTeamType bztk_getTeamFromFlag(std::string flagAbbr)
+{
+    if (bztk_isTeamFlag(flagAbbr))
+    {
+        if      (flagAbbr == "R*") return eRedTeam;
+        else if (flagAbbr == "G*") return eGreenTeam;
+        else if (flagAbbr == "B*") return eBlueTeam;
+        else if (flagAbbr == "P*") return ePurpleTeam;
+    }
+
+    return eNoTeam;
+}
+
+void bztk_killAll(bz_eTeamType _team = eNoTeam, bool spawnOnBase = false, int killerID = -1, std::string flagID = NULL)
+{
+    // Create a list of players
+    std::unique_ptr<bz_APIIntList> playerList(bz_getPlayerIndexList());
+
+    // Be sure the playerlist exists
+    if (playerList)
+    {
+        // Loop through all of the players' callsigns
+        for (unsigned int i = 0; i < playerList->size(); i++)
+        {
+            // If the team isn't specified, then kill all of the players
+            if (_team == eNoTeam)
+            {
+                bz_killPlayer(playerList->get(i), spawnOnBase, killerID, flagID.c_str());
+            }
+            // Kill only the players belonging to the specified team
+            else if (bz_getPlayerTeam(playerList->get(i)) == _team)
+            {
+                bz_killPlayer(playerList->get(i), spawnOnBase, killerID, flagID.c_str());
+            }
+        }
+    }
+}
+
+int bztk_getPlayerCount(bool observers = false)
+{
+    return (bz_getTeamCount(eRogueTeam) +
+            bz_getTeamCount(eRedTeam) +
+            bz_getTeamCount(eGreenTeam) +
+            bz_getTeamCount(eBlueTeam) +
+            bz_getTeamCount(ePurpleTeam) +
+            bz_getTeamCount(eRabbitTeam) +
+            bz_getTeamCount(eHunterTeam) +
+            (observers ? bz_getTeamCount(eObservers) : 0));
+}
+
+bool bztk_anyPlayers(bool observers = false)
+{
+    return (bool)(bztk_getPlayerCount(observers));
+}
+
+const char* bztk_eTeamTypeLiteral(bz_eTeamType _team)
+{
+    switch (_team)
+    {
+        case eNoTeam:
+            return "No";
+
+        case eRogueTeam:
+            return "Rogue";
+
+        case eRedTeam:
+            return "Red";
+
+        case eGreenTeam:
+            return "Green";
+
+        case eBlueTeam:
+            return "Blue";
+
+        case ePurpleTeam:
+            return "Purple";
+
+        case eRabbitTeam:
+            return "Rabbit";
+
+        case eHunterTeam:
+            return "Hunter";
+
+        case eObservers:
+            return "Observer";
+
+        case eAdministrators:
+            return "Administrator";
+
+        default:
+            return "No";
+    }
+}
+
+bz_eTeamType bztk_eTeamType(std::string teamColor)
+{
+    teamColor = bz_tolower(teamColor.c_str());
+
+    if (teamColor == "rogue")
+    {
+        return eRogueTeam;
+    }
+    else if (teamColor == "red")
+    {
+        return eRedTeam;
+    }
+    else if (teamColor == "green")
+    {
+        return eGreenTeam;
+    }
+    else if (teamColor == "blue")
+    {
+        return eBlueTeam;
+    }
+    else if (teamColor == "purple")
+    {
+        return ePurpleTeam;
+    }
+    else if (teamColor == "rabbit")
+    {
+        return eRabbitTeam;
+    }
+    else if (teamColor == "hunter")
+    {
+        return eHunterTeam;
+    }
+    else if (teamColor == "observer")
+    {
+        return eObservers;
+    }
+    else if (teamColor == "administrator")
+    {
+        return eAdministrators;
+    }
+    else
+    {
+        return eNoTeam;
+    }
+}
+
+void bztk_foreachPlayer(void (*function)(int))
+{
+    std::shared_ptr<bz_APIIntList> playerList(bz_getPlayerIndexList());
+
+    for (unsigned int i = 0; i < playerList->size(); i++)
+    {
+        (*function)(playerList->get(i));
+    }
+}
+
+bz_BasePlayerRecord* bztk_getPlayerByBZID(const char* BZID)
+{
+    std::shared_ptr<bz_APIIntList> playerList(bz_getPlayerIndexList());
+
+    for (unsigned int i = 0; i < playerList->size(); i++)
+    {
+        if (bz_getPlayerByIndex(playerList->get(i))->bzID == std::string(BZID))
+        {
+            int playerID = playerList->get(i);
+
+            return bz_getPlayerByIndex(playerID);
+        }
+    }
+
+    return NULL;
+}
+
+bool bztk_changeTeam(int playerID, bz_eTeamType _team)
+{
+    GameKeeper::Player *playerData = GameKeeper::Player::getPlayerByIndex(playerID);
+
+    if (!playerData)
+    {
+        bz_debugMessagef(2, "bzToolkit -> bztk_changeTeam() :: Player ID %d not found.", playerID);
+        return false;
+    }
+    else if ((_team != eRogueTeam)  && (_team != eRedTeam)  &&
+             (_team != eGreenTeam)  && (_team != eBlueTeam) &&
+             (_team != ePurpleTeam) && (_team != eObservers))
+    {
+        bz_debugMessagef(2, "bzToolkit -> bztk_changeTeam() :: Warning! Players cannot be swapped to the %s team through this function.", bztk_eTeamTypeLiteral(_team));
+        return false;
+    }
+    else if (bz_getTeamPlayerLimit(_team) <= 0)
+    {
+        bz_debugMessagef(2, "bzToolkit -> bztk_changeTeam() :: Warning! The %s team does not exist on this server.");
+        return false;
+    }
+
+    // No need to change them if they're in the same team they're being moved to
+    if (playerData->player.getTeam() == eTeamTypeToTeamColor(_team))
+    {
+        return false;
+    }
+
+    // If the player is being moved to the observer team, we need to kill them so they can't pause/shoot while in observer
+    if (_team == eObservers)
+    {
+        bz_killPlayer(playerID, false);
+        playerData->player.setDead();
+    }
+
+    removePlayer(playerID, "Switching Teams");
+
+    // If the player is currently an observer, we need to prevent them from getting idle kicked. A player's idle time can only
+    // be updated when they're alive and they can only spawn when they're marked as dead.
+    if (playerData->player.getTeam() == ObserverTeam)
+    {
+        playerData->player.setAlive();
+        playerData->player.updateIdleTime();
+        playerData->player.setDead();
+    }
+
+    playerData->player.setTeam(eTeamTypeToTeamColor(_team));
+
+    addPlayer(playerData);
+    sendPlayerInfo();
+    sendIPUpdate(-1, playerID);
+
+    return true;
+}
+
+bz_APIIntList* bztk_getTeamPlayerIndexList(bz_eTeamType _team)
+{
+    std::shared_ptr<bz_APIIntList> playerList(bz_getPlayerIndexList());
+
+    bz_APIIntList* resp = bz_newIntList();
+
+    for (unsigned int i = 0; i < playerList->size(); i++)
+    {
+        if (bz_getPlayerTeam(playerList->get(i)) == _team)
+        {
+            resp->push_back(playerList->get(i));
+        }
+    }
+
+    return resp;
+}
+
+bool bztk_isValidPlayerID(int playerID)
+{
+    return bz_getPlayerByIndex(playerID);
+}
+
+int bztk_randomPlayer(bz_eTeamType _team = eNoTeam)
+{
+    srand(time(NULL));
+
+    if (_team == eNoTeam)
+    {
+        if (bztk_anyPlayers())
+        {
+            bz_APIIntList *playerlist = bz_getPlayerIndexList();
+            int picked = (*playerlist)[rand()%playerlist->size()];
+            bz_deleteIntList(playerlist);
+
+            return picked;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+    else
+    {
+        if (bz_getTeamCount(_team) > 0)
+        {
+            int picked = 0;
+            bz_APIIntList* playerlist = bz_getPlayerIndexList();
+
+            while (true)
+            {
+                picked = rand() % playerlist->size();
+
+                if (bz_getPlayerTeam(picked) == _team)
+                {
+                    break;
+                }
+            }
+
+            bz_deleteIntList(playerlist);
+
+            return picked;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+}
+
+bool bztk_registerCustomBoolBZDB(const char* bzdbVar, bool value, int perms = 0, bool persistent = false)
+{
+    if (!bz_BZDBItemExists(bzdbVar))
+    {
+        bz_setBZDBBool(bzdbVar, value, perms, persistent);
+        return value;
+    }
+
+    return bz_getBZDBBool(bzdbVar);
+}
+
+double bztk_registerCustomDoubleBZDB(const char* bzdbVar, double value, int perms = 0, bool persistent = false)
+{
+    if (!bz_BZDBItemExists(bzdbVar))
+    {
+        bz_setBZDBDouble(bzdbVar, value, perms, persistent);
+        return value;
+    }
+
+    return bz_getBZDBDouble(bzdbVar);
+}
+
+int bztk_registerCustomIntBZDB(const char* bzdbVar, int value, int perms = 0, bool persistent = false)
+{
+    if (!bz_BZDBItemExists(bzdbVar))
+    {
+        bz_setBZDBInt(bzdbVar, value, perms, persistent);
+        return value;
+    }
+
+    return bz_getBZDBInt(bzdbVar);
+}
+
+const char* bztk_registerCustomStringBZDB(const char* bzdbVar, const char* value, int perms = 0, bool persistent = false)
+{
+    if (!bz_BZDBItemExists(bzdbVar))
+    {
+        bz_setBZDBString(bzdbVar, value, perms, persistent);
+        return value;
+    }
+
+    return bz_getBZDBString(bzdbVar).c_str();
+}
+
+template<typename Iter, typename RandomGenerator>
+Iter bztk_select_randomly(Iter start, Iter end, RandomGenerator& g)
+{
+    std::uniform_int_distribution<> dis(0, (int)(std::distance(start, end) - 1));
+    std::advance(start, dis(g));
+
+    return start;
+}
+
+template<typename Iter>
+Iter bztk_select_randomly(Iter start, Iter end)
+{
+    static std::random_device rd;
+    static std::mt19937 gen(rd());
+
+    return bztk_select_randomly(start, end, gen);
+}
+
+void bztk_fileToVector (const char* filePath, std::vector<std::string> &storage, bool enableComments = false, bool includeEmptyLines = true)
+{
+    std::ifstream file(filePath);
+    std::string str;
+
+    if (!file.good())
+    {
+        bz_debugMessagef(1, "bztk_fileToVector() :: File not found: %s", filePath);
+        return;
+    }
+
+    while (std::getline(file, str))
+    {
+        str = bztk_ltrim(str);
+
+        if (enableComments && !str.empty() && str.at(0) == '#')
+        {
+            continue;
+        }
+
+        if (!includeEmptyLines && str.empty())
+        {
+            continue;
+        }
+
+        storage.push_back(str);
+    }
+}
+
+void bztk_sendToPlayers (bz_eTeamType _team, std::string message)
+{
+    bz_APIIntList *playerList = bz_newIntList();
+    bz_getPlayerIndexList(playerList);
+
+    for (unsigned int i = 0; i < playerList->size(); i++)
+    {
+        int playerID = playerList->get(i);
+
+        if (bz_getPlayerByIndex(playerID)->team == _team)
+        {
+            bz_sendTextMessagef(playerID, playerID, message.c_str());
+        }
+    }
+
+    bz_deleteIntList(playerList);
+}
+*/
+
 
 // Local Variables: ***
 // mode: C++ ***

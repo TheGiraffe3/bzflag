@@ -64,6 +64,12 @@ static bool dropIt(float pos[3], float minZ, float maxZ,
 
 /******************************************************************************/
 
+bool DropGeometry::isValidSpawn(const float pos[3], float radius, float height)
+{
+    return isValidClearance(pos, radius, height, -1);
+}
+
+
 bool DropGeometry::dropPlayer(float pos[3], float minZ, float maxZ)
 {
     // fudge-it to avoid spawn stickiness on obstacles

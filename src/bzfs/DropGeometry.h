@@ -13,11 +13,11 @@
 #ifndef __DROP_GEOMETRY_H__
 #define __DROP_GEOMETRY_H__
 
-// 1st
-#include "common.h"
 
 class WorldInfo;
 
+static bool isValidClearance(const float pos[3], float radius,
+                             float height, int team);
 
 namespace DropGeometry
 {
@@ -25,6 +25,7 @@ namespace DropGeometry
 bool dropFlag (float pos[3], float minZ, float maxZ);
 bool dropPlayer (float pos[3], float minZ, float maxZ);
 bool dropTeamFlag (float pos[3], float minZ, float maxZ, int team);
+bool isValidSpawn(const float pos[3], float radius, float height);
 }
 
 

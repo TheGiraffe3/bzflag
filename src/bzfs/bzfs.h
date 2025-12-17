@@ -222,6 +222,14 @@ void AddPlayer(int playerIndex, GameKeeper::Player *playerData);
 void recalcAllHandicaps();
 void broadcastHandicaps(int toPlayer = -1);
 
+/* CUSTOM STUFF */
+
+TeamColor eTeamTypeToTeamColor (bz_eTeamType _team);
+void fixTeamCountForSwitch();
+void removePlayer(int playerIndex);
+void addPlayer(GameKeeper::Player *playerData);
+void forcePlayerSpawn(int playerID);
+
 #endif
 
 // Local Variables: ***

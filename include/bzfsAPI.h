@@ -21,6 +21,8 @@
 #include <vector>
 #include <cstdlib>
 #include <stdint.h>
+#include <queue>
+#include <tuple>
 
 
 /* DO NOT INCLUDE ANY OTHER HEADERS IN THIS FILE */
@@ -1719,9 +1721,11 @@ BZF_API bool bz_sentFetchResMessage ( int playerID,  const char* URL );
 /*DEPRECATED*/ BZF_API int bz_fireWorldGM ( int targetPlayerID, float lifetime, float *pos, float tilt, float direction,
         float dt, bz_eTeamType shotTeam = eRogueTeam);
 
-// new server shot API
+// Grue: This function has been modified to include the 'lifetime' variable.
 BZF_API uint32_t bz_fireServerShot(const char* shotType, float origin[3], float vector[3],
                                    bz_eTeamType color = eRogueTeam, int targetPlayerId = -1);
+
+
 
 // will be removed in next breaking version after 2.4.x
 /*DEPRECATED*/ BZF_API uint32_t bz_getShotMetaData (int fromPlayer, int shotID, const char* name);
@@ -2438,6 +2442,36 @@ BZF_API void bz_SetFiltering(bool chat, bool callsigns);
 BZF_API void bz_LoadFilterDefFile(const char* fileName);
 BZF_API void bz_AddFilterItem(const char* word, const char* expression = NULL);
 BZF_API void bz_ClearFilter(void);
+
+/*
+ * Grue: custom methods start here (aside from the modification of bz_fireServerShot)
+*/
+
+BZF_API bool bz_endServerShot(uint32_t shotID, bool explode = true);
+BZF_API uint32_t bz_fireServerShotAsPlayer(const char* shotType, float origin[3], float vector[3],
+                                   const char* flagAbbr, int playerID,
+                                   float lifetime = -1,
+                                   int targetPlayerId = -1);
+BZF_API float bz_randFloatBetween(float a, float b);
+BZF_API void bz_forcePlayerSpawn(int playerID);
+BZF_API bool bz_isTeamFlag(const char* flagAbbr);
+BZF_API void bz_sendToTeamsExcept(bz_eTeamType _team, const char* msg, int from = BZ_SERVER);
+BZF_API bz_eTeamType bz_getTeamFromFlag(const char* flagAbbr);
+BZF_API const char* bz_eTeamTypeLiteral(bz_eTeamType _team);
+BZF_API bool bz_changeTeam(int playerID, bz_eTeamType _team);
+BZF_API const char* bz_getFlagFromTeam(bz_eTeamType _team);
+BZF_API bz_ApiString bz_getPlayerFlagAbbr(int playerID);
+BZF_API bool bz_isPlayer(int playerID);
+BZF_API bool bz_isValidSpawnPoint(float* pos);
+BZF_API float* bz_getServerShotPos(uint32_t shotID);
+BZF_API bz_eTeamType bz_getUnbalancedTeam(bz_eTeamType, bz_eTeamType);
+BZF_API void bz_setServerVariableForPlayer(int playerID, const std::string& key, const std::string& value);
+BZF_API bool bz_isNaturalBadFlag(const char* flagAbbr);
+BZF_API bz_eTeamType bz_stringToTeamType(std::string teamColor);
+
+BZF_API bool bz_delayedFlagReset(int flagID);
+extern std::queue<std::tuple<double, int>> delayedFlagResetQueue; // time, flagID
+
 
 #endif //_BZFS_API_H_
 
