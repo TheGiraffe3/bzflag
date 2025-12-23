@@ -8,6 +8,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <vector>
+#include <map>
+#include <set>
 
 float spawnLocation[256][5] = {0};
 int playerPlatform[256] = {0};
@@ -69,6 +72,28 @@ const float platformZones[14][6] = {
 	{0, 0, 0, 0, 0, 0}, // 13
 };
 
+class TeleportZone : public bz_CustomZoneObject
+{
+public:
+	TeleportZone() : bz_CustomZoneObject()
+	{
+		zoneName = "";
+		teleportTo = "";
+	}
+
+	std::string zoneName;
+	std::string teleportTo;
+};
+
+std::vector<TeleportZone> teleportZones;
+std::map<std::string, int> zoneNameMap;
+
+struct PlayerZoneState {
+	std::set<int> currentZones;
+};
+
+std::map<int, PlayerZoneState> playerZoneStates;
+
 int getRandomNumber(int min, int max)
 {
 	return min + (std::rand() % (max - min + 1));
@@ -114,7 +139,7 @@ bool playerOnPlatform(int playerID, const char* platformName)
 	return (playerPlatform[playerID] == platformNumber);
 }
 
-class StationCollaborationPlugin : public bz_Plugin, public bz_CustomSlashCommandHandler
+class StationCollaborationPlugin : public bz_Plugin, public bz_CustomSlashCommandHandler, public bz_CustomMapObjectHandler
 {
 public:
 	virtual const char* Name();
@@ -122,6 +147,7 @@ public:
 	virtual void Cleanup();
 	virtual void Event(bz_EventData* eventData);
 	virtual bool SlashCommand(int playerID, bz_ApiString command, bz_ApiString /*message*/, bz_APIStringList *params);
+	virtual bool MapObject(bz_ApiString object, bz_CustomMapObjectInfo* data);
 };
 
 BZ_PLUGIN(StationCollaborationPlugin)
@@ -141,6 +167,8 @@ void StationCollaborationPlugin::Init(const char*)
 	bz_registerCustomSlashCommand("teleport", this);
 	bz_registerCustomSlashCommand("tp", this);
 
+	bz_registerCustomMapObject("TELEPORTZONE", this);
+
 	std::srand(static_cast<unsigned int>(std::time(nullptr)));
 }
 
@@ -150,6 +178,8 @@ void StationCollaborationPlugin::Cleanup()
 
 	bz_removeCustomSlashCommand("teleport");
 	bz_removeCustomSlashCommand("tp");
+
+	bz_removeCustomMapObject("TELEPORTZONE");
 }
 
 void StationCollaborationPlugin::Event(bz_EventData* eventData)
@@ -178,6 +208,8 @@ void StationCollaborationPlugin::Event(bz_EventData* eventData)
 			bz_PlayerJoinPartEventData_V1* data = (bz_PlayerJoinPartEventData_V1*)eventData;
 
 			playerPlatform[data->playerID] = 0;
+
+			playerZoneStates.erase(data->playerID);
 		}
 		break;
 
@@ -188,6 +220,46 @@ void StationCollaborationPlugin::Event(bz_EventData* eventData)
 
 			int currentPlatform = getPlatform(pr->lastKnownState.pos);
 			playerPlatform[data->playerID] = currentPlatform;
+
+			PlayerZoneState& playerState = playerZoneStates[data->playerID];
+			std::set<int> newZones;
+
+			for (size_t i = 0; i < teleportZones.size(); i++)
+			{
+				if (teleportZones[i].pointInZone(pr->lastKnownState.pos))
+				{
+					newZones.insert(i);
+
+					if (playerState.currentZones.find(i) == playerState.currentZones.end())
+					{
+						std::map<std::string, int>::iterator it = zoneNameMap.find(teleportZones[i].teleportTo);
+
+						if (it != zoneNameMap.end())
+						{
+							int destIndex = it->second;
+							TeleportZone& destZone = teleportZones[destIndex];
+
+							spawnLocation[data->playerID][0] = (destZone.xMax + destZone.xMin) / 2.0f;
+							spawnLocation[data->playerID][1] = (destZone.yMax + destZone.yMin) / 2.0f;
+							spawnLocation[data->playerID][2] = (destZone.zMax + destZone.zMin) / 2.0f;
+							spawnLocation[data->playerID][3] = pr->lastKnownState.rotation;
+							spawnLocation[data->playerID][4] = 1; // tell it we want it to change the spawn location next time
+
+							bz_killPlayer(data->playerID, false, -1, NULL);
+							bz_incrementTeamLosses(pr->team, -1);
+							bz_incrementPlayerLosses(data->playerID, -1);
+							playerAlive(data->playerID);
+
+							newZones.insert(destIndex);
+						}
+						break;
+					}
+				}
+			}
+
+			playerState.currentZones = newZones;
+
+			bz_freePlayerRecord(pr);
 		}
 		break;
 
@@ -274,4 +346,47 @@ bool StationCollaborationPlugin::SlashCommand(int playerID, bz_ApiString command
 	}
 
 	return false;
+}
+
+bool StationCollaborationPlugin::MapObject(bz_ApiString object, bz_CustomMapObjectInfo* data)
+{
+	if (!data || object != "TELEPORTZONE")
+	{
+		return false;
+	}
+
+	TeleportZone teleportZone;
+	teleportZone.handleDefaultOptions(data);
+
+	for (unsigned int i = 0; i < data->data.size(); i++)
+	{
+		std::string line = data->data.get(i);
+
+		bz_APIStringList nubs;
+		nubs.tokenize(line.c_str(), " ", 0, true);
+
+		if (nubs.size() > 0)
+		{
+			std::string key = bz_toupper(nubs.get(0).c_str());
+
+			if (key == "NAME" && nubs.size() > 1)
+			{
+				teleportZone.zoneName = nubs.get(1).c_str();
+			}
+			else if (key == "TELEPORTTO" && nubs.size() > 1)
+			{
+				teleportZone.teleportTo = nubs.get(1).c_str();
+			}
+		}
+	}
+
+	int zoneIndex = teleportZones.size();
+	teleportZones.push_back(teleportZone);
+
+	if (!teleportZone.zoneName.empty())
+	{
+		zoneNameMap[teleportZone.zoneName] = zoneIndex;
+	}
+
+	return true;
 }
