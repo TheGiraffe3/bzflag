@@ -1,113 +1,168 @@
 #include "bzfsAPI.h"
 
+#include <chrono>
+#include <random>
+
 class SneakPlugin : public bz_Plugin, public bz_CustomSlashCommandHandler
 {
-    virtual const char* Name ();
-    virtual void Init (const char*);
-    virtual void Cleanup ();
-    virtual void Event (bz_EventData* eventData);
-    virtual bool SlashCommand (int playerID, bz_ApiString command, bz_ApiString /*message*/, bz_APIStringList *params);
+	virtual const char* Name ();
+	virtual void Init (const char*);
+	virtual void Cleanup ();
+	virtual void Event (bz_EventData* eventData);
+	virtual bool SlashCommand (int playerID, bz_ApiString command, bz_ApiString /*message*/, bz_APIStringList *params);
 
-    int SneakPluginAttack[256];
+	int sneakAttack[256];
+
+	std::mt19937 gen;
+	std::uniform_int_distribution<int> random_rotation;
+	std::uniform_int_distribution<int> random_x;
+	std::uniform_int_distribution<int> random_y;
 };
 
 BZ_PLUGIN(SneakPlugin)
 
 const char* SneakPlugin::Name ()
 {
-    return "Sneak Plugin";
+	return "Sneak Plugin";
 }
 
 void SneakPlugin::Init (const char*)
 {
-    Register(bz_eGetPlayerSpawnPosEvent);
-    Register(bz_ePlayerPartEvent);
+	Register(bz_eGetPlayerSpawnPosEvent);
+	Register(bz_ePlayerPartEvent);
 
-    bz_registerCustomSlashCommand("sneak", this);
+	bz_registerCustomSlashCommand("sneak", this);
 
-    // Range-based for loop syntax; a C++11 feature
-    for (int &i : SneakPluginAttack)
-    {
-        i = -1;
-    }
+	for (int &i : sneakAttack)
+	{
+		i = -1;
+	}
+
+	std::random_device rd;
+	auto seed = rd() ^ static_cast<unsigned int>(std::chrono::system_clock::now().time_since_epoch().count());
+	gen.seed(seed);
+
+	random_rotation = std::uniform_int_distribution<int>(-120, 120);
+	random_x = std::uniform_int_distribution<int>(-15, 15);
+	random_y = std::uniform_int_distribution<int>(-15, 15);
 }
 
 void SneakPlugin::Cleanup ()
 {
-    Flush();
+	Flush();
 
-    bz_removeCustomSlashCommand("sneak");
+	bz_removeCustomSlashCommand("sneak");
 }
 
 void SneakPlugin::Event (bz_EventData* eventData)
 {
-    switch (eventData->eventType)
-    {
-        case bz_eGetPlayerSpawnPosEvent:
-        {
-            bz_GetPlayerSpawnPosEventData_V1 *data = (bz_GetPlayerSpawnPosEventData_V1*)eventData;
+	switch (eventData->eventType)
+	{
+		case bz_eGetPlayerSpawnPosEvent:
+		{
+			bz_GetPlayerSpawnPosEventData_V1 *data = (bz_GetPlayerSpawnPosEventData_V1*)eventData;
 
-            if (SneakPluginAttack[data->playerID] >= 0)
-            {
-                bz_BasePlayerRecord *pr = bz_getPlayerByIndex(SneakPluginAttack[data->playerID]);
+			if (sneakAttack[data->playerID] >= 0 && data->handled == false)
+			{
+				bz_BasePlayerRecord *pr = bz_getPlayerByIndex(sneakAttack[data->playerID]);
 
-                if (!pr)
-                {
-                    bz_sendTextMessage(BZ_SERVER, data->playerID, "Your sneak attack failed! Victim not found.");
-                    return;
-                }
+				if (!pr)
+				{
+					bz_sendTextMessage(BZ_SERVER, data->playerID, "Your sneak attack failed! Victim not found.");
+					return;
+				}
 
-                data->handled = true;
-                data->pos[0] = pr->lastKnownState.pos[0];
-                data->pos[1] = pr->lastKnownState.pos[1];
-                data->pos[2] = pr->lastKnownState.pos[2];
-                data->rot = pr->lastKnownState.rotation;
+				bool valid = false;
+				float newPos[3];
 
-                bz_freePlayerRecord(pr);
+				do {
+					int x_diff = random_x(gen);
+					int y_diff = random_y(gen);
 
-                SneakPluginAttack[data->playerID] = -1;
-            }
-        }
-        break;
+					newPos[0] = pr->lastKnownState.pos[0] + x_diff;
+					newPos[1] = pr->lastKnownState.pos[1] + y_diff;
+					newPos[2] = pr->lastKnownState.pos[2] + 5;
 
-        case bz_ePlayerPartEvent:
-        {
-            bz_PlayerJoinPartEventData_V1 *data = (bz_PlayerJoinPartEventData_V1*)eventData;
+					if (bz_isValidSpawnPoint(newPos))
+						valid = true;
+				} while (valid == false);
 
-            SneakPluginAttack[data->playerID] = -1;
-        }
-        break;
+				if (valid == true)
+				{
+					int rot_diff = random_rotation(gen);
+					data->handled = true;
+					data->pos[0] = newPos[0];
+					data->pos[1] = newPos[1];
+					data->pos[2] = newPos[2];
+					data->rot = pr->lastKnownState.rotation + rot_diff;
+				}
 
-        default: break;
-    }
+				bz_freePlayerRecord(pr);
+
+				sneakAttack[data->playerID] = -1;
+			}
+		}
+		break;
+
+		case bz_ePlayerPartEvent:
+		{
+			bz_PlayerJoinPartEventData_V1 *data = (bz_PlayerJoinPartEventData_V1*)eventData;
+
+			sneakAttack[data->playerID] = -1;
+		}
+		break;
+
+		default:
+			break;
+	}
 }
 
 bool SneakPlugin::SlashCommand (int playerID, bz_ApiString command, bz_ApiString /*message*/, bz_APIStringList *params)
 {
-    if (command == "sneakplugin")
-    {
-        if (params->size() != 1)
-        {
-            bz_sendTextMessage(BZ_SERVER, playerID, "/sneakplugin <player ID|callsign>");
-            return true;
-        }
+	if (command == "sneak")
+	{
+		bz_BasePlayerRecord *runPR = bz_getPlayerByIndex(playerID);
 
-        const char* victimID = params->get(0).c_str();
+		if (runPR->spawned == false)
+		{
+			bz_sendTextMessage(BZ_SERVER, playerID, "You can only /sneak if you are alive!");
+			bz_freePlayerRecord(runPR);
+			return true;
+		}
 
-        bz_BasePlayerRecord *pr = bz_getPlayerBySlotOrCallsign(victimID);
+		if (params->size() != 1)
+		{
+			bz_sendTextMessage(BZ_SERVER, playerID, "/sneak <player ID|callsign>");
+			return true;
+		}
 
-        if (!pr)
-        {
-            bz_sendTextMessagef(BZ_SERVER, playerID, "player \"%s\" not found", victimID);
-        }
-        else
-        {
-            SneakPluginAttack[playerID] = pr->playerID;
-            bz_freePlayerRecord(pr);
-        }
+		const char* victimID = params->get(0).c_str();
 
-        return true;
-    }
+		bz_BasePlayerRecord *pr = bz_getPlayerBySlotOrCallsign(victimID);
 
-    return false;
+		if (!pr)
+		{
+			bz_sendTextMessagef(BZ_SERVER, playerID, "player %s not found", victimID);
+			return true;
+		}
+
+		if (pr->playerID == runPR->playerID)
+		{
+			bz_sendTextMessage(BZ_SERVER, playerID, "You cannot sneak yourself!");
+			return true;
+		}
+
+		else
+		{
+			sneakAttack[playerID] = pr->playerID;
+			bz_sendTextMessagef(BZ_SERVER, playerID, "Sneaking %s. Next time you die, you will spawn near their tank.", pr->callsign.c_str());
+			bz_sendTextMessagef(BZ_SERVER, pr->playerID, "Warning! %s is sneaking you!", runPR->callsign.c_str());
+			bz_freePlayerRecord(pr);
+			bz_freePlayerRecord(runPR);
+		}
+
+		return true;
+	}
+
+	return false;
 }
