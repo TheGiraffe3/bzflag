@@ -24,7 +24,7 @@ class Kamikaze : public bz_Plugin, bz_CustomSlashCommandHandler
 {
 public:
   virtual const char* Name() { return "Kamikaze"; }
-  virtual void Init(const char* config);
+  virtual void Init(const char*);
   virtual void Event(bz_EventData *eventData);
   virtual void Cleanup(void);
   virtual bool SlashCommand(int playerID, bz_ApiString command, bz_ApiString message, bz_APIStringList* params);
@@ -32,7 +32,7 @@ public:
 
 BZ_PLUGIN(Kamikaze)
 
-void Kamikaze::Init(const char* /*commandLine*/)
+void Kamikaze::Init(const char*)
 {
   bz_debugMessage(4, "Kamikaze plugin loaded");
 
