@@ -81,7 +81,7 @@ void SneakPlugin::Event (bz_EventData* eventData)
 
 					newPos[0] = pr->lastKnownState.pos[0] + x_diff;
 					newPos[1] = pr->lastKnownState.pos[1] + y_diff;
-					newPos[2] = pr->lastKnownState.pos[2] + 5;
+					newPos[2] = pr->lastKnownState.pos[2] + 2;
 
 					if (bz_isValidSpawnPoint(newPos))
 						valid = true;
