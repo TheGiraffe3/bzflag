@@ -125,7 +125,7 @@ bool givePoints::SlashCommand(int playerID, bz_ApiString command, bz_ApiString /
         }
         else
         {
-            bz_sendTextMessagef(BZ_SERVER, playerID, "%s does not exist to give points to", params->get(0));
+            bz_sendTextMessagef(BZ_SERVER, playerID, "That player does not exist to give points to.");
             bz_freePlayerRecord(toPlayer);
         }
 
