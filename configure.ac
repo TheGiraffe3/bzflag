@@ -1070,6 +1070,7 @@ AC_CONFIG_FILES([
 	plugins/serverSidePlayerSample/Makefile
 	plugins/shockwaveDeath/Makefile
         plugins/skyfireFlag/Makefile
+	plugins/spawnAtBase/Makefile
 	plugins/spawnFacingCenter/Makefile
 	plugins/superBulletBackwards/Makefile
 	plugins/superLaserFlag/Makefile

@@ -71,6 +71,7 @@ SUBDIRS = \
 	ShootingGallery \
 	skyfireFlag \
 	SneakPlugin \
+	spawnAtBase \
 	spawnFacingCenter \
 	SpawnSave \
 	StationCollaborationPlugin \
