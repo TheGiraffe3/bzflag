@@ -997,12 +997,15 @@ AC_CONFIG_FILES([
 	plugins/CustomZoneSample/Makefile
 	plugins/DeathBlossomFlag/Makefile
 	plugins/DemilitarizedZones/Makefile
+	plugins/HoldTheFlag/Makefile
 	plugins/Makefile
 	plugins/MessageZones/Makefile
+	plugins/Phoenix/Makefile
 	plugins/PointLessSelfKills/Makefile
 	plugins/RemoteDetonationFlag/Makefile
 	plugins/Retroreflector/Makefile
 	plugins/RogueGenocide/Makefile
+	plugins/SAMPLE_PLUGIN/Makefile
 	plugins/SandybeesServerAdministration/Makefile
 	plugins/ScoreRestorer/Makefile
 	plugins/SeerRadar/Makefile
@@ -1014,30 +1017,51 @@ AC_CONFIG_FILES([
 	plugins/UselessMine/Makefile
 	plugins/WhackyWeapons/Makefile
 	plugins/WingsFlagOnSpawn/Makefile
+	plugins/airspawn/Makefile
 	plugins/autoFlagReset/Makefile
 	plugins/avengerFlag/Makefile
 	plugins/bountyHunter/Makefile
+	plugins/bzfscron/Makefile
+	plugins/chathistory/Makefile
 	plugins/ctfOverseer/Makefile
+	plugins/customflagsample/Makefile
+	plugins/customPollTypeSample/Makefile
 	plugins/doublePoint/Makefile
+	plugins/fairCTF/Makefile
+	plugins/fastmap/Makefile
+	plugins/flagStay/Makefile
 	plugins/genoonce/Makefile
 	plugins/givePoint/Makefile
-    plugins/gruesomeKillerFlag/Makefile
+	plugins/gruesomeKillerFlag/Makefile
 	plugins/incrementPoint/Makefile
+	plugins/keepaway/Makefile
+	plugins/killall/Makefile
 	plugins/koth/Makefile
 	plugins/logDetail/Makefile
 	plugins/mapchange/Makefile
 	plugins/mappedDeathZones/Makefile
+	plugins/nagware/Makefile
 	plugins/neutralZones/Makefile
 	plugins/playHistoryTracker/Makefile
 	plugins/plugin_utils/Makefile
+	plugins/rabbitTimer/Makefile
+	plugins/rabidRabbit/Makefile
+	plugins/recordmatch/Makefile
+	plugins/regFlag/Makefile
 	plugins/riskygeno/Makefile
+	plugins/serverControl/Makefile
+	plugins/serverSidePlayerSample/Makefile
 	plugins/shockwaveDeath/Makefile
 	plugins/spawnAtBase/Makefile
 	plugins/spawnFacingCenter/Makefile
 	plugins/superUser/Makefile
 	plugins/teamflaggeno/Makefile
 	plugins/teamflagreset/Makefile
-    plugins/tripleBarrelFlag/Makefile
+	plugins/thiefControl/Makefile
+	plugins/timedctf/Makefile
+	plugins/TimeLimit/Makefile
+	plugins/tripleBarrelFlag/Makefile
+	plugins/wwzones/Makefile
 	src/3D/Makefile
 	src/Makefile
 	src/bzadmin/Makefile
