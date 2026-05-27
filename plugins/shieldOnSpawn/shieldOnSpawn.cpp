@@ -1,0 +1,58 @@
+/*
+ * Copyright (C) 2025 Loymdayddaud
+ * All rights reserved.
+ */
+
+#include "bzfsAPI.h"
+#include "plugin_utils.h"
+
+class shieldOnSpawn : public bz_Plugin
+{
+public:
+	virtual const char* Name();
+	virtual void Init(const char*);
+	virtual void Cleanup();
+	virtual void Event(bz_EventData* eventData);
+};
+
+BZ_PLUGIN(shieldOnSpawn)
+
+const char* shieldOnSpawn::Name()
+{
+	return "Shield On Spawn";
+}
+
+void shieldOnSpawn::Init(const char*)
+{
+	Register(bz_ePlayerSpawnEvent);
+}
+
+void shieldOnSpawn::Cleanup()
+{
+	Flush();
+}
+
+void shieldOnSpawn::Event(bz_EventData* eventData)
+{
+	switch (eventData->eventType)
+	{
+		case bz_ePlayerSpawnEvent:
+		{
+			// This event is called each time a playing tank is being spawned into the world
+			bz_PlayerSpawnEventData_V1* data = (bz_PlayerSpawnEventData_V1*)eventData;
+
+			bz_givePlayerFlag(data->playerID, "SH", true);
+
+			// Data
+			// ----
+			// (int)                  playerID  - ID of the player who was added to the world.
+			// (bz_eTeamType)         team      - The team the player is a member of.
+			// (bz_PlayerUpdateState) state     - The state record for the spawning player
+			// (double)               eventTime - Time local server time for the event.
+		}
+		break;
+
+		default:
+			break;
+	}
+}

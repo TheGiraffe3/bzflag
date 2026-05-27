@@ -52,6 +52,7 @@ SUBDIRS = \
 	SeerRadar \
 	serverControl \
 	serverSidePlayerSample \
+	shieldOnSpawn \
 	ShockwaveCenterFlag \
 	shockwaveDeath \
 	ShootingGallery \
@@ -67,6 +68,7 @@ SUBDIRS = \
 	TimeLimit \
 	tripleBarrelFlag \
 	TronPlugin \
+	VortexPlugin \
 	UselessMine \
 	WhackyWeapons \
 	WingsFlagOnSpawn \

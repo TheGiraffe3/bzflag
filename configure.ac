@@ -1014,6 +1014,7 @@ AC_CONFIG_FILES([
 	plugins/StationCollaborationPlugin/Makefile
 	plugins/SuperBulletBackwardsFlag/Makefile
 	plugins/TronPlugin/Makefile
+	plugins/VortexPlugin/Makefile
 	plugins/UselessMine/Makefile
 	plugins/WhackyWeapons/Makefile
 	plugins/WingsFlagOnSpawn/Makefile
@@ -1051,6 +1052,7 @@ AC_CONFIG_FILES([
 	plugins/riskygeno/Makefile
 	plugins/serverControl/Makefile
 	plugins/serverSidePlayerSample/Makefile
+	plugins/shieldOnSpawn/Makefile
 	plugins/shockwaveDeath/Makefile
 	plugins/spawnAtBase/Makefile
 	plugins/spawnFacingCenter/Makefile
