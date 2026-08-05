@@ -87,6 +87,98 @@ void WorldInfo::addLink(const std::string& src, const std::string& dst)
     return;
 }
 
+void WorldInfo::addArc(float x, float y, float z, float r, float w , float d, int divisions )
+{
+    MeshTransform xform;
+   
+    const float pos[3] = {x, y, z};
+    const float _size[3] = {r, w, d};
+    const float texsize[4] = {-8.0f, -8.0f, -8.0f, -8.0f};
+   
+    const float flipScale[3] = {1.0f, 1.0f, 1.0f};
+    const float flipShift[3] = {0.0f, 0.0f, 0.0f};
+    const float flipShear[3] = {0.0f, 0.0f, 0.0f};
+   
+    xform.addScale(flipScale);
+    xform.addShift(flipShift);
+    xform.addShear(flipShear);
+   
+    BzMaterial materials[6];
+    materials[0].setTexture("roof");
+    materials[1].setTexture("root");
+    materials[2].setTexture("boxwall");
+    materials[3].setTexture("boxwall");
+    materials[4].setTexture("wall");
+    materials[5].setTexture("wall");
+   
+    const BzMaterial* mats[6];
+   
+    for (int i=0; i < 6; i++)
+        mats[i] = MATERIALMGR.addMaterial(&materials[i]);
+   
+    ArcObstacle* arc = new ArcObstacle(xform, pos, _size, 0.0f,360, 1,texsize, true, divisions, mats, -1, false, false, false, true );
+    OBSTACLEMGR.addWorldObstacle(arc);
+}
+
+void WorldInfo::addCone(float x, float y, float z, int divisions)
+{
+    MeshTransform xform;
+    const float pos[3] = {x, y, z};
+    const float _size[3] = {8.0f, 8.0f, 15.0f};
+    const float diffuse[4] = {0.5f, 0.5f, 0.5f, 0.5f};
+    const float texsize[2] = {-4.0f, -4.0f};
+   
+    const float flipScale[3] = {1.0f, 1.0f, 1.0f};
+    const float flipShift[3] = {0.0f, 0.0f, 0.0f};
+    const float flipShear[3] = {0.0f, 0.0f, 0.0f};
+   
+   
+    xform.addScale(flipScale);
+    xform.addShift(flipShift);
+    xform.addShear(flipShear);
+   
+    BzMaterial materials[4];
+  
+    materials[0].setDiffuse(diffuse);
+    materials[1].setDiffuse(diffuse);
+    materials[2].setDiffuse(diffuse);
+    materials[3].setDiffuse(diffuse);
+   
+    const BzMaterial* mats[4];
+    for (int i=0; i < 4; i++)
+        mats[i] = MATERIALMGR.addMaterial(&materials[i]);
+   
+    ConeObstacle* cone = new ConeObstacle(xform, pos, _size, 0.0f,360, texsize, true, divisions, mats, -1, true, false, false, true );
+   
+    OBSTACLEMGR.addWorldObstacle(cone);
+}
+
+void WorldInfo::addSphere(float x, float y, float z , int divisions)
+{
+    MeshTransform xform;
+    const float pos[3] = {x, y, z};
+    const float _size[3] = {10.0f, 10.0f, -10.0f};
+    const float texsize[2] = {-4.0f, -4.0f};
+   
+    const float flipScale[3] = {1.0f, 1.0f, 1.0f};
+    const float flipShift[3] = {1.0f, 1.0f, 1.0f};
+    const float flipShear[3] = {0.0f, 0.0f, 0.0f};
+    xform.addScale(flipScale);
+    xform.addShift(flipShift);
+    xform.addShear(flipShear);
+   
+    BzMaterial materials[2];
+    materials[0].setTexture("tetrawall");
+    materials[1].setTexture("roof");
+   
+    const BzMaterial* mats[2];
+    mats[0] = MATERIALMGR.addMaterial(&materials[0]);
+    mats[1] = MATERIALMGR.addMaterial(&materials[1]);
+   
+    SphereObstacle* sphere = new SphereObstacle(xform, pos, _size, 0.0f, texsize, true, false, divisions, mats, -1, true, false, false, true );
+   
+    OBSTACLEMGR.addWorldObstacle(sphere);
+}
 
 void WorldInfo::addZone(const CustomZone *zone)
 {

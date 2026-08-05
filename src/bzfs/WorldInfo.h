@@ -87,11 +87,15 @@ public:
     void addPyramid(float x, float y, float z, float r,
                     float w, float d, float h,
                     bool drive = false, bool shoot = false, bool rico = false, bool flipZ = false);
+    void addSphere(float x, float y, float z, int divisions);
+    void addArc(float x, float y, float z, float r, float w, float d, int divisions);
+    void addCone(float x, float y, float z, int divisions); 
     void addTeleporter(float x, float y, float z, float r,
                        float w, float d, float h, float b,
                        bool horizontal, bool drive = false, bool shoot = false, bool rico = false);
     void addBase(const float pos[3], float r, const float size[3],
                  int color, bool drive = false, bool shoot = false, bool rico = false);
+   
 
     float getWaterLevel() const;
     float getMaxWorldHeight() const;

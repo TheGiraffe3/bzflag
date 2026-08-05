@@ -79,6 +79,34 @@ WorldInfo *defineRandomWorld()
                             pyrBase, pyrBase, h);
     }
 
+    if (clOptions->fancy) {
+        // make arcs
+        const int numArcs = int((0.5f + 0.7f * bzfrand()) * actCitySize * actCitySize);
+  
+        for (i = 0; i < numArcs; i++) {
+            myWorld->addArc(worldSize * ((float)bzfrand() - 0.5f),
+            worldSize * ((float)bzfrand() - 0.5f), 0.0f, 15, 15, 15, 24);
+  
+            myWorld->addArc(worldSize * ((float)bzfrand() - 0.5f),
+            worldSize * ((float)bzfrand() - 0.5f), 0.0f, 15, 15, 15, 3);
+  
+            myWorld->addArc(worldSize * ((float)bzfrand() - 0.5f),
+            worldSize * ((float)bzfrand() - 0.5f), 0.0f, 15, 15, 15, 6);
+        }
+  
+        // make cones and spheres
+        const int numCones = int((0.5f + 0.7f * bzfrand()) * actCitySize * actCitySize);
+        float x,y;
+  
+        for (i = 0; i < numCones; i++) {
+            x = worldSize * ((float)bzfrand() - 0.5f);
+            y = worldSize * ((float)bzfrand() - 0.5f);
+  
+            myWorld->addCone(x,y,0.0f, 16);
+            myWorld->addSphere(x + 20,y,20.0f, 4);
+        }
+    }
+
     if (clOptions->useTeleporters)
     {
         // make teleporters

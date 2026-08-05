@@ -69,6 +69,7 @@ const char *usageString =
     "[-disableBots] "
     "[+f {good|<id>}] "
     "[-f {bad|<id>}] "
+    "[-fancy] "
     "[-fb] "
     "[-filterCallsigns] "
     "[-filterChat] "
@@ -176,6 +177,7 @@ const char *extraUsageString =
     "\t-disableBots: disallow clients from using autopilot or robots\n"
     "\t+f: always have flag <id> available\n"
     "\t-f: never randomly generate flag <id>\n"
+    "\t-fancy: use random arcs\n"
     "\t-fb: allow flags on box buildings\n"
     "\t-filterCallsigns: filter callsigns to disallow inappropriate user names\n"
     "\t-filterChat: filter chat messages\n"
@@ -759,6 +761,10 @@ void parse(int argc, char **argv, CmdLineOptions &options, bool fromWorldFile)
             // add required flag
             checkArgc(1, i, argc, argv[i]);
             storedFlagCounts.push_back(argv[i]);
+        }
+        else if (strcmp(argv[i], "-fancy") == 0) 
+        {
+            options.fancy = true;
         }
         else if (strcmp(argv[i], "-fb") == 0)
         {

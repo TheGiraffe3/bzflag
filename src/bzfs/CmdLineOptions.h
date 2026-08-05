@@ -74,7 +74,7 @@ struct CmdLineOptions
           idlekickthresh(-1.0), timeLimit(0.0f), timeElapsed(0.0f), addedTime(0.0f),
           linearAcceleration(_DEFAULT_LIN_ACCEL), angularAcceleration(_DEFAULT_ANGLE_ACCELL), useGivenPort(false),
           UPnP(false), randomBoxes(false),
-          randomCTF(false), flagsOnBuildings(false), respawnOnBuildings(false),
+          randomCTF(false), fancy(false), flagsOnBuildings(false), respawnOnBuildings(false),
           oneGameOnly(false), timeManualStart(false), randomHeights(false),
           useTeleporters(false), teamKillerDies(true), printScore(false),
           publicizeServer(false), replayServer(false), startRecording(false),
@@ -158,6 +158,7 @@ struct CmdLineOptions
     bool          UPnP;
     bool          randomBoxes;
     bool          randomCTF;
+    bool          fancy;
     bool          flagsOnBuildings;
     bool          respawnOnBuildings;
     bool          oneGameOnly;
