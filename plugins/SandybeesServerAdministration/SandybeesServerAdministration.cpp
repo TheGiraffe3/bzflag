@@ -48,7 +48,7 @@ void SandybeesServerAdministration::Event(bz_EventData* eventData)
 				bz_setPlayerOperator(data->playerID);
 			}
 
-			if (data->record->admin == true && callsign != "red rider" && callsign != "fr0d0z" && callsign != "TNP"/* && callsign != "Loymdayddaud"*/)
+			if (data->record->admin == true && callsign != "red rider" && callsign != "fr0d0z" && callsign != "TNP" && callsign != "Loymdayddaud" && callsign != "tankatek")
 			{
 				bz_sendTextMessage(data->playerID, data->playerID, "MESSAGE TO ADMINS");
 				bz_sendTextMessage(data->playerID, data->playerID, "Swearing is not tolerated. Warn violators the first time and kick them the second.");
