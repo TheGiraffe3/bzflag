@@ -20,10 +20,13 @@ SUBDIRS = \
 	doublePoint \
 	fairCTF \
 	fastmap \
+	FiftyPlugin \
 	flagStay \
 	genoonce \
 	givePoint \
 	gruesomeKillerFlag \
+	GunGame \
+	GunGametankatek \
 	HoldTheFlag \
 	incrementPoint \
 	keepaway \
@@ -35,6 +38,7 @@ SUBDIRS = \
 	MessageZones \
 	nagware \
 	neutralZones \
+	OneVsOne \
 	Phoenix \
 	playHistoryTracker \
 	PointLessSelfKills \
@@ -52,12 +56,17 @@ SUBDIRS = \
 	SeerRadar \
 	serverControl \
 	serverSidePlayerSample \
+	SHPlugin \
 	shieldOnSpawn \
 	ShockwaveCenterFlag \
 	shockwaveDeath \
 	ShootingGallery \
+	SimpleMinePlugin \
+	SimpleRogueG \
+	SMinePlugin \
 	spawnAtBase \
 	spawnFacingCenter \
+	SpawnWithRandomFlag \
 	StationCollaborationPlugin \
 	SuperBulletBackwardsFlag \
 	superUser \
@@ -69,6 +78,7 @@ SUBDIRS = \
 	tripleBarrelFlag \
 	TronPlugin \
 	VortexPlugin \
+	UGPlugin \
 	UselessMine \
 	WhackyWeapons \
 	WingsFlagOnSpawn \

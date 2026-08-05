@@ -1010,9 +1010,13 @@ AC_CONFIG_FILES([
 	plugins/CustomZoneSample/Makefile
 	plugins/DeathBlossomFlag/Makefile
 	plugins/DemilitarizedZones/Makefile
+	plugins/FiftyPlugin/Makefile
+	plugins/GunGame/Makefile
+	plugins/GunGametankatek/Makefile
 	plugins/HoldTheFlag/Makefile
 	plugins/Makefile
 	plugins/MessageZones/Makefile
+	plugins/OneVsOne/Makefile
 	plugins/Phoenix/Makefile
 	plugins/PointLessSelfKills/Makefile
 	plugins/RemoteDetonationFlag/Makefile
@@ -1022,12 +1026,18 @@ AC_CONFIG_FILES([
 	plugins/SandybeesServerAdministration/Makefile
 	plugins/ScoreRestorer/Makefile
 	plugins/SeerRadar/Makefile
+	plugins/SHPlugin/Makefile
 	plugins/ShockwaveCenterFlag/Makefile
 	plugins/ShootingGallery/Makefile
+	plugins/SimpleMinePlugin/Makefile
+	plugins/SimpleRogueG/Makefile
+	plugins/SMinePlugin/Makefile
+	plugins/SpawnWithRandomFlag/Makefile
 	plugins/StationCollaborationPlugin/Makefile
 	plugins/SuperBulletBackwardsFlag/Makefile
 	plugins/TronPlugin/Makefile
 	plugins/VortexPlugin/Makefile
+	plugins/UGPlugin/Makefile
 	plugins/UselessMine/Makefile
 	plugins/WhackyWeapons/Makefile
 	plugins/WingsFlagOnSpawn/Makefile
