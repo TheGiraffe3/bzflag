@@ -1030,21 +1030,6 @@ static void     doMotion()
 
     if (myTank->isAutoPilot())
         doAutoPilot(rotation, speed);
-    else if (myTank->getInputMethod() == LocalPlayer::Keyboard)
-    {
-
-        rotation = (float)keyboardRotation;
-        speed    = (float)keyboardSpeed;
-        if (speed < 0.0f)
-            speed /= 2.0;
-
-        rotation *= BZDB.eval("displayFOV") / 60.0f;
-        if (BZDB.isTrue("slowKeyboard"))
-        {
-            rotation *= 0.5f;
-            speed *= 0.5f;
-        }
-    }
     else if (myTank->getInputMethod() == LocalPlayer::Joystick)
     {
         applyJSModifiers(jsx, jsy);
@@ -1085,8 +1070,20 @@ static void     doMotion()
                 speed = -0.5f;
         }
     }
-    else // mouse
+    else // mouse + keyboard
     {
+        rotation = (float)keyboardRotation;
+        speed    = (float)keyboardSpeed;
+        if (speed < 0.0f)
+            speed /= 2.0;
+
+        rotation *= BZDB.eval("displayFOV") / 60.0f;
+        if (BZDB.isTrue("slowKeyboard"))
+        {
+            rotation *= 0.5f;
+            speed *= 0.5f;
+        }
+
         // calculate desired rotation
         if (keyboardRotation && !devDriving)
         {
@@ -1107,30 +1104,6 @@ static void     doMotion()
             if (rotation < -1.0f)
                 rotation = -1.0f;
         }
-
-        // calculate desired speed
-        if (keyboardSpeed && !devDriving)
-        {
-            speed = float(keyboardSpeed);
-            if (speed < 0.0f)
-                speed *= 0.5f;
-            if (BZDB.isTrue("slowKeyboard"))
-                speed *= 0.5f;
-        }
-        else if (my < -noMotionSize)
-        {
-            speed = float(-my - noMotionSize) / float(maxMotionSize - noMotionSize);
-            if (speed > 1.0f)
-                speed = 1.0f;
-        }
-        else if (my > noMotionSize)
-        {
-            speed = -float(my - noMotionSize) / float(maxMotionSize - noMotionSize);
-            if (speed < -0.5f)
-                speed = -0.5f;
-        }
-        else
-            speed = 0.0f;
     }
 
     myTank->setDesiredAngVel(rotation);
@@ -7292,13 +7265,6 @@ static void     playingLoop()
         // update the countdowns
         updatePauseCountdown(dt);
         updateDestructCountdown(dt);
-
-        // notify if input changed
-        if ((myTank != NULL) && (myTank->queryInputChange() == true))
-        {
-            controlPanel->addMessage(
-                LocalPlayer::getInputMethodName(myTank->getInputMethod()) + " movement");
-        }
 
         // update other tank's shots
         for (i = 0; i < curMaxPlayers; i++)
