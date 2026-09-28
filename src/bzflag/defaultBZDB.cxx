@@ -157,7 +157,7 @@ DefaultDBItem defaultDBItems[] =
     { "consoleFont",      "DejaVuSansMonoBold",   true,   StateDatabase::ReadWrite,   NULL },
     { "sansSerifFont",        "DejaVuSansCondensedBold",true, StateDatabase::ReadWrite,   NULL },
 
-    // team based object sufixes
+    // team based object suffixes
     { "tankTexture",      "tank",         true,   StateDatabase::ReadWrite,   NULL },
     { "boltTexture",      "bolt",         true,   StateDatabase::ReadWrite,   NULL },
     { "laserTexture",     "laser",        true,   StateDatabase::ReadWrite,   NULL },

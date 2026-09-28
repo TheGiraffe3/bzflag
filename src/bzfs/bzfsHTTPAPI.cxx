@@ -21,7 +21,7 @@
 #include <time.h>
 #include <cstdlib>
 
-// implementation wrapers for all the bzf_ API functions
+// implementation wrappers for all the bzf_ API functions
 #include "bzfsHTTPAPI.h"
 #include "WorldEventManager.h"
 #include "TextUtils.h"
@@ -2341,7 +2341,7 @@ void processIF ( std::string &code, std::string::const_iterator &inItr, const st
         itr = findNextTag(checkKeys,keyFound,elseSection,itr,str);
     }
 
-    // test the if, stuff that dosn't exist is false
+    // test the if, stuff that doesn't exist is false
     if (CallIF(commandParts[1],param,info.Callback))
         code += processTemplate(trueSection,info);
     else

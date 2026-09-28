@@ -55,10 +55,10 @@ class BZFServerInfo
 
   // MsgTeamUpdate results
   public int $numTeams;
-  public array $teamInfo;
+  public array $teamInfo = [];
 
   // MsgAddPlayer results
-  public array $playerInfo;
+  public array $playerInfo = [];
 }
 
 class BZFQueryException extends RuntimeException

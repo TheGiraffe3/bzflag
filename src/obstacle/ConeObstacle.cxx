@@ -15,7 +15,6 @@
 
 // System headers
 #include <math.h>
-#include <assert.h>
 
 // Common headers
 #include "global.h"
@@ -26,12 +25,6 @@
 #include "MeshUtils.h"
 
 const char* ConeObstacle::typeName = "ConeObstacle";
-
-
-ConeObstacle::ConeObstacle()
-{
-    return;
-}
 
 
 ConeObstacle::ConeObstacle(const MeshTransform& xform,
@@ -54,14 +47,6 @@ ConeObstacle::ConeObstacle(const MeshTransform& xform,
     memcpy(texsize, _texsize, sizeof(texsize));
     memcpy(materials, mats, sizeof(materials));
 
-    finalize();
-
-    return;
-}
-
-
-ConeObstacle::~ConeObstacle()
-{
     return;
 }
 
@@ -95,12 +80,6 @@ const char* ConeObstacle::getClassName() // const
 bool ConeObstacle::isValid() const
 {
     return true;
-}
-
-
-void ConeObstacle::finalize()
-{
-    return;
 }
 
 
@@ -350,59 +329,6 @@ MeshObstacle* ConeObstacle::makeMesh()
 }
 
 
-float ConeObstacle::intersect(const Ray&) const
-{
-    assert(false);
-    return -1.0f;
-}
-
-void ConeObstacle::get3DNormal(const float*, float*) const
-{
-    assert(false);
-    return;
-}
-
-void ConeObstacle::getNormal(const float*, float*) const
-{
-    assert(false);
-    return;
-}
-
-bool ConeObstacle::getHitNormal(const float*, float, const float*, float,
-                                float, float, float, float*) const
-{
-    assert(false);
-    return false;
-}
-
-bool ConeObstacle::inCylinder(const float*,float, float) const
-{
-    assert(false);
-    return false;
-}
-
-bool ConeObstacle::inBox(const float*, float, float, float, float) const
-{
-    assert(false);
-    return false;
-}
-
-bool ConeObstacle::inMovingBox(const float*, float, const float*, float,
-                               float, float, float) const
-{
-    assert(false);
-    return false;
-}
-
-bool ConeObstacle::isCrossing(const float* UNUSED(p), float UNUSED(_angle),
-                              float UNUSED(dx), float UNUSED(dy), float UNUSED(height),
-                              float* UNUSED(_plane)) const
-{
-    assert(false);
-    return false;
-}
-
-
 void *ConeObstacle::pack(void *buf) const
 {
     buf = transform.pack(buf);
@@ -466,8 +392,6 @@ const void *ConeObstacle::unpack(const void *buf)
     smoothBounce = (stateByte & (1 << 2)) != 0;
     useNormals   = (stateByte & (1 << 3)) != 0;
     ricochet     = (stateByte & (1 << 4)) != 0;
-
-    finalize();
 
     return buf;
 }

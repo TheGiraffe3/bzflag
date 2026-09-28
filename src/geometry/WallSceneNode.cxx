@@ -40,9 +40,6 @@ WallSceneNode::WallSceneNode() : numLODs(0),
     modulateColor[3] = 1.0f;
     lightedColor[3] = 1.0f;
     lightedModulateColor[3] = 1.0f;
-    color[3] = 1.0f;
-    color[3] = 1.0f;
-    color[3] = 1.0f;
     setColor(1.0f, 1.0f, 1.0f);
     setModulateColor(1.0f, 1.0f, 1.0f);
     setLightedColor(1.0f, 1.0f, 1.0f);

@@ -841,7 +841,7 @@ PingPacket getTeamCounts()
         // pretend there are no players if the game is over, but only
         // for servers with automatic countdown because we want the server
         // to become empty, so a new countdown can start.
-        // Servers with -timemanual (match servers) or plugins whch handle gameover
+        // Servers with -timemanual (match servers) or plugins which handle gameover
         // usually want people to join even when last game has just ended.
         // (FIXME: the countdown/gameover handling really needs a new concept,
         //   originally it was not possible to even join a server when gameover
@@ -1487,7 +1487,7 @@ void sendPlayerMessage(GameKeeper::Player *playerData, PlayerId dstPlayer,
         return;
 
     // reformat any '/me' action messages
-    // this is here instead of in commands.cxx to allow player-player/player-channel targetted messages
+    // this is here instead of in commands.cxx to allow player-player/player-channel targeted messages
     if (strncasecmp(message, "/me", 3) == 0)
     {
 
@@ -5495,7 +5495,7 @@ static void handleCommand(int t, void *rawbuf, bool udp)
         playerData->setPlayerState(state, timestamp);
 
         // Player might already be dead and did not know it yet (e.g. teamkill)
-        // do not propogate
+        // do not propagate
         if (!playerData->player.isAlive() &&
                 (state.status & short(PlayerState::Alive)))
             break;
@@ -6531,7 +6531,7 @@ void UPnP::stop()
 }
 
 /** main parses command line options and then enters an event and activity
- * dependant main loop.  once inside the main loop, the server is up and
+ * dependent main loop.  once inside the main loop, the server is up and
  * running and should be ready to process connections and activity.
  */
 int main(int argc, char **argv)
@@ -6992,7 +6992,7 @@ int main(int argc, char **argv)
                 waitTime = nextGT;
         }
 
-        // minmal waitTime
+        // minimal waitTime
         if (waitTime < 0.0f)
             waitTime = 0.0f;
 
@@ -7780,7 +7780,7 @@ int main(int argc, char **argv)
             processConnectedPeer(peerItr->second, peerItr->first, read_set, write_set);
 
         // remove anyone that became a player since they will be handled by the rest of the code
-        // there net handler was transfered to the player class
+        // there net handler was transferred to the player class
         toKill.clear();
         for (peerItr = netConnectedPeers.begin(); peerItr != netConnectedPeers.end(); ++peerItr)
         {

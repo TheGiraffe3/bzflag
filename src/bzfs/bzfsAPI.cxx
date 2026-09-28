@@ -1742,7 +1742,7 @@ BZF_API bool bz_sentFetchResMessage ( int playerID,  const char* URL )
     return true;
 }
 
-// old API, many arguments get ingored.
+// old API, many arguments get ignored.
 BZF_API bool bz_fireWorldWep(const char* flagType, float UNUSED(lifetime), int UNUSED(fromPlayer), float *pos,
                              float tilt, float direction, int UNUSED(shotID), float UNUSED(dt), bz_eTeamType shotTeam)
 {
@@ -2486,7 +2486,7 @@ BZF_API double bz_getBanItemDuration ( bz_eBanListType listType, unsigned int it
         break;
     }
 
-    if (end.getSeconds() > 30000000.0) // it's basicly forever
+    if (end.getSeconds() > 30000000.0) // it's basically forever
         return -1.0;
 
     return end.getSeconds() - TimeKeeper::getCurrent().getSeconds();
@@ -2792,7 +2792,7 @@ BZF_API bool bz_givePlayerFlag ( int playerID, const char* flagType, bool force 
             return false;
         }
     }
-    else //invald player
+    else //invalid player
         return false;
 
     if (gkPlayer && fi)
@@ -3136,7 +3136,7 @@ BZF_API bool bz_CustomZoneObject::pointInZone(float pos[3])
             py = ry;
         }
 
-        // As the world is now simmetric remove the sign
+        // As the world is now symmetric remove the sign
         px = std::abs(px);
         py = std::abs(py);
 
@@ -3238,7 +3238,7 @@ BZF_API void bz_CustomZoneObject::handleDefaultOptions(bz_CustomMapObjectInfo *d
                 _size[1] = (float)atof(nubs->get(2).c_str());
                 _size[2] = (float)atof(nubs->get(3).c_str());
 
-                // Half Width and Half Heigth
+                // Half Width and Half Height
                 hw  = _size[0];
                 hh  = _size[1];
             }
@@ -4108,7 +4108,7 @@ BZF_API bz_ApiString bz_filterPath ( const char* path )
 
     strcpy(temp,path);
 
-    // replace anything but alphanumeric charcters or dots in filename by '_'
+    // replace anything but alphanumeric characters or dots in filename by '_'
     // should be safe on every supported platform
 
     char * buf = temp;

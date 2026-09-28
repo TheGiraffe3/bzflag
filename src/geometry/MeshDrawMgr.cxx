@@ -38,7 +38,7 @@ MeshDrawMgr::MeshDrawMgr(const MeshDrawInfo* drawInfo_)
     auto lodCount = drawInfo->getLodCount();
     lodLists.resize(lodCount);
 
-    // This pointer is a convience way to iterate over the DrawLod objects known to the MeshDrawInfo. A first-class
+    // This pointer is a convenience way to iterate over the DrawLod objects known to the MeshDrawInfo. A first-class
     // iterator would be better
     auto curDrawLod = drawInfo->getDrawLods();
 

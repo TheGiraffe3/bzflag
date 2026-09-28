@@ -42,14 +42,14 @@ public:
         MaterialCount
     };
 
-    ConeObstacle();
+    ConeObstacle() = default;
     ConeObstacle(const MeshTransform& transform,
                  const float* _pos, const float* _size,
                  float _rotation, float _angle,
                  const float _texsize[2], bool _useNormals,
                  int _divisions, const BzMaterial* mats[MaterialCount],
                  int physics, bool bounce, bool drive, bool shoot, bool ricochet);
-    ~ConeObstacle();
+    ~ConeObstacle() = default;
 
     Obstacle* copyWithTransform(const MeshTransform&) const override;
 
@@ -59,33 +59,11 @@ public:
     static const char* getClassName(); // const
     bool isValid() const override;
 
-    float intersect(const Ray&) const override;
-    void getNormal(const float* p, float* n) const override;
-    void get3DNormal(const float* p, float* n) const override;
-
-    bool inCylinder(const float* p, float radius, float height) const override;
-    bool inBox(const float* p, float angle,
-               float halfWidth, float halfBreadth, float height) const override;
-    bool inMovingBox(const float* oldP, float oldAngle,
-                     const float *newP, float newAngle,
-                     float halfWidth, float halfBreadth, float height) const override;
-    bool isCrossing(const float* p, float angle,
-                    float halfWidth, float halfBreadth, float height,
-                    float* plane) const override;
-
-    bool getHitNormal(const float* pos1, float azimuth1,
-                      const float* pos2, float azimuth2,
-                      float halfWidth, float halfBreadth,
-                      float height, float* normal) const override;
-
     int packSize() const override;
     void *pack(void*) const override;
     const void *unpack(const void*) override;
 
     void print(std::ostream& out, const std::string& indent) const override;
-
-private:
-    void finalize();
 
 private:
     static const char* typeName;

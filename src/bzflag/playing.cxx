@@ -6611,7 +6611,7 @@ enum MouseCtrlType
 {
     NoCtrl,
     ShiftX, // left/right
-    ShiftY, // backwards/forewards
+    ShiftY, // backwards/forwards
     ShiftZ, // up/down
     SpinX,  // tilt (phi)
     SpinY,  // -- not used --

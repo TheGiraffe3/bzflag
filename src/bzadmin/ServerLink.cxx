@@ -227,7 +227,7 @@ ServerLink::ServerLink(const Address& serverAddress, int port) :
 
     bool gotNetData = false;
 
-    // loop calling select untill we read some data back.
+    // loop calling select until we read some data back.
     // its only 8 bytes so it better come back in one packet.
     int loopCount = 0;
     while (!gotNetData)

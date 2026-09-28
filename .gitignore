@@ -26,7 +26,6 @@ dependencies/
 *.idb
 *.pdb
 *.suo
-*.lib
 *.user
 *.log
 *.cache
@@ -46,6 +45,10 @@ dependencies/
 *.opendb
 .vs
 *.aps
+
+# JetBrains files
+.idea
+*.iml
 
 # GNU Autotools
 Makefile.in

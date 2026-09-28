@@ -40,7 +40,7 @@ void    _debugLookups(const std::string &name)
     typedef std::map<std::string,int> EvalCntMap;
     static const float interval = 20.0f;
 
-    /* This bit of nastyness help debug BDZB->eval accesses sorted from worst to best*/
+    /* This bit of nastiness help debug BDZB->eval accesses sorted from worst to best*/
     static EvalCntMap cnts;
     static TimeKeeper last = TimeKeeper::getCurrent();
 

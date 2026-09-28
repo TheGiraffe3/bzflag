@@ -19,6 +19,11 @@
 
 #define _WINSOCKAPI_
 
+// Work around bug in recent Visual C++ 2017 that triggers an unknown attribute error when including windows.h
+#if (_MSC_VER >= 1915)
+#define no_init_all deprecated
+#endif
+
 #include <windows.h>
 #include <stdio.h>
 #include <float.h>

@@ -972,8 +972,8 @@ void Player::addToScene(SceneDatabase* scene, TeamColor effectiveTeam,
     else if (isExploding() && (state.pos[2] > ZERO_TOLERANCE))
     {
         float t;
-        const float deltaExplode = TimeKeeper::getTick() - explodeTime;
-        const float bzExplodeTim = BZDB.eval(StateDatabase::BZDB_EXPLODETIME);
+        const double deltaExplode = TimeKeeper::getTick() - explodeTime;
+        const double bzExplodeTim = BZDB.eval(StateDatabase::BZDB_EXPLODETIME);
         if (deltaExplode < 0)
         {
             // shouldn't happen but why take chances

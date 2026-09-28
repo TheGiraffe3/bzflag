@@ -15,7 +15,6 @@
 
 // System headers
 #include <math.h>
-#include <assert.h>
 
 // Common headers
 #include "global.h"
@@ -26,12 +25,6 @@
 #include "MeshUtils.h"
 
 const char* SphereObstacle::typeName = "SphereObstacle";
-
-
-SphereObstacle::SphereObstacle()
-{
-    return;
-}
 
 
 SphereObstacle::SphereObstacle(const MeshTransform& xform,
@@ -55,14 +48,6 @@ SphereObstacle::SphereObstacle(const MeshTransform& xform,
     memcpy(texsize, _texsize, sizeof(texsize));
     memcpy(materials, mats, sizeof(materials));
 
-    finalize();
-
-    return;
-}
-
-
-SphereObstacle::~SphereObstacle()
-{
     return;
 }
 
@@ -95,12 +80,6 @@ const char* SphereObstacle::getClassName() // const
 bool SphereObstacle::isValid() const
 {
     return true;
-}
-
-
-void SphereObstacle::finalize()
-{
-    return;
 }
 
 
@@ -454,59 +433,6 @@ MeshObstacle* SphereObstacle::makeMesh()
 }
 
 
-float SphereObstacle::intersect(const Ray&) const
-{
-    assert(false);
-    return -1.0f;
-}
-
-void SphereObstacle::get3DNormal(const float*, float*) const
-{
-    assert(false);
-    return;
-}
-
-void SphereObstacle::getNormal(const float*, float*) const
-{
-    assert(false);
-    return;
-}
-
-bool SphereObstacle::getHitNormal(const float*, float, const float*, float,
-                                  float, float, float, float*) const
-{
-    assert(false);
-    return false;
-}
-
-bool SphereObstacle::inCylinder(const float*,float, float) const
-{
-    assert(false);
-    return false;
-}
-
-bool SphereObstacle::inBox(const float*, float, float, float, float) const
-{
-    assert(false);
-    return false;
-}
-
-bool SphereObstacle::inMovingBox(const float*, float, const float*, float,
-                                 float, float, float) const
-{
-    assert(false);
-    return false;
-}
-
-bool SphereObstacle::isCrossing(const float* UNUSED(p), float UNUSED(_angle),
-                                float UNUSED(dx), float UNUSED(dy), float UNUSED(height),
-                                float* UNUSED(_plane)) const
-{
-    assert(false);
-    return false;
-}
-
-
 void *SphereObstacle::pack(void *buf) const
 {
     buf = transform.pack(buf);
@@ -570,7 +496,6 @@ const void *SphereObstacle::unpack(const void *buf)
     useNormals   = (stateByte & (1 << 3)) != 0;
     hemisphere   = (stateByte & (1 << 4)) != 0;
     ricochet     = (stateByte & (1 << 5)) != 0;
-    finalize();
 
     return buf;
 }

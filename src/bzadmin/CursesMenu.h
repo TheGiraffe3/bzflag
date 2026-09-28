@@ -282,7 +282,7 @@ public:
         next time it gets the chance. */
     void forceUpdate();
 
-    /** This function updates the menu if neccessary. */
+    /** This function updates the menu if necessary. */
     void rebuild();
 
     /** Return a reference to the map of message types that will cause the menu

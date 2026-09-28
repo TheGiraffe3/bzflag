@@ -12,6 +12,9 @@ BZFlag 2.4.31
 * Fix custom flags added via zoneflag in a zone - Scott Wichser
 * Add support for per-face ricochet on pyramids - Scott Wichser
 * Fix flag types disappearing when used in world weapons - Scott Wichser
+* Resolved a memory leak in the c-ares DNS resolution handler - Alfredo Tupone
+* Fix loading server plugins on macOS - Scott Wichser
+* Fix client hang if window resized to be very narrow - Scott Wichser
 
 
 BZFlag 2.4.30  "All Is Clear" (2025-03-16)

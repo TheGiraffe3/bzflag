@@ -31,7 +31,7 @@
 #include "BZDBCache.h"
 #include "MeshSceneNode.h"
 
-/* FIXME - local implementation dependancies */
+/* FIXME - local implementation dependencies */
 #include "BackgroundRenderer.h"
 #include "LocalPlayer.h"
 #include "daylight.h"

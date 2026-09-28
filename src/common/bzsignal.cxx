@@ -12,7 +12,7 @@
 
 #include "bzsignal.h"
 
-/* Unix systems implemnt signal() differently */
+/* Unix systems implement signal() differently */
 /* modified from "UNIX Network Programming" */
 SIG_PF bzSignal(int signo, SIG_PF func)
 {

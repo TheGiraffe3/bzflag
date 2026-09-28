@@ -1184,7 +1184,7 @@ bool ShutdownCommand::operator() (const char     *,
 bool SuperkillCommand::operator() (const char    *,
                                    GameKeeper::Player *playerData)
 {
-    // If no playerData - dont perfom permission check, since it is probably the API
+    // If no playerData - dont perform permission check, since it is probably the API
     int t = ServerPlayer;
 
     if (playerData)
@@ -3699,7 +3699,7 @@ bool RecordCommand::operator() (const char   *message,
  *  /replay play        # began playing
  *  /replay loop        # began playing in looped mode
  *  /replay stats       # report the current replay state
- *  /replay skip <secs>  # fast foward or rewind in time
+ *  /replay skip <secs>  # fast forward or rewind in time
  */
 bool ReplayCommand::operator() (const char   *message,
                                 GameKeeper::Player *playerData)
@@ -3876,7 +3876,7 @@ bool ModCountCommand::operator() (const char* message, GameKeeper::Player *playe
 
 
 
-// parse server comands
+// parse server commands
 void parseServerCommand(const char *message, int t, int sourceChannel)
 {
     if (!message)
@@ -3921,7 +3921,7 @@ void parseServerCommand(const char *message, int t, int sourceChannel)
     if ( strlen(message+1) > params[0].size())
         APIMessage = (message+params[0].size()+2);
 
-    // see if we have a registerd custom command and call it
+    // see if we have a registered custom command and call it
     if (itr != customCommands.end())
     {
         // if it handles it, then we are good

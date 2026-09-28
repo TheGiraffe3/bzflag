@@ -83,7 +83,7 @@ MeshSceneNode::MeshSceneNode(const MeshObstacle* _mesh)
     }
     else
     {
-        // sloppy way to recalcuate the transformed extents
+        // sloppy way to recalculate the transformed extents
         afvec3 c[8];
         c[0][0] = c[6][0] = c[5][0] = c[3][0] = diExts.mins[0];
         c[7][0] = c[1][0] = c[2][0] = c[4][0] = diExts.maxs[0];

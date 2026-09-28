@@ -87,13 +87,16 @@ void MeshFace::finalize()
     int i, j, k;
     for (i = 0; i < (vertexCount - 2); i++)
     {
-        for (j = i; j < (vertexCount - 1); j++)
+        // When j == i edge2 become 0 and so the cross product
+        for (j = i + 1; j < (vertexCount - 1); j++)
         {
-            for (k = j; k < (vertexCount - 0); k++)
+            float edge2[3];
+            vec3sub(edge2, vertices[i], vertices[j]);
+
+            for (k = j + 1; k < (vertexCount - 0); k++)
             {
-                float edge1[3], edge2[3], cross[3];
+                float edge1[3], cross[3];
                 vec3sub(edge1, vertices[k], vertices[j]);
-                vec3sub(edge2, vertices[i], vertices[j]);
                 vec3cross(cross, edge1, edge2);
                 const float lenSqr = vec3dot(cross, cross);
                 if (lenSqr > maxCrossSqr)

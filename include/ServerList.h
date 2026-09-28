@@ -27,7 +27,7 @@
 
 
 /** The ServerList class contains links to the list server as well as
- * any fetched list of servers.  The list handles cacheing of those
+ * any fetched list of servers.  The list handles caching of those
  * server entries in case of list server unavailability.
  */
 class ServerList final : cURLManager

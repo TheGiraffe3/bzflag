@@ -222,7 +222,7 @@ public:
     void outputWords(void) const;
     /** dump the filter to stdout (including expressions) */
     void outputFilter(void) const;
-    /** retuns a count of how many words are in the filter */
+    /** returns a count of how many words are in the filter */
     unsigned long int wordCount(void) const;
 
     /** Clears the Filter */
@@ -260,7 +260,7 @@ inline int WordFilter::filterCharacters(char *input, unsigned int start, size_t 
         previousCharPos = randomCharPos;
 
         /* when filterspaces is true, we filter everything.
-          * otherise the ascii character code ranges for a-z, A-Z, and 0-9
+          * otherwise the ascii character code ranges for a-z, A-Z, and 0-9
           * are filtered.
           */
         if (filterSpaces)

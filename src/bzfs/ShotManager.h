@@ -247,7 +247,7 @@ public:
     void Setup(Shot& shot ) override;
     bool Update ( Shot& shot ) override;
 
-    bool CollideBox ( Shot& shot, fvec3& ecnter, fvec3& size, float rotation ) override;
+    bool CollideBox ( Shot& shot, fvec3& center, fvec3& size, float rotation ) override;
     bool CollideSphere ( Shot& shot, fvec3& center, float radius ) override;
     bool CollideCylinder ( Shot& shot, fvec3& center, float height, float radius ) override;
 
