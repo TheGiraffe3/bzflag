@@ -171,6 +171,10 @@ if test x$enable_robots != xno; then
     AC_DEFINE(ROBOT, 1, [Enabling Robots])
 fi
 
+AC_ARG_ENABLE(native,       [  --enable-native         optimized for the CPU used to build])
+AC_ARG_ENABLE(Woverride,    [  --enable-Woverride      warning for missing override of virtual])
+AC_ARG_ENABLE(framepointer, [  --enable-framepointer   use frame pointer, useful for getting stack frame (perf)])
+
 # debugging and profiling
 AC_ARG_ENABLE(debug,     [  --enable-debug          turn on debugging])
 AC_ARG_ENABLE(profiling, [  --enable-profiling      turn on profiling])
@@ -689,10 +693,19 @@ case $host_os in
 	CONF_CXXFLAGS="$CONF_CXXFLAGS $FLAGS"
 	case $host_vendor in
 	     pc)
-               FLAGS=-mtune=native
+               FLAGS="-mtune=native"
+               if test x$enable_native = xyes ; then
+                   FLAGS="$FLAGS -march=native"
+               fi
+               if test x$enable_framepointer = xyes ; then
+                   FLAGS="$FLAGS -fno-omit-frame-pointer"
+               fi
 	       CONF_CFLAGS="$CONF_CFLAGS $FLAGS";
 	       CONF_CXXFLAGS="$CONF_CXXFLAGS $FLAGS";
-	       CONF_CXXFLAGS="$CONF_CXXFLAGS -fsigned-char";;
+	       CONF_CXXFLAGS="$CONF_CXXFLAGS -fsigned-char";
+	       if test x$enable_Woverride = xyes ; then
+                   CONF_CXXFLAGS="$CONF_CXXFLAGS -Wsuggest-override -Woverloaded-virtual"
+	       fi;;
 	     ppc)
 	       FLAGS="-mcpu=$host_cpu"
 	       CONF_CFLAGS="$CONF_CFLAGS $FLAGS";

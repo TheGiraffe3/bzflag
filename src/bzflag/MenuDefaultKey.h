@@ -13,11 +13,11 @@
 #ifndef __MENUDEFAULTKEY_H__
 #define __MENUDEFAULTKEY_H__
 
+// Inherits from
+#include "HUDuiDefaultKey.h"
+
 /* common interface headers */
 #include "BzfEvent.h"
-
-/* local interface headers */
-#include "HUDuiDefaultKey.h"
 
 class MenuDefaultKey : public HUDuiDefaultKey
 {
@@ -25,8 +25,8 @@ public:
     MenuDefaultKey();
     ~MenuDefaultKey();
 
-    bool keyPress(const BzfKeyEvent&);
-    bool keyRelease(const BzfKeyEvent&);
+    bool keyPress(const BzfKeyEvent&) override;
+    bool keyRelease(const BzfKeyEvent&) override;
 
     static MenuDefaultKey* getInstance();
 

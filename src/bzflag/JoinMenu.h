@@ -13,7 +13,8 @@
 #ifndef __JOINMENU_H__
 #define __JOINMENU_H__
 
-#include "common.h"
+// Inherits from
+#include "HUDDialog.h"
 
 /* system interface headers */
 #include <vector>
@@ -23,7 +24,6 @@
 #include "global.h"
 
 /* local interface headers */
-#include "HUDDialog.h"
 #include "HUDuiDefaultKey.h"
 #include "HUDuiControl.h"
 #include "HUDuiLabel.h"
@@ -34,18 +34,18 @@
 class ServerStartMenu;
 class ServerMenu;
 
-class JoinMenu : public HUDDialog
+class JoinMenu final : public HUDDialog
 {
 public:
     JoinMenu();
     ~JoinMenu();
 
-    HUDuiDefaultKey*    getDefaultKey();
+    HUDuiDefaultKey*    getDefaultKey() override;
 
-    void        show();
-    void        execute();
-    void        dismiss();
-    void        resize(int width, int height);
+    void        show() override;
+    void        execute() override;
+    void        dismiss() override;
+    void        resize(int width, int height) override;
     void        updateTeamTexture() const;
 
 private:
@@ -53,7 +53,7 @@ private:
     TeamColor       getTeam() const;
     void        setTeam(TeamColor);
     void        setStatus(const char*, const std::vector<std::string> *parms = NULL);
-    void        setFailedMessage(const char* msg);
+    void        setFailedMessage(const char* msg) override;
     void        centerLabelHorizontally(HUDuiLabel* label);
     void        loadInfo();
 

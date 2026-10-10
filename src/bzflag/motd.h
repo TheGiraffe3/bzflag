@@ -13,20 +13,18 @@
 #ifndef __MOTD_H__
 #define __MOTD_H__
 
-// bzflag global header
-#include "common.h"
+// Inherits from
+#include "cURLManager.h"
 
 // system interface header
 #include <string>
 
-// common interface headers
-#include "cURLManager.h"
 
-class MessageOfTheDay : cURLManager
+class MessageOfTheDay final : cURLManager
 {
 public:
 
-    virtual void finalization(char *data, unsigned int length, bool good);
+    void finalization(char *data, unsigned int length, bool good) override;
     void   getURL(const std::string &URL);
 };
 

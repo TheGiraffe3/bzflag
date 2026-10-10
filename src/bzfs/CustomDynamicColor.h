@@ -19,14 +19,14 @@
 /* common headers */
 #include "DynamicColor.h"
 
-class CustomDynamicColor : public WorldFileObject
+class CustomDynamicColor final : public WorldFileObject
 {
 public:
     CustomDynamicColor();
     ~CustomDynamicColor();
-    virtual bool read(const char *cmd, std::istream& input);
-    virtual void writeToManager() const;
-    bool usesManager()
+    bool read(const char *cmd, std::istream& input) override;
+    void writeToManager() const override;
+    bool usesManager() override
     {
         return true;
     }

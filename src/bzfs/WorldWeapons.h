@@ -75,13 +75,13 @@ private:
     WorldWeapons& operator=(const WorldWeapons &w) const;
 };
 
-class WorldWeaponGlobalEventHandler : public bz_EventHandler
+class WorldWeaponGlobalEventHandler final : public bz_EventHandler
 {
 public:
     WorldWeaponGlobalEventHandler(FlagType *type, const float *origin,float direction, float tilt,TeamColor teamColor );
     virtual ~WorldWeaponGlobalEventHandler();
 
-    virtual void process ( bz_EventData *eventData );
+    void process ( bz_EventData *eventData ) override;
 
 protected:
     FlagType    *type;

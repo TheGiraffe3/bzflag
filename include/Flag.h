@@ -143,7 +143,7 @@ public:
     ~FlagType();
 
     /** returns a label of flag name and abbreviation with the flag name
-     * excentuating the abbreviation if relevant.
+     * accentuating the abbreviation if relevant.
      */
     const std::string label() const;
 

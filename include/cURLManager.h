@@ -107,7 +107,7 @@ typedef struct
     std::string       fileName;
 } trResourceItem;
 
-class ResourceGetter : cURLManager
+class ResourceGetter final : cURLManager
 {
 public:
     ResourceGetter();
@@ -116,7 +116,7 @@ public:
     void addResource(trResourceItem &item);
     void flush(void);
 
-    virtual void finalization(char *data, unsigned int length, bool good);
+    void finalization(char *data, unsigned int length, bool good) override;
 
 protected:
     bool itemExists(trResourceItem &item);

@@ -26,7 +26,7 @@
 
 class GroupInstance;
 
-class CustomGroup : public WorldFileObstacle
+class CustomGroup final : public WorldFileObstacle
 {
 public:
     CustomGroup(const std::string& groupdef);

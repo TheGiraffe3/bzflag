@@ -166,7 +166,7 @@ std::vector<std::string> tokenize(const std::string& in, const std::string &deli
                             // finish off current token
                             tokenDone = true;
                             inQuote = false;
-                            //slurp off one additional delimeter if possible
+                            //slurp off one additional delimiter if possible
                             if (pos+1 < len &&
                                     delims.find(in[pos+1]) != std::string::npos)
                                 pos++;

@@ -21,7 +21,7 @@
 #include "HUDuiLabel.h"
 #include "OpenGLGState.h"
 
-class HUDuiJSTestLabel : public HUDuiLabel
+class HUDuiJSTestLabel final : public HUDuiLabel
 {
 public:
     HUDuiJSTestLabel();
@@ -30,7 +30,7 @@ public:
     void setSize(float newWidth, float newHeight);
 
 protected:
-    void        doRender();
+    void        doRender() override;
 
 private:
     float width, height;

@@ -21,7 +21,7 @@
 // Inherits from
 #include "WallSceneNode.h"
 
-class MeshPolySceneNode : public WallSceneNode
+class MeshPolySceneNode final : public WallSceneNode
 {
 public:
     MeshPolySceneNode(const float plane[4],
@@ -31,23 +31,23 @@ public:
                       const GLfloat2Array& texcoords);
     ~MeshPolySceneNode();
 
-    bool cull(const ViewFrustum& frustum) const;
-    bool inAxisBox (const Extents& exts) const;
-    int getVertexCount () const;
-    const GLfloat* getVertex (int vertex) const;
+    bool cull(const ViewFrustum& frustum) const override;
+    bool inAxisBox (const Extents& exts) const override;
+    int getVertexCount () const override;
+    const GLfloat* getVertex (int vertex) const override;
     const GLfloat (*getVertices() const)[3];
 
-    int split(const float* plane, SceneNode*&, SceneNode*&) const;
+    int split(const float* plane, SceneNode*&, SceneNode*&) const override;
 
-    void addRenderNodes(SceneRenderer&);
-    void addShadowNodes(SceneRenderer&);
-    void renderRadar();
+    void addRenderNodes(SceneRenderer&) override;
+    void addShadowNodes(SceneRenderer&) override;
+    void renderRadar() override;
 
-    void getRenderNodes(std::vector<RenderSet>& rnodes);
+    void getRenderNodes(std::vector<RenderSet>& rnodes) override;
 
 
 protected:
-    class Geometry : public RenderNode
+    class Geometry final : public RenderNode
     {
     public:
         Geometry(MeshPolySceneNode*,

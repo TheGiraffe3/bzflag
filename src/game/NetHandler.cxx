@@ -623,7 +623,7 @@ RxStatus NetHandler::receive(size_t length, bool *retry)
     if (retry)
         *retry = false;
 
-    // Degenerate case, becase a closed socket should not be sending data, but be paranoid and test for it anyway
+    // Degenerate case, because a closed socket should not be sending data, but be paranoid and test for it anyway
     if (closed) return returnValue;
 
     if ((int)length <= tcplen) return ReadAll;

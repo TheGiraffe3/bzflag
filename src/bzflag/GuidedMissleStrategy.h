@@ -29,19 +29,19 @@
 #include "ShotPathSegment.h"
 
 
-class GuidedMissileStrategy : public ShotStrategy
+class GuidedMissileStrategy final : public ShotStrategy
 {
 public:
     GuidedMissileStrategy(ShotPath*);
     ~GuidedMissileStrategy();
 
-    void        update(float dt);
-    float       checkHit(const BaseLocalPlayer*, float[3]) const;
-    void        sendUpdate(const FiringInfo&) const;
-    void        readUpdate(uint16_t, const void*);
-    void        addShot(SceneDatabase*, bool colorblind);
-    void        expire();
-    void        radarRender() const;
+    void        update(float dt) override;
+    float       checkHit(const BaseLocalPlayer*, float[3]) const override;
+    void        sendUpdate(const FiringInfo&) const override;
+    void        readUpdate(uint16_t, const void*) override;
+    void        addShot(SceneDatabase*, bool colorblind) override;
+    void        expire() override;
+    void        radarRender() const override;
 
 private:
     float       checkBuildings(const Ray& ray);

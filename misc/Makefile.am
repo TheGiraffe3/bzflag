@@ -8,7 +8,6 @@ EXTRA_DIST =				\
 	bzfquery.php			\
 	bzfquery.pl			\
 	bzfquery.py			\
-	bzfquery_example.php		\
 	bzfs				\
 	bzfs.conf			\
 	bzfsd				\

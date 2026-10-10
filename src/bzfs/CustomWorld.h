@@ -13,8 +13,6 @@
 #ifndef __CUSTOMWORLD_H__
 #define __CUSTOMWORLD_H__
 
-#include "common.h"
-
 /* interface header */
 #include "WorldFileObject.h"
 
@@ -25,13 +23,13 @@
 #include "WorldInfo.h"
 
 
-class CustomWorld : public WorldFileObject
+class CustomWorld final : public WorldFileObject
 {
 public:
     CustomWorld();
-    virtual bool read(const char *cmd, std::istream&);
-    virtual void writeToWorld(WorldInfo*) const;
-    virtual bool usesGroupDef()
+    bool read(const char *cmd, std::istream&) override;
+    void writeToWorld(WorldInfo*) const override;
+    bool usesGroupDef() override
     {
         return false;
     }

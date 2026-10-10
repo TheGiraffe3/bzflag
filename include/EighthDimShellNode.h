@@ -23,18 +23,18 @@
 // Common headers
 #include "OpenGLGState.h"
 
-class EighthDimShellNode : public SceneNode
+class EighthDimShellNode final : public SceneNode
 {
 public:
     EighthDimShellNode(SceneNode *sceneNode, bool ownTheNode);
     ~EighthDimShellNode();
 
-    bool cull(const ViewFrustum&) const;
-    void addRenderNodes(SceneRenderer&);
-    void notifyStyleChange();
+    bool cull(const ViewFrustum&) const override;
+    void addRenderNodes(SceneRenderer&) override;
+    void notifyStyleChange() override;
 
 protected:
-    class ShellRenderNode : public RenderNode
+    class ShellRenderNode final : public RenderNode
     {
     public:
         ShellRenderNode(RenderNode *renderNode,

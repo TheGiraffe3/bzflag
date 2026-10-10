@@ -13,8 +13,8 @@
 #ifndef __BZWREADER_H__
 #define __BZWREADER_H__
 
-// bzflag common header
-#include "common.h"
+// Inherits from
+#include "cURLManager.h"
 
 #include "network.h"
 
@@ -25,12 +25,11 @@
 
 /* bzflag common headers */
 #include "BZWError.h"
-#include "cURLManager.h"
 
 class WorldFileObject;
 class WorldInfo;
 
-class BZWReader : cURLManager
+class BZWReader final : cURLManager
 {
 public:
     BZWReader(std::string filename);
@@ -44,7 +43,7 @@ private:
     void readToken(char *buffer, int n);
     bool readWorldStream(std::vector<WorldFileObject*>& wlist,
                          class GroupDefinition* groupDef);
-    void finalization(char *data, unsigned int length, bool good);
+    void finalization(char *data, unsigned int length, bool good) override;
 
     // stream to open
     std::string location;

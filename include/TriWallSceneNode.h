@@ -20,7 +20,7 @@
 // Inherits from
 #include "WallSceneNode.h"
 
-class TriWallSceneNode : public WallSceneNode
+class TriWallSceneNode final : public WallSceneNode
 {
 public:
     TriWallSceneNode(const GLfloat base[3],
@@ -31,23 +31,23 @@ public:
                      bool makeLODs = true);
     ~TriWallSceneNode();
 
-    int         split(const float*, SceneNode*&, SceneNode*&) const;
+    int         split(const float*, SceneNode*&, SceneNode*&) const override;
 
-    void        addRenderNodes(SceneRenderer&);
-    void        addShadowNodes(SceneRenderer&);
-    void        renderRadar();
+    void        addRenderNodes(SceneRenderer&) override;
+    void        addShadowNodes(SceneRenderer&) override;
+    void        renderRadar() override;
 
-    bool        inAxisBox (const Extents& exts) const;
+    bool        inAxisBox (const Extents& exts) const override;
 
-    int         getVertexCount () const;
-    const       GLfloat* getVertex (int vertex) const;
+    int         getVertexCount () const override;
+    const       GLfloat* getVertex (int vertex) const override;
 
-    bool        cull(const ViewFrustum&) const;
+    bool        cull(const ViewFrustum&) const override;
 
-    void        getRenderNodes(std::vector<RenderSet>& rnodes);
+    void        getRenderNodes(std::vector<RenderSet>& rnodes) override;
 
 protected:
-    class Geometry : public RenderNode
+    class Geometry  final : public RenderNode
     {
     public:
         Geometry(TriWallSceneNode*,

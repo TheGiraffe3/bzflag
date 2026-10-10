@@ -437,9 +437,9 @@ void ResourceGetter::flush ( void )
 void ResourceGetter::finalization(char *data, unsigned int length, bool good)
 {
     if (!resources.size() || !doingStuff)
-        return; // we are suposed to be done
+        return; // we are supposed to be done
 
-    // this is who we are suposed to be geting
+    // this is who we are supposed to be getting
     trResourceItem item = resources[0];
     resources.erase(resources.begin());
     if (good)

@@ -21,7 +21,7 @@ class PNGChunk;
 
 /** This class represents a PNG image file. It implements the read() function
     from ImageFile. */
-class PNGImageFile : public ImageFile
+class PNGImageFile final : public ImageFile
 {
 public:
     PNGImageFile(std::istream*);
@@ -31,7 +31,7 @@ public:
     static std::string    getExtension();
 
     /** Read image data from a PNG file. */
-    virtual bool      read(void* buffer);
+    bool      read(void* buffer) override;
 private:
     PNGPalette* readPalette(PNGChunk *c);
     unsigned char *getLineBuffer(bool active=true);

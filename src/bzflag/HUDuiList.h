@@ -27,7 +27,7 @@
 
 #include "BzfEvent.h"
 
-class HUDuiList : public HUDuiControl
+class HUDuiList final : public HUDuiControl
 {
 public:
     HUDuiList();
@@ -42,9 +42,9 @@ public:
     void        update();
 
 protected:
-    bool        doKeyPress(const BzfKeyEvent&);
-    bool        doKeyRelease(const BzfKeyEvent&);
-    void        doRender();
+    bool        doKeyPress(const BzfKeyEvent&) override;
+    bool        doKeyRelease(const BzfKeyEvent&) override;
+    void        doRender() override;
 
 private:
     int         index;

@@ -16,13 +16,13 @@
 #include "ObstacleSceneNodeGenerator.h"
 #include "PyramidBuilding.h"
 
-class PyramidSceneNodeGenerator : public ObstacleSceneNodeGenerator
+class PyramidSceneNodeGenerator final : public ObstacleSceneNodeGenerator
 {
     friend class SceneDatabaseBuilder;
 public:
     ~PyramidSceneNodeGenerator();
 
-    WallSceneNode*  getNextNode(float, float, bool);
+    WallSceneNode*  getNextNode(float, float, bool) override;
 
 protected:
     PyramidSceneNodeGenerator(const PyramidBuilding*);

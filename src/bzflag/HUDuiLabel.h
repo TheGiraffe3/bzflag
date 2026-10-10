@@ -38,10 +38,10 @@ public:
     void        setColor(GLfloat r, GLfloat g, GLfloat b);
 
 protected:
-    void        onSetFont();
-    bool        doKeyPress(const BzfKeyEvent&);
-    bool        doKeyRelease(const BzfKeyEvent&);
-    void        doRender();
+    void        onSetFont() override final;
+    bool        doKeyPress(const BzfKeyEvent&) override final;
+    bool        doKeyRelease(const BzfKeyEvent&) override final;
+    void        doRender() override;
 
 private:
     std::string     string;

@@ -21,7 +21,7 @@
 // Inherits
 #include "SceneNode.h"
 
-class FlagWarpSceneNode : public SceneNode
+class FlagWarpSceneNode final : public SceneNode
 {
 public:
     FlagWarpSceneNode(const GLfloat pos[3]);
@@ -29,14 +29,14 @@ public:
 
     void        setSizeFraction(GLfloat);
 
-    GLfloat     getDistance(const GLfloat*) const;
+    GLfloat     getDistance(const GLfloat*) const override;
     void        move(const GLfloat pos[3]);
 
-    void        notifyStyleChange();
-    void        addRenderNodes(SceneRenderer&);
+    void        notifyStyleChange() override;
+    void        addRenderNodes(SceneRenderer&) override;
 
 protected:
-    class FlagWarpRenderNode : public RenderNode
+    class FlagWarpRenderNode final : public RenderNode
     {
     public:
         FlagWarpRenderNode(const FlagWarpSceneNode*);

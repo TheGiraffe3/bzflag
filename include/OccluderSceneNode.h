@@ -24,7 +24,7 @@
 // common implementation headers
 #include "MeshFace.h"
 
-class OccluderSceneNode : public SceneNode
+class OccluderSceneNode final : public SceneNode
 {
 
 public:

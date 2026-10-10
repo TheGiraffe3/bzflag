@@ -20,7 +20,7 @@
 // Inherits from
 #include "SceneNode.h"
 
-class LaserSceneNode : public SceneNode
+class LaserSceneNode final : public SceneNode
 {
 public:
     LaserSceneNode(const GLfloat pos[3],
@@ -29,10 +29,10 @@ public:
 
     void        setTexture(const int);
 
-    bool        cull(const ViewFrustum&) const;
+    bool        cull(const ViewFrustum&) const override;
 
-    void        notifyStyleChange();
-    void        addRenderNodes(SceneRenderer&);
+    void        notifyStyleChange() override;
+    void        addRenderNodes(SceneRenderer&) override;
 
     void        setColor ( float r, float g, float b );
     void        setCenterColor ( float r, float g, float b );
@@ -42,7 +42,7 @@ public:
     }
 
 protected:
-    class LaserRenderNode : public RenderNode
+    class LaserRenderNode final : public RenderNode
     {
     public:
         LaserRenderNode(const LaserSceneNode*);

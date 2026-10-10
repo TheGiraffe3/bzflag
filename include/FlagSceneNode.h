@@ -19,7 +19,7 @@
 // Inherits from
 #include "SceneNode.h"
 
-class FlagSceneNode : public SceneNode
+class FlagSceneNode final : public SceneNode
 {
 public:
     FlagSceneNode(const GLfloat pos[3]);
@@ -49,7 +49,7 @@ public:
     bool        cullShadow(int planeCount,
                            const float (*planes)[4]) const override;
 protected:
-    class FlagRenderNode : public RenderNode
+    class FlagRenderNode final : public RenderNode
     {
     public:
         FlagRenderNode(const FlagSceneNode*);

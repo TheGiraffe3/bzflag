@@ -23,7 +23,7 @@
 #include "WorldInfo.h"
 
 
-class CustomCone : public WorldFileObstacle
+class CustomCone final : public WorldFileObstacle
 {
 public:
     CustomCone(bool pyramidStyle);

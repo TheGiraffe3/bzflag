@@ -19,14 +19,14 @@
 /* common headers */
 #include "TextureMatrix.h"
 
-class CustomTextureMatrix : public WorldFileObject
+class CustomTextureMatrix final : public WorldFileObject
 {
 public:
     CustomTextureMatrix();
     ~CustomTextureMatrix();
-    virtual bool read(const char *cmd, std::istream& input);
-    virtual void writeToManager() const;
-    bool usesManager()
+    bool read(const char *cmd, std::istream& input) override;
+    void writeToManager() const override;
+    bool usesManager() override
     {
         return true;
     }

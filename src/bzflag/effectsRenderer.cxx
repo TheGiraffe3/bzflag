@@ -28,8 +28,8 @@ public:
     StdSpawnEffect();
     virtual ~StdSpawnEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 protected:
     int texture;
@@ -38,20 +38,20 @@ protected:
     float radius;
 };
 
-class ConeSpawnEffect : public StdSpawnEffect
+class ConeSpawnEffect final : public StdSpawnEffect
 {
 public:
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 };
 
-class RingSpawnEffect : public StdSpawnEffect
+class RingSpawnEffect final : public StdSpawnEffect
 {
 public:
     RingSpawnEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 private:
     void drawRing(int n, float coreAlpha);
@@ -66,8 +66,8 @@ public:
     StdShotEffect();
     virtual ~StdShotEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 protected:
     int texture;
@@ -76,26 +76,26 @@ protected:
     float radius;
 };
 
-class FlashShotEffect : public StdShotEffect
+class FlashShotEffect final : public StdShotEffect
 {
 public:
     FlashShotEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 private:
     float length;
 };
 
-class RingsDeathEffect : public DeathEffect
+class RingsDeathEffect final : public DeathEffect
 {
 public:
     RingsDeathEffect();
     virtual ~RingsDeathEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 protected:
     int texture;
@@ -104,32 +104,32 @@ protected:
     float radius;
 };
 
-class SquishDeathEffect : public DeathEffect
+class SquishDeathEffect final : public DeathEffect
 {
 public:
     SquishDeathEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
-    virtual bool SetDeathRenderParams ( TankDeathOverride::DeathParams &params);
-    virtual bool GetDeathVector( fvec3 & v );
-    virtual bool ShowExplosion ( void )
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
+    bool SetDeathRenderParams ( TankDeathOverride::DeathParams &params) override;
+    bool GetDeathVector( fvec3 & v ) override;
+    bool ShowExplosion ( void ) override
     {
         return false;
     }
 protected:
 };
 
-class FadeToHeaven : public DeathEffect
+class FadeToHeaven final : public DeathEffect
 {
 public:
     FadeToHeaven();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
-    virtual bool SetDeathRenderParams ( TankDeathOverride::DeathParams &params);
-    virtual bool GetDeathVector( fvec3 & v );
-    virtual bool ShowExplosion ( void )
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
+    bool SetDeathRenderParams ( TankDeathOverride::DeathParams &params) override;
+    bool GetDeathVector( fvec3 & v ) override;
+    bool ShowExplosion ( void ) override
     {
         return false;
     }
@@ -138,14 +138,14 @@ protected:
     bool done;
 };
 
-class SpikesDeathEffect : public DeathEffect
+class SpikesDeathEffect final : public DeathEffect
 {
 public:
     SpikesDeathEffect();
     virtual ~SpikesDeathEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 protected:
     int texture;
@@ -167,14 +167,14 @@ protected:
 };
 
 
-class StdLandEffect : public BasicEffect
+class StdLandEffect final : public BasicEffect
 {
 public:
     StdLandEffect();
     virtual ~StdLandEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 protected:
     int texture;
@@ -183,14 +183,14 @@ protected:
     float radius;
 };
 
-class StdGMPuffEffect : public BasicEffect
+class StdGMPuffEffect final : public BasicEffect
 {
 public:
     StdGMPuffEffect();
     virtual ~StdGMPuffEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 protected:
     int texture;
     OpenGLGState ringState;
@@ -198,14 +198,14 @@ protected:
     float radius;
 };
 
-class SmokeGMPuffEffect : public BasicEffect
+class SmokeGMPuffEffect final : public BasicEffect
 {
 public:
     SmokeGMPuffEffect();
     virtual ~SmokeGMPuffEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 
 protected:
     int texture;
@@ -217,14 +217,14 @@ protected:
     float u,v,du,dv;
 };
 
-class StdRicoEffect : public BasicEffect
+class StdRicoEffect final : public BasicEffect
 {
 public:
     StdRicoEffect();
     virtual ~StdRicoEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 protected:
     int texture;
     OpenGLGState ringState;
@@ -232,14 +232,14 @@ protected:
     float radius;
 };
 
-class StdShotTeleportEffect : public BasicEffect
+class StdShotTeleportEffect final : public BasicEffect
 {
 public:
     StdShotTeleportEffect();
     virtual ~StdShotTeleportEffect();
 
-    virtual bool update ( float time );
-    virtual void draw ( const SceneRenderer& sr );
+    bool update ( float time ) override;
+    void draw ( const SceneRenderer& sr ) override;
 protected:
     int texture;
     OpenGLGState ringState;
@@ -299,7 +299,7 @@ void EffectsRenderer::update(void)
 
 void EffectsRenderer::draw(const SceneRenderer& sr)
 {
-    // really should check here for only the things that are VISIBILE!!!
+    // really should check here for only the things that are VISIBLE!!!
 
     for ( unsigned int i = 0; i < effectsList.size(); i++ )
         effectsList[i]->draw(sr);

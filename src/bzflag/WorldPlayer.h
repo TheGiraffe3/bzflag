@@ -13,25 +13,29 @@
 #ifndef BZF_WORLD_PLAYER_H
 #define BZF_WORLD_PLAYER_H
 
-#include "common.h"
+// Inherits from
 #include "Player.h"
-#include "ShotPath.h"
+
+// System headers
 #include <vector>
 
-class WorldPlayer : public Player
+// Local headers
+#include "ShotPath.h"
+
+class WorldPlayer final : public Player
 {
 public:
     WorldPlayer();
     ~WorldPlayer();
 
     void        addShot(const FiringInfo&);
-    ShotPath*       getShot(int index) const;
+    ShotPath*       getShot(int index) const override;
     void        updateShots(float dt);
-    int         getMaxShots() const;
-    void        addShots(SceneDatabase* scene, bool colorblind) const;
+    int         getMaxShots() const override;
+    void        addShots(SceneDatabase* scene, bool colorblind) const override;
 
 private:
-    bool        doEndShot(int index, bool isHit, float* pos);
+    bool        doEndShot(int index, bool isHit, float* pos) override;
 
 private:
     std::vector<RemoteShotPath*> shots;

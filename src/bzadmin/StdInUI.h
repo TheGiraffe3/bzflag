@@ -13,26 +13,28 @@
 #ifndef STDINUI_H
 #define STDINUI_H
 
-#include "common.h"
+// Inherits from
+#include "BZAdminUI.h"
 
 /* system interface headers */
 #include <string>
 
 /* common interface headers */
 #include "Address.h"
-#include "BZAdminUI.h"
 #include "global.h"
+
+// Local headers
 #include "UIMap.h"
 
 
 /** This class is an interface for bzadmin that reads commands from stdin. */
-class StdInUI : public BZAdminUI
+class StdInUI final : public BZAdminUI
 {
 public:
 
     StdInUI(BZAdminClient& c);
 
-    bool checkCommand(std::string& str);
+    bool checkCommand(std::string& str) override;
 
     /** This function returns a pointer to a dynamically allocated
         StdInUI object. */

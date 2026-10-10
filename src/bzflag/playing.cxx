@@ -1873,13 +1873,13 @@ static void loadCachedWorld()
     downloadingInitialTexture  = true;
 }
 
-class WorldDownLoader : cURLManager
+class WorldDownLoader final : cURLManager
 {
 public:
     void start(char * hexDigest);
 private:
     void askToBZFS();
-    virtual void finalization(char *data, unsigned int length, bool good);
+    void finalization(char *data, unsigned int length, bool good) override;
 };
 
 void WorldDownLoader::start(char * hexDigest)
@@ -3511,11 +3511,20 @@ static void     handlePlayerMessage(uint16_t code, uint16_t,
     {
         ShotUpdate shot;
         msg = shot.unpack(msg);
-        Player* tank = lookupPlayer(shot.player);
+        PlayerId playerId = shot.player;
+        Player* tank = lookupPlayer(playerId);
         if (!tank || tank == myTank) break;
-        RemotePlayer* remoteTank = (RemotePlayer*)tank;
-        RemoteShotPath* shotPath =
-            (RemoteShotPath*)remoteTank->getShot(shot.id);
+        RemoteShotPath* shotPath;
+        if (playerId == ServerPlayer)
+        {
+            WorldPlayer* remotePlayer = static_cast<WorldPlayer*>(tank);
+            shotPath = (RemoteShotPath*)remotePlayer->getShot(shot.id);
+        }
+        else
+        {
+            RemotePlayer* remoteTank = (RemotePlayer*)tank;
+            shotPath = (RemoteShotPath*)remoteTank->getShot(shot.id);
+        }
         if (shotPath) shotPath->update(shot, code, msg);
         PlayerId targetId;
         msg = nboUnpackUByte(msg, targetId);
@@ -5022,7 +5031,7 @@ static void enteringServer(const void *buf)
     std::string teamMsg;
     if (myTank->getTeam() != AutomaticTeam)
     {
-        teamMsg = TextUtils::format("%s team was unavailable, you were joined ",
+        teamMsg = TextUtils::format("%s was unavailable, you were joined ",
                                     Team::getName(myTank->getTeam()));
         if ((TeamColor)team == ObserverTeam)
             teamMsg += "as an Observer";
@@ -6629,7 +6638,7 @@ enum MouseCtrlType
 {
     NoCtrl,
     ShiftX, // left/right
-    ShiftY, // backwards/forewards
+    ShiftY, // backwards/forwards
     ShiftZ, // up/down
     SpinX,  // tilt (phi)
     SpinY,  // -- not used --

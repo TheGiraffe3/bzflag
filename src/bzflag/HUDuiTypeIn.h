@@ -18,20 +18,20 @@
 #ifndef __HUDUITYPEIN_H__
 #define __HUDUITYPEIN_H__
 
-#include "common.h"
+// Inherits from
+#include "HUDuiControl.h"
 
 /* system interface headers */
 #include <string>
 
 /* common interface headers */
 #include "BzfEvent.h"
-#include "HUDuiControl.h"
 
 
 typedef std::string (*TypeInColorFunc)(const std::string&);
 
 
-class HUDuiTypeIn : public HUDuiControl
+class HUDuiTypeIn final : public HUDuiControl
 {
 public:
     HUDuiTypeIn();
@@ -50,9 +50,9 @@ public:
     }
 
 protected:
-    bool        doKeyPress(const BzfKeyEvent&);
-    bool        doKeyRelease(const BzfKeyEvent&);
-    void        doRender();
+    bool        doKeyPress(const BzfKeyEvent&) override;
+    bool        doKeyRelease(const BzfKeyEvent&) override;
+    void        doRender() override;
 
 private:
     size_t          maxLength;

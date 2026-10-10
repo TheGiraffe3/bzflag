@@ -19,18 +19,18 @@
 
 #include "PlatformFactory.h"
 
-class SdlPlatformFactory : public PlatformFactory
+class SdlPlatformFactory final : public PlatformFactory
 {
 public:
     SdlPlatformFactory();
     ~SdlPlatformFactory();
 
-    BzfDisplay*       createDisplay(const char* name, const char*);
-    BzfVisual*        createVisual(const BzfDisplay*);
-    BzfWindow*        createWindow(const BzfDisplay*, BzfVisual*);
-    BzfMedia*     createMedia();
-    BzfJoystick*      createJoystick();
-    std::string       getClipboard();
+    BzfDisplay*       createDisplay(const char* name, const char*) override;
+    BzfVisual*        createVisual(const BzfDisplay*) override;
+    BzfWindow*        createWindow(const BzfDisplay*, BzfVisual*) override;
+    BzfMedia*     createMedia() override;
+    BzfJoystick*      createJoystick() override;
+    std::string       getClipboard() override;
 
 private:
     SdlPlatformFactory(const SdlPlatformFactory&);

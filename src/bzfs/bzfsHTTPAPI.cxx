@@ -21,7 +21,7 @@
 #include <time.h>
 #include <cstdlib>
 
-// implementation wrapers for all the bzf_ API functions
+// implementation wrappers for all the bzf_ API functions
 #include "bzfsHTTPAPI.h"
 #include "WorldEventManager.h"
 #include "TextUtils.h"
@@ -407,14 +407,14 @@ BZF_API bool bzhttp_RemoveAllVdirs (bz_Plugin* plugin )
 void NewHTTPConnection ( bz_EventData *eventData );
 void CheckForZombies  ( void );
 
-class ConnectionEvent : public bz_EventHandler
+class ConnectionEvent final : public bz_EventHandler
 {
 public:
     ConnectionEvent()
     {
         plugin = NULL;
     }
-    virtual void process ( bz_EventData *eventData )
+    void process ( bz_EventData *eventData ) override
     {
         if (eventData->eventType == bz_eTickEvent)
             CheckForZombies();
@@ -423,14 +423,14 @@ public:
     }
 };
 
-class TickEvent : public bz_EventHandler
+class TickEvent final : public bz_EventHandler
 {
 public:
     TickEvent()
     {
         plugin = NULL;
     }
-    virtual void process (bz_EventData *)
+    void process (bz_EventData *) override
     {
         CheckForZombies();
     }
@@ -761,7 +761,7 @@ public:
             list[n] = std::string(d);
     }
 
-    virtual void URLDone (const char*, const void *data, unsigned int size, bool complete)
+    void URLDone (const char*, const void *data, unsigned int size, bool complete) override final
     {
         if (data && size)
             bzAuthReturnData += std::string((const char*)data,size);
@@ -816,19 +816,19 @@ public:
         }
     }
 
-    virtual void URLTimeout ( const char* UNUSED(URL), int UNUSED(errorCode) )
+    void URLTimeout ( const char* UNUSED(URL), int UNUSED(errorCode) ) override final
     {
         bzIDAuthComplete = true;
         bzIDAuthFailed = true;
     }
 
-    virtual void URLError ( const char* UNUSED(URL), int UNUSED(errorCode), const char * UNUSED(errorString) )
+    void URLError ( const char* UNUSED(URL), int UNUSED(errorCode), const char * UNUSED(errorString) ) override final
     {
         bzIDAuthComplete = true;
         bzIDAuthFailed = true;
     }
 
-    virtual void pending(int connectionID, void *data, unsigned int size)
+    void pending(int connectionID, void *data, unsigned int size) override final
     {
         RequestData.append(static_cast<char const*>(data), size);
 
@@ -1568,7 +1568,7 @@ public:
         }
     }
 
-    virtual void disconnect(int connectionID)
+    void disconnect(int connectionID) override final
     {
         if (!connectionID)
             return;
@@ -1620,7 +1620,7 @@ protected:
     std::string RequestData;
 };
 
-class ResourcePeer : public HTTPConnectedPeer
+class ResourcePeer final : public HTTPConnectedPeer
 {
 public:
     std::string File;
@@ -1631,7 +1631,7 @@ public:
         Mime = "application/octet-stream";
     }
 
-    virtual bzhttp_ePageGenStatus GetPage ()
+    bzhttp_ePageGenStatus GetPage () override
     {
         if (!File.size())
             return eNoPage;
@@ -1679,7 +1679,7 @@ public:
 std::map<int,HTTPConnectedPeer*> HTTPPeers;
 
 // index handler
-class HTTPIndexHandler: public bzhttp_VDir
+class HTTPIndexHandler final : public bzhttp_VDir
 {
 public:
     HTTPIndexHandler() : bzhttp_VDir()
@@ -1690,12 +1690,12 @@ public:
         AddStandardTypes();
     }
 
-    virtual const char* VDirName()
+    const char* VDirName() override
     {
         return "INDEX";
     }
 
-    virtual bzhttp_ePageGenStatus GeneratePage (const bzhttp_Request &, bzhttp_Response &response)
+    bzhttp_ePageGenStatus GeneratePage (const bzhttp_Request &, bzhttp_Response &response) override
     {
         response.ReturnCode = e200OK;
         response.DocumentType = eHTML;
@@ -1724,7 +1724,7 @@ public:
         return ePageDone;
     }
 
-    virtual bool AllowResourceDownloads ( void )
+    bool AllowResourceDownloads ( void ) override
     {
         return ResourceDirs.size() > 0;
     }
@@ -2341,7 +2341,7 @@ void processIF ( std::string &code, std::string::const_iterator &inItr, const st
         itr = findNextTag(checkKeys,keyFound,elseSection,itr,str);
     }
 
-    // test the if, stuff that dosn't exist is false
+    // test the if, stuff that doesn't exist is false
     if (CallIF(commandParts[1],param,info.Callback))
         code += processTemplate(trueSection,info);
     else

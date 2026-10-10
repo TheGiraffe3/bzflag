@@ -21,7 +21,7 @@
 // Inherits from
 #include "EighthDimSceneNode.h"
 
-class EighthDPyrSceneNode : public EighthDimSceneNode
+class EighthDPyrSceneNode final : public EighthDimSceneNode
 {
 public:
     EighthDPyrSceneNode(const float pos[3],
@@ -32,7 +32,7 @@ public:
     void        addRenderNodes(SceneRenderer&) override;
 
 protected:
-    class EighthDPyrRenderNode : public RenderNode
+    class EighthDPyrRenderNode final : public RenderNode
     {
     public:
         EighthDPyrRenderNode(const EighthDPyrSceneNode*,

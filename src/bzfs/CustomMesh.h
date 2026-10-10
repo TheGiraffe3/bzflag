@@ -29,7 +29,7 @@
 #include "CustomMeshFace.h"
 
 
-class CustomMesh : public WorldFileObstacle
+class CustomMesh final : public WorldFileObstacle
 {
 public:
     CustomMesh();

@@ -13,23 +13,23 @@
 #ifndef BZF_SERVERAUTH_H
 #define BZF_SERVERAUTH_H
 
-#include "common.h"
+// Inherits from
+#include "cURLManager.h"
 
 /* system interface headers */
 #include <vector>
 
 /* common interface headers */
 #include "StartupInfo.h"
-#include "cURLManager.h"
 
-class ServerAuth : cURLManager
+class ServerAuth final : cURLManager
 {
 public:
     ServerAuth();
     virtual ~ServerAuth();
 
     void requestToken(StartupInfo *info);
-    void finalization(char *data, unsigned int length, bool good);
+    void finalization(char *data, unsigned int length, bool good) override;
 
 private:
     StartupInfo *startupInfo;

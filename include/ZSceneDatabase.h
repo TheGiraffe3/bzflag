@@ -20,7 +20,7 @@
 // Inherits from
 #include "SceneDatabase.h"
 
-class ZSceneDatabase : public SceneDatabase
+class ZSceneDatabase final : public SceneDatabase
 {
     friend class ZSceneIterator;
 public:
@@ -28,24 +28,24 @@ public:
     ~ZSceneDatabase();
 
     // returns true if the node would have been deleted
-    bool        addStaticNode(SceneNode*, bool dontFree);
-    void        addDynamicNode(SceneNode*);
-    void        addDynamicSphere(SphereSceneNode*);
-    void        finalizeStatics();
-    void        removeDynamicNodes();
-    void        removeAllNodes();
-    bool        isOrdered();
+    bool        addStaticNode(SceneNode*, bool dontFree) override;
+    void        addDynamicNode(SceneNode*) override;
+    void        addDynamicSphere(SphereSceneNode*) override;
+    void        finalizeStatics() override;
+    void        removeDynamicNodes() override;
+    void        removeAllNodes() override;
+    bool        isOrdered() override;
 
-    void        updateNodeStyles();
-    void        addLights(SceneRenderer& renderer);
-    void        addShadowNodes(SceneRenderer &renderer);
-    void        addRenderNodes(SceneRenderer& renderer);
-    void        renderRadarNodes(const ViewFrustum&);
+    void        updateNodeStyles() override;
+    void        addLights(SceneRenderer& renderer) override;
+    void        addShadowNodes(SceneRenderer &renderer) override;
+    void        addRenderNodes(SceneRenderer& renderer) override;
+    void        renderRadarNodes(const ViewFrustum&) override;
 
-    void        drawCuller();
-    void        setOccluderManager(int);
+    void        drawCuller() override;
+    void        setOccluderManager(int) override;
 
-    const Extents*  getVisualExtents() const;
+    const Extents*  getVisualExtents() const override;
 
 private:
     void        setupCullList();

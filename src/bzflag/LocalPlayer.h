@@ -66,7 +66,7 @@ public:
     float     getFlagShakingTime() const;
     int       getFlagShakingWins() const;
     const float*  getAntidoteLocation() const;
-    ShotPath* getShot(int index) const;
+    ShotPath* getShot(int index) const override final;
     const Player* getTarget() const;
     int       getDeathPhysicsDriver() const;
     const std::vector<const Obstacle*>& getInsideBuildings() const;
@@ -77,7 +77,7 @@ public:
     void      setPause(bool = true);
     void      activateAutoPilot(bool = true);
     bool      fireShot();
-    void      explodeTank();
+    void      explodeTank() override;
     void      doJump();
     void      setJump();
     void      setJumpPressed(bool value);
@@ -94,9 +94,9 @@ public:
 
     void      restart(const float* pos, float azimuth);
     bool      checkHit(const Player* source, const ShotPath*& hit,
-                       float& minTime) const;
-    void      setFlag(FlagType*);
-    void      changeScore(short deltaWins, short deltaLosses, short deltaTeamKills);
+                       float& minTime) const override final;
+    void      setFlag(FlagType*) override final;
+    void      changeScore(short deltaWins, short deltaLosses, short deltaTeamKills) override final;
 
     void      addAntidote(SceneDatabase*);
 
@@ -124,9 +124,9 @@ public:
                            float* normal) const;
 
 protected:
-    bool      doEndShot(int index, bool isHit, float* pos);
-    void      doUpdate(float dt);
-    void      doUpdateMotion(float dt);
+    bool      doEndShot(int index, bool isHit, float* pos) override final;
+    void      doUpdate(float dt) override;
+    void      doUpdateMotion(float dt) override;
     void      doMomentum(float dt, float& speed, float& angVel);
     void      doFriction(float dt, const float *oldVelocity, float *newVelocity);
     void      doForces(float dt, float* velocity, float& angVel);

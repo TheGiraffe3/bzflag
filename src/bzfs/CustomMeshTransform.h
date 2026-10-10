@@ -19,14 +19,14 @@
 /* common headers */
 #include "MeshTransform.h"
 
-class CustomMeshTransform : public WorldFileObject
+class CustomMeshTransform final : public WorldFileObject
 {
 public:
     CustomMeshTransform();
     ~CustomMeshTransform();
-    virtual bool read(const char *cmd, std::istream& input);
-    virtual void writeToManager() const;
-    bool usesManager()
+    bool read(const char *cmd, std::istream& input) override;
+    void writeToManager() const override;
+    bool usesManager() override
     {
         return true;
     }

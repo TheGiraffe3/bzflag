@@ -15,13 +15,13 @@
 
 #include "ObstacleSceneNodeGenerator.h"
 
-class EmptySceneNodeGenerator : public ObstacleSceneNodeGenerator
+class EmptySceneNodeGenerator final : public ObstacleSceneNodeGenerator
 {
 public:
     virtual     ~EmptySceneNodeGenerator();
 
-    virtual WallSceneNode* getNextNode(float uRepeats, float vRepeats,
-                                       bool lod);
+    WallSceneNode* getNextNode(float uRepeats, float vRepeats,
+                               bool lod) override;
 };
 
 #endif

@@ -21,7 +21,7 @@
 // Inherit from
 #include "EighthDimSceneNode.h"
 
-class EighthDBaseSceneNode : public EighthDimSceneNode
+class EighthDBaseSceneNode final : public EighthDimSceneNode
 {
 public:
     EighthDBaseSceneNode(const float pos[3],
@@ -30,7 +30,7 @@ public:
     void        notifyStyleChange() override;
     void        addRenderNodes(SceneRenderer&) override;
 protected:
-    class EighthDBaseRenderNode : public RenderNode
+    class EighthDBaseRenderNode final : public RenderNode
     {
     public:
         EighthDBaseRenderNode(const EighthDBaseSceneNode *,

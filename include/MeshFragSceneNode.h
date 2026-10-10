@@ -35,7 +35,7 @@
 
 class MeshFace;
 
-class MeshFragSceneNode : public WallSceneNode
+class MeshFragSceneNode final : public WallSceneNode
 {
 
 public:
@@ -55,7 +55,7 @@ public:
     void getRenderNodes(std::vector<RenderSet>& rnodes) override;
 
 protected:
-    class Geometry : public RenderNode
+    class Geometry final : public RenderNode
     {
     public:
         Geometry(MeshFragSceneNode &node);

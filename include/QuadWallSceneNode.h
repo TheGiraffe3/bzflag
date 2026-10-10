@@ -20,7 +20,7 @@
 // Inherits from
 #include "WallSceneNode.h"
 
-class QuadWallSceneNode : public WallSceneNode
+class QuadWallSceneNode final : public WallSceneNode
 {
 public:
     QuadWallSceneNode(const GLfloat base[3],
@@ -40,19 +40,19 @@ public:
                       bool makeLODs);
     ~QuadWallSceneNode();
 
-    int         split(const float*, SceneNode*&, SceneNode*&) const;
+    int         split(const float*, SceneNode*&, SceneNode*&) const override;
 
-    void        addRenderNodes(SceneRenderer&);
-    void        addShadowNodes(SceneRenderer&);
-    void        renderRadar();
+    void        addRenderNodes(SceneRenderer&) override;
+    void        addShadowNodes(SceneRenderer&) override;
+    void        renderRadar() override;
 
 
-    bool        inAxisBox (const Extents& exts) const;
+    bool        inAxisBox (const Extents& exts) const override;
 
-    int         getVertexCount () const;
-    const       GLfloat* getVertex (int vertex) const;
+    int         getVertexCount () const override;
+    const       GLfloat* getVertex (int vertex) const override;
 
-    virtual void    getRenderNodes(std::vector<RenderSet>& rnodes);
+    void    getRenderNodes(std::vector<RenderSet>& rnodes) override;
 
 private:
     void        init(const GLfloat base[3],
@@ -65,7 +65,7 @@ private:
                      bool makeLODs, bool fixedUVs);
 
 protected:
-    class Geometry : public RenderNode
+    class Geometry final : public RenderNode
     {
     public:
         Geometry(QuadWallSceneNode*,

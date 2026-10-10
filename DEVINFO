@@ -339,6 +339,16 @@ A profile build is specified via:
 
 ./configure --enable-profile
 
+On GNU-Linux a more performant profiling tool is perf. Run
+"perf record bzflag" to collect data and then
+"perf report" to get a report.
+
+use "perf record -h" or "perf report -h" to get more info.
+
+You are encouraged to
+./configure --enable-framepointer --disable-debug --disable-profile ...
+for a good report.
+
 
 Sounds
 ======

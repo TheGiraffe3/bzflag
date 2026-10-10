@@ -13,7 +13,8 @@
 #ifndef __CUSTOMWEAPON_H__
 #define __CUSTOMWEAPON_H__
 
-#include "common.h"
+// Inherits from
+#include "WorldFileLocation.h"
 
 /* system interface headers */
 #include <iostream>
@@ -24,18 +25,17 @@
 #include "TimeKeeper.h"
 
 /* local interface headers */
-#include "WorldFileLocation.h"
 #include "WorldInfo.h"
 #include "WorldEventManager.h"
 
 
-class CustomWeapon : public WorldFileLocation
+class CustomWeapon final : public WorldFileLocation
 {
 public:
     CustomWeapon();
-    virtual bool read(const char *cmd, std::istream&);
-    virtual void writeToWorld(WorldInfo*) const;
-    virtual bool usesGroupDef()
+    bool read(const char *cmd, std::istream&) override;
+    void writeToWorld(WorldInfo*) const override;
+    bool usesGroupDef() override
     {
         return false;
     }

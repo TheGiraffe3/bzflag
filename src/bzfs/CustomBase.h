@@ -23,7 +23,7 @@
 #include "WorldInfo.h"
 
 
-class CustomBase : public WorldFileObstacle
+class CustomBase final : public WorldFileObstacle
 {
 public:
     CustomBase();

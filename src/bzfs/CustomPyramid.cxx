@@ -174,6 +174,16 @@ bool CustomPyramid::read(const char *cmd, std::istream& input)
         shootThrough = true; // for old pyramids
         return true;
     }
+    else if (strcasecmp(cmd, "ricochet") == 0)
+    {
+        for (int i = 0; i < faceCount; i++)
+        {
+            const int f = faceList[i];
+            ricochets[f] = true;
+        }
+        ricochet = true;
+        return true;
+    }
     else if (strcasecmp(cmd, "texsize") == 0)
     {
         isOldPyramid = false;

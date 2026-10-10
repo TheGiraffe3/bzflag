@@ -15,8 +15,8 @@
 #ifndef __LISTSERVERCONNECTION_H__
 #define __LISTSERVERCONNECTION_H__
 
-/* common header */
-#include "common.h"
+// Inherits from
+#include "cURLManager.h"
 
 /* system headers */
 #include <string>
@@ -25,9 +25,8 @@
 #include "Address.h"
 #include "Ping.h"
 #include "TimeKeeper.h"
-#include "cURLManager.h"
 
-class ListServerLink : cURLManager
+class ListServerLink final : cURLManager
 {
 public:
     // c'tor will fill list and local server information variables and
@@ -60,7 +59,7 @@ private:
     std::string publicizeDescription;
     std::string advertiseGroups;
 
-    virtual void finalization(char *data, unsigned int length, bool good);
+    void finalization(char *data, unsigned int length, bool good) override;
 
     // messages to send, used by sendQueuedMessages
     void addMe(PingPacket pingInfo, std::string publicizedAddress,

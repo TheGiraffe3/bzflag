@@ -13,12 +13,12 @@
 // interface header
 #include "SceneBuilder.h"
 
-// local implemenation headers
+// local implementation headers
 #include "ZSceneDatabase.h"
 #include "BSPSceneDatabase.h"
 #include "World.h"
 
-// scene node implemenation headers
+// scene node implementation headers
 #include "MeshPolySceneNode.h"
 #include "TankSceneNode.h"
 #include "BoxSceneNodeGenerator.h"

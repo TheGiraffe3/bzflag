@@ -56,7 +56,7 @@ public:
     virtual bool GetDeathVector ( fvec3 &/*vel*/ ) = 0;
 };
 
-class TankIDLSceneNode : public SceneNode
+class TankIDLSceneNode final : public SceneNode
 {
 public:
     TankIDLSceneNode(const TankSceneNode*);
@@ -76,7 +76,7 @@ public:
     //     SphereSceneNode isn't requesting access, it's granting it
 //  protected:
 public:
-    class IDLRenderNode : public RenderNode
+    class IDLRenderNode final : public RenderNode
     {
     public:
         IDLRenderNode(const TankIDLSceneNode*);
@@ -97,7 +97,7 @@ private:
     IDLRenderNode   renderNode;
 };
 
-class TankSceneNode : public SceneNode
+class TankSceneNode final : public SceneNode
 {
     friend class TankIDLSceneNode;
     friend class TankIDLSceneNode::IDLRenderNode;
@@ -133,16 +133,16 @@ public:
     void        rebuildExplosion();
     void        addTreadOffsets(float left, float right);
 
-    void        notifyStyleChange();
-    void        addRenderNodes(SceneRenderer&);
-    void        addShadowNodes(SceneRenderer&);
+    void        notifyStyleChange() override;
+    void        addRenderNodes(SceneRenderer&) override;
+    void        addShadowNodes(SceneRenderer&) override;
 
     bool        cullShadow(int planeCount,
-                           const float (*planes)[4]) const;
+                           const float (*planes)[4]) const override;
 
-    void        addLight(SceneRenderer&);
+    void        addLight(SceneRenderer&) override;
 
-    void        renderRadar();
+    void        renderRadar() override;
 
     static void     setMaxLOD(int maxLevel);
 
@@ -159,7 +159,7 @@ public:
 protected:
     TankDeathOverride   *deathOverride;
 
-    class TankRenderNode : public RenderNode
+    class TankRenderNode final : public RenderNode
     {
     public:
         TankRenderNode(const TankSceneNode*);

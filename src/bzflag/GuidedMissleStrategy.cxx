@@ -227,7 +227,7 @@ void GuidedMissileStrategy::update(float dt)
         lastPuff = currentTime;
         addShotPuff(nextPos,azimuth,elevation);
 
-        // pick a new time for the next puff so it's not so orderd.
+        // pick a new time for the next puff so it's not so ordered.
         puffTime = (float)bzfrand()*rootPuff;
     }
 

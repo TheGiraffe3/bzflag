@@ -13,9 +13,7 @@
 #ifndef __INPUTMENU_H__
 #define __INPUTMENU_H__
 
-#include "common.h"
-
-/* common interface headers */
+// Inherits from
 #include "HUDDialog.h"
 
 /* local interface headers */
@@ -29,18 +27,18 @@
 
 /** this class provides options for setting the gui
  */
-class InputMenu : public HUDDialog
+class InputMenu final : public HUDDialog
 {
 public:
     InputMenu();
     ~InputMenu();
 
-    HUDuiDefaultKey* getDefaultKey()
+    HUDuiDefaultKey* getDefaultKey() override
     {
         return MenuDefaultKey::getInstance();
     }
-    void execute();
-    void resize(int width, int height);
+    void execute() override;
+    void resize(int width, int height) override;
     static void callback(HUDuiControl* w, const void* data);
 
     void fillJSOptions();

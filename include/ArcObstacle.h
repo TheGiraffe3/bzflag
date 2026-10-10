@@ -29,7 +29,7 @@
 #include "BzMaterial.h"
 
 
-class ArcObstacle : public Obstacle
+class ArcObstacle final : public Obstacle
 {
 public:
 
@@ -44,51 +44,31 @@ public:
         MaterialCount
     };
 
-    ArcObstacle();
+    ArcObstacle() = default;
     ArcObstacle(const MeshTransform& transform,
                 const float* _pos, const float* _size,
                 float _rotation, float _angle, float _ratio,
                 const float _texsize[4], bool _useNormals,
                 int _divisions, const BzMaterial* mats[MaterialCount],
                 int physics, bool bounce, bool drive, bool shoot, bool ricochet);
-    ~ArcObstacle();
+    ~ArcObstacle() = default;
 
-    Obstacle* copyWithTransform(const MeshTransform&) const;
+    Obstacle* copyWithTransform(const MeshTransform&) const override;
 
     MeshObstacle* makeMesh();
 
-    const char* getType() const;
+    const char* getType() const override;
     static const char* getClassName(); // const
-    bool isValid() const;
-    bool isFlatTop() const;
+    bool isValid() const override;
+    bool isFlatTop() const override;
 
-    float intersect(const Ray&) const;
-    void getNormal(const float* p, float* n) const;
-    void get3DNormal(const float* p, float* n) const;
+    int packSize() const override;
+    void *pack(void*) const override;
+    const void *unpack(const void*) override;
 
-    bool inCylinder(const float* p, float radius, float height) const;
-    bool inBox(const float* p, float angle,
-               float halfWidth, float halfBreadth, float height) const;
-    bool inMovingBox(const float* oldP, float oldAngle,
-                     const float *newP, float newAngle,
-                     float halfWidth, float halfBreadth, float height) const;
-    bool isCrossing(const float* p, float angle,
-                    float halfWidth, float halfBreadth, float height,
-                    float* plane) const;
-
-    bool getHitNormal(const float* pos1, float azimuth1,
-                      const float* pos2, float azimuth2,
-                      float halfWidth, float halfBreadth,
-                      float height, float* normal) const;
-
-    int packSize() const;
-    void *pack(void*) const;
-    const void *unpack(const void*);
-
-    void print(std::ostream& out, const std::string& indent) const;
+    void print(std::ostream& out, const std::string& indent) const override;
 
 private:
-    void finalize();
     MeshObstacle* makePie(bool isCircle, float a, float r, float h,
                           float radius, float squish, float texsz[4]);
     MeshObstacle* makeRing(bool isCircle, float a, float r, float h,

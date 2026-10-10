@@ -13,30 +13,29 @@
 #ifndef __QUICKKEYSMENU_H__
 #define __QUICKKEYSMENU_H__
 
-// common - 1st one
-#include "common.h"
+// Inherits from
+#include "HUDDialog.h"
 
 /* system interface headers */
 #include <string>
 
 /* local interface headers */
-#include "HUDDialog.h"
 #include "HUDuiDefaultKey.h"
 #include "HUDuiLabel.h"
 #include "HUDuiTypeIn.h"
 
-class QuickKeysMenu : public HUDDialog
+class QuickKeysMenu final : public HUDDialog
 {
 public:
     QuickKeysMenu();
     ~QuickKeysMenu();
 
-    HUDuiDefaultKey* getDefaultKey();
+    HUDuiDefaultKey* getDefaultKey() override;
 
-    void show();
-    void dismiss();
-    void execute() {}
-    void resize(int width, int height);
+    void show() override;
+    void dismiss() override;
+    void execute() override {}
+    void resize(int width, int height) override;
 
 private:
     HUDuiLabel* createLabel(const std::string &);

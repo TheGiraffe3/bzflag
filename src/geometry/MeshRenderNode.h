@@ -31,8 +31,8 @@ public:
                      GLfloat *xformMatrix, bool normalize,
                      const GLfloat* color, int lod, int set,
                      const Extents* exts, int triangles);
-    void render() override;
-    void renderShadow() override;
+    void render() override final;
+    void renderShadow() override final;
     const GLfloat* getPosition() const override;
 private:
     void drawV() const;
@@ -50,7 +50,7 @@ private:
 };
 
 
-class AlphaGroupRenderNode : public OpaqueRenderNode
+class AlphaGroupRenderNode final : public OpaqueRenderNode
 {
 public:
     AlphaGroupRenderNode(MeshDrawMgr* drawMgr,

@@ -101,10 +101,10 @@ DisplayMenu::DisplayMenu() : formatMenu(NULL)
         option->setCallback(callback, "m");
         options = &option->getList();
         options->push_back(std::string("Off"));
-        for (int i = 2; i <= OpenGLGState::getMaxSamples(); i=i*2)
+        for (unsigned int i = 2; i <= OpenGLGState::getMaxSamples(); i=i*2)
         {
             char msaaText[11];
-            snprintf(msaaText, sizeof(msaaText), "%i", i);
+            snprintf(msaaText, sizeof(msaaText), "%u", i);
             options->push_back(std::string(msaaText) + "x MSAA");
         }
         option->update();

@@ -23,7 +23,7 @@
 // Common headers
 #include "OpenGLLight.h"
 
-class BoltSceneNode : public SceneNode
+class BoltSceneNode final : public SceneNode
 {
 public:
     BoltSceneNode(const GLfloat pos[3], const GLfloat vel[3], bool super);
@@ -59,7 +59,7 @@ public:
 protected:
     bool        isSuper;
 
-    class BoltRenderNode : public RenderNode
+    class BoltRenderNode final : public RenderNode
     {
     public:
         BoltRenderNode(const BoltSceneNode*);

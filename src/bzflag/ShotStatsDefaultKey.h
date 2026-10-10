@@ -13,20 +13,20 @@
 #ifndef __SHOTSTATSDEFAULTKEY_H__
 #define __SHOTSTATSDEFAULTKEY_H__
 
+// Inherits from
+#include "HUDuiDefaultKey.h"
+
 /* common interface headers */
 #include "BzfEvent.h"
 
-/* local interface headers */
-#include "HUDuiDefaultKey.h"
-
-class ShotStatsDefaultKey : public HUDuiDefaultKey
+class ShotStatsDefaultKey final : public HUDuiDefaultKey
 {
 public:
     ShotStatsDefaultKey();
     ~ShotStatsDefaultKey();
 
-    bool keyPress(const BzfKeyEvent&);
-    bool keyRelease(const BzfKeyEvent&);
+    bool keyPress(const BzfKeyEvent&) override;
+    bool keyRelease(const BzfKeyEvent&) override;
     static ShotStatsDefaultKey* getInstance();
 
 private:

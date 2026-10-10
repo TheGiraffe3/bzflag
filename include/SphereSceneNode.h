@@ -32,7 +32,7 @@ public:
     void setColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a = 1.0f);
     void setColor(const GLfloat* rgba);
     void move(const GLfloat pos[3], GLfloat radius);
-    void notifyStyleChange();
+    void notifyStyleChange() override final;
 
     virtual void setShockWave(bool)
     {
@@ -41,8 +41,8 @@ public:
 
     virtual SceneNode** getParts(int& numParts) = 0;
 
-    virtual void addRenderNodes(SceneRenderer&) = 0;
-    virtual void addShadowNodes(SceneRenderer&) = 0;
+    void addRenderNodes(SceneRenderer&) override = 0;
+    void addShadowNodes(SceneRenderer&) override = 0;
 
 protected:
     GLfloat     radius;
@@ -56,22 +56,22 @@ protected:
 
 const int sphereLods = 5;
 
-class SphereLodSceneNode : public SphereSceneNode
+class SphereLodSceneNode final : public SphereSceneNode
 {
 public:
     SphereLodSceneNode(const GLfloat pos[3], GLfloat radius);
     ~SphereLodSceneNode();
 
-    void setShockWave(bool value);
+    void setShockWave(bool value) override;
 
     // this node just won't split
-    SceneNode** getParts(int&)
+    SceneNode** getParts(int&) override
     {
         return NULL;
     }
 
-    void addRenderNodes(SceneRenderer&);
-    void addShadowNodes(SceneRenderer&);
+    void addRenderNodes(SceneRenderer&) override;
+    void addShadowNodes(SceneRenderer&) override;
 
     static void init();
     static void kill();
@@ -79,7 +79,7 @@ public:
     static void freeContext(void*);
 
 protected:
-    class SphereLodRenderNode : public RenderNode
+    class SphereLodRenderNode final : public RenderNode
     {
         friend class SphereLodSceneNode;
     public:
@@ -115,7 +115,7 @@ const int       SphereLowRes = 6;
 
 class SphereBspSceneNode;
 
-class SphereFragmentSceneNode : public SceneNode
+class SphereFragmentSceneNode final : public SceneNode
 {
 public:
     SphereFragmentSceneNode(int theta, int phi,
@@ -124,8 +124,8 @@ public:
 
     void        move();
 
-    void        addRenderNodes(SceneRenderer&);
-    void        addShadowNodes(SceneRenderer&);
+    void        addRenderNodes(SceneRenderer&) override;
+    void        addShadowNodes(SceneRenderer&) override;
 
     // Irix 7.2.1 and solaris compilers appear to have a bug.  if the
     // following declaration isn't public it generates an error when trying
@@ -137,7 +137,7 @@ public:
     //     SphereBspSceneNode isn't requesting access, it's granting it
 //  protected:
 public:
-    class FragmentRenderNode : public RenderNode
+    class FragmentRenderNode final : public RenderNode
     {
     public:
         FragmentRenderNode(const SphereBspSceneNode*,
@@ -158,7 +158,7 @@ private:
     FragmentRenderNode  renderNode;
 };
 
-class SphereBspSceneNode : public SphereSceneNode
+class SphereBspSceneNode final : public SphereSceneNode
 {
     friend class SphereFragmentSceneNode;
     friend class SphereFragmentSceneNode::FragmentRenderNode;
@@ -166,10 +166,10 @@ public:
     SphereBspSceneNode(const GLfloat pos[3], GLfloat radius);
     ~SphereBspSceneNode();
 
-    void        addRenderNodes(SceneRenderer&);
-    void        addShadowNodes(SceneRenderer&);
+    void        addRenderNodes(SceneRenderer&) override;
+    void        addShadowNodes(SceneRenderer&) override;
 
-    SceneNode**     getParts(int& numParts);
+    SceneNode**     getParts(int& numParts) override;
 
 protected:
     GLfloat     getRadius() const
@@ -181,7 +181,7 @@ private:
     void        freeParts();
 
 protected:
-    class SphereBspRenderNode : public RenderNode
+    class SphereBspRenderNode final : public RenderNode
     {
         friend class SphereBspSceneNode;
         friend class SphereFragmentSceneNode::FragmentRenderNode;

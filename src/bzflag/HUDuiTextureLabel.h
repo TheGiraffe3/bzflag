@@ -22,7 +22,7 @@
 #include "HUDuiLabel.h"
 #include "OpenGLGState.h"
 
-class HUDuiTextureLabel : public HUDuiLabel
+class HUDuiTextureLabel final : public HUDuiLabel
 {
 public:
     HUDuiTextureLabel();
@@ -32,7 +32,7 @@ public:
     int         getTexture() const;
 
 protected:
-    void        doRender();
+    void        doRender() override;
 
 private:
     OpenGLGState    gstate;

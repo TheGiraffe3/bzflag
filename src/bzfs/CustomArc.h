@@ -23,7 +23,7 @@
 #include "WorldInfo.h"
 
 
-class CustomArc : public WorldFileObstacle
+class CustomArc final : public WorldFileObstacle
 {
 public:
     CustomArc(bool boxStyle);

@@ -264,11 +264,11 @@ void WorldWeapons::fire()
         Weapon *w = *it;
         if (w->nextTime <= nowTime)
         {
-            FlagType type = *(w->type);   // non-const copy
+            FlagType* type = const_cast<FlagType*>(w->type);
 
             float vec[3] = { 0,0,0 };
             bz_vectorFromRotations(w->tilt, w->direction, vec);
-            fireShot(&type, w->origin, vec, nullptr, w->teamColor);
+            fireShot(type, w->origin, vec, nullptr, w->teamColor);
 
             //Set up timer for next shot, and eat any shots that have been missed
             while (w->nextTime <= nowTime)

@@ -16,14 +16,14 @@
 #include "ObstacleSceneNodeGenerator.h"
 #include "WallObstacle.h"
 
-class WallSceneNodeGenerator : public ObstacleSceneNodeGenerator
+class WallSceneNodeGenerator final : public ObstacleSceneNodeGenerator
 {
     friend class SceneDatabaseBuilder;
 
 public:
     ~WallSceneNodeGenerator();
 
-    WallSceneNode*  getNextNode(float, float, bool);
+    WallSceneNode*  getNextNode(float, float, bool) override;
 
 protected:
     WallSceneNodeGenerator(const WallObstacle*);

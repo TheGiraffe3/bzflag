@@ -23,7 +23,7 @@
 #include "WorldInfo.h"
 
 
-class CustomSphere : public WorldFileObstacle
+class CustomSphere final : public WorldFileObstacle
 {
 public:
     CustomSphere();

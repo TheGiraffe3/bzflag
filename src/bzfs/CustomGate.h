@@ -24,7 +24,7 @@
 #include "WorldInfo.h"
 
 
-class CustomGate : public WorldFileObstacle
+class CustomGate final : public WorldFileObstacle
 {
 public:
     CustomGate(const char* telename);

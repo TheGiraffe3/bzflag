@@ -407,7 +407,7 @@ void TextureMatrix::update (double t)
     if (!useDynamic)
     {
         // the matrix has already been setup with the
-        // static tranformations, or an identity matrix.
+        // static transformations, or an identity matrix.
         return;
     }
 

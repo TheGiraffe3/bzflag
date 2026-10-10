@@ -21,23 +21,23 @@
 // Inherits from
 #include "WallSceneNode.h"
 
-class PolyWallSceneNode : public WallSceneNode
+class PolyWallSceneNode final : public WallSceneNode
 {
 public:
     PolyWallSceneNode(const GLfloat3Array& vertices,
                       const GLfloat2Array& uvs);
     ~PolyWallSceneNode();
 
-    int         split(const float*, SceneNode*&, SceneNode*&) const;
+    int         split(const float*, SceneNode*&, SceneNode*&) const override;
 
-    void        addRenderNodes(SceneRenderer&);
-    void        addShadowNodes(SceneRenderer&);
-    void        renderRadar();
+    void        addRenderNodes(SceneRenderer&) override;
+    void        addShadowNodes(SceneRenderer&) override;
+    void        renderRadar() override;
 
-    void        getRenderNodes(std::vector<RenderSet>& rnodes);
+    void        getRenderNodes(std::vector<RenderSet>& rnodes) override;
 
 protected:
-    class Geometry : public RenderNode
+    class Geometry final : public RenderNode
     {
     public:
         Geometry(PolyWallSceneNode*,

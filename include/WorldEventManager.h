@@ -15,7 +15,7 @@
 ************************************
 * right now this just does team flag capture events for world weps
 * but it should be able to be expandable to store any type of event
-* for anything that can be triggerd.
+* for anything that can be triggered.
 */
 
 #ifndef WORLD_EVENT_MANAGER_H

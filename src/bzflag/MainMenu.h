@@ -13,9 +13,10 @@
 #ifndef __MAINMENU_H__
 #define __MAINMENU_H__
 
-#include "common.h"
-
+// Inherits from
 #include "HUDDialog.h"
+
+// Local headers
 #include "HUDuiControl.h"
 #include "HUDuiDefaultKey.h"
 
@@ -25,15 +26,15 @@ class QuitMenu;
 
 /** MainMenu is the main menu
  */
-class MainMenu : public HUDDialog
+class MainMenu final : public HUDDialog
 {
 public:
     MainMenu();
     ~MainMenu();
 
-    HUDuiDefaultKey* getDefaultKey();
-    void execute();
-    void resize(int width, int height);
+    HUDuiDefaultKey* getDefaultKey() override;
+    void execute() override;
+    void resize(int width, int height) override;
     void createControls();
 
     static int getFontFace();

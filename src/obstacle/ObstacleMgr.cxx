@@ -620,7 +620,7 @@ void GroupDefinition::makeGroups(const MeshTransform& xform,
 
             // the tele names are setup with default names if
             // they are not named (even for those in the world
-            // groupd def). invalid teleporters are also named
+            // grouped def). invalid teleporters are also named
             if (type == teleType)
                 makeTeleName(obs, i);
 

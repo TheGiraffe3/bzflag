@@ -18,7 +18,7 @@
 
 /** This class represents a SGI image file. It implements read() from
     ImageFile. */
-class SGIImageFile : public ImageFile
+class SGIImageFile final : public ImageFile
 {
 public:
     SGIImageFile(std::istream*);
@@ -28,7 +28,7 @@ public:
     static std::string    getExtension();
 
     /** This function reads image data from a SGI image file. */
-    virtual bool      read(void* buffer);
+    bool      read(void* buffer) override;
 
 protected:
     bool          readVerbatim(void* buffer);

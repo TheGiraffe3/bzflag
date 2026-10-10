@@ -13,12 +13,11 @@
 #ifndef __CACHEMENU_H__
 #define __CACHEMENU_H__
 
-#include "common.h"
-
+// Inherits from
+#include "HUDDialog.h"
 
 /* local interface headers */
 #include "MenuDefaultKey.h"
-#include "HUDDialog.h"
 #include "HUDuiLabel.h"
 #include "HUDuiTypeIn.h"
 #include "HUDuiDefaultKey.h"
@@ -26,19 +25,19 @@
 
 /** this class provides options for setting the gui
  */
-class CacheMenu : public HUDDialog
+class CacheMenu final : public HUDDialog
 {
 public:
     CacheMenu();
     ~CacheMenu();
 
-    HUDuiDefaultKey* getDefaultKey()
+    HUDuiDefaultKey* getDefaultKey() override
     {
         return MenuDefaultKey::getInstance();
     }
-    void execute();
-    void resize(int width, int height);
-    void setFailedMessage(const char* msg);
+    void execute() override;
+    void resize(int width, int height) override;
+    void setFailedMessage(const char* msg) override;
     static void callback(HUDuiControl* w, const void* data);
 
 private:

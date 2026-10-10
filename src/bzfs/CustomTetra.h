@@ -25,7 +25,7 @@
 /* local interface header */
 #include "WorldInfo.h"
 
-class CustomTetra : public WorldFileObstacle
+class CustomTetra final : public WorldFileObstacle
 {
 public:
     CustomTetra();

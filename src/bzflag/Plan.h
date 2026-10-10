@@ -97,75 +97,75 @@ private:
     std::stack<Plan *> plans;
 };
 
-class TopLevelPlan : public Plan
+class TopLevelPlan final : public Plan
 {
 public:
     TopLevelPlan();
 
-    virtual bool isValid();
-    virtual bool usesSubPlan();
-    virtual Plan *createSubPlan() ;
+    bool isValid() override;
+    bool usesSubPlan() override;
+    Plan *createSubPlan() override;
 };
 
-class GotoPointPlan : public Plan
+class GotoPointPlan final : public Plan
 {
 public:
     GotoPointPlan(float *pt);
 
-    virtual bool usesSubPlan();
-    virtual Plan *createSubPlan() ;
-    virtual void execute(float &rotation, float &speed);
+    bool usesSubPlan() override;
+    Plan *createSubPlan() override;
+    void execute(float &rotation, float &speed) override;
 
 private:
     float gotoPt[3];
 };
 
-class WeavePlan : public Plan
+class WeavePlan final : public Plan
 {
 public:
     WeavePlan(int pID, bool right );
 
-    virtual bool isValid();
-    virtual bool usesSubPlan();
-    virtual Plan* createSubPlan();
-    virtual void execute(float &rotation, float &speed);
+    bool isValid() override;
+    bool usesSubPlan() override;
+    Plan* createSubPlan() override;
+    void execute(float &rotation, float &speed) override;
 
 private:
     int playerID;
     bool weaveRight;
 };
 
-class HuntPlayerPlan : public Plan
+class HuntPlayerPlan final : public Plan
 {
 public:
     HuntPlayerPlan();
 
-    virtual bool isValid();
-    virtual bool usesSubPlan();
-    virtual Plan *createSubPlan();
+    bool isValid() override;
+    bool usesSubPlan() override;
+    Plan *createSubPlan() override;
 
 private:
     int playerID;
 };
 
-class HuntTeamFlagPlan : public Plan
+class HuntTeamFlagPlan final : public Plan
 {
 public:
     HuntTeamFlagPlan();
 
-    virtual bool isValid();
-    virtual bool usesSubPlan();
-    virtual Plan *createSubPlan();
+    bool isValid() override;
+    bool usesSubPlan() override;
+    Plan *createSubPlan() override;
 };
 
-class CaptureFlagPlan : public Plan
+class CaptureFlagPlan final : public Plan
 {
 public:
     CaptureFlagPlan();
 
-    virtual bool isValid();
-    virtual bool usesSubPlan();
-    virtual Plan *createSubPlan();
+    bool isValid() override;
+    bool usesSubPlan() override;
+    Plan *createSubPlan() override;
 };
 
 #endif

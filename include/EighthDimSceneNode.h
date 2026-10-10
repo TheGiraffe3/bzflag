@@ -25,7 +25,7 @@ class EighthDimSceneNode : public SceneNode
 public:
     ~EighthDimSceneNode();
 
-    bool        cull(const ViewFrustum&) const override;
+    bool        cull(const ViewFrustum&) const override final;
     void        notifyStyleChange() override;
     void        addRenderNodes(SceneRenderer&) override;
 
@@ -35,7 +35,7 @@ protected:
     void        setPolygon(int index, const GLfloat[3][3]);
 
 protected:
-    class EighthDimRenderNode : public RenderNode
+    class EighthDimRenderNode final : public RenderNode
     {
     public:
         EighthDimRenderNode(

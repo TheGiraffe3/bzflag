@@ -300,7 +300,7 @@ void GameKeeper::Player::signingOn(bool ctf)
 }
 
 
-// Attempt to retrive a slot number for a player specified as EITHER "callsign" or "#<slot>"
+// Attempt to retrieve a slot number for a player specified as EITHER "callsign" or "#<slot>"
 int GameKeeper::Player::getPlayerIDByName(const std::string &name)
 {
     Player* playerData(0);

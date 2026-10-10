@@ -23,7 +23,7 @@
 // Common headers
 #include "OpenGLLight.h"
 
-class BillboardSceneNode : public SceneNode
+class BillboardSceneNode final : public SceneNode
 {
 public:
     BillboardSceneNode(const GLfloat pos[3]);
@@ -55,13 +55,13 @@ public:
 
     void        move(const GLfloat pos[3]);
     void        setAngle(GLfloat);
-    void        addLight(SceneRenderer&);
+    void        addLight(SceneRenderer&) override;
 
-    void        notifyStyleChange();
-    void        addRenderNodes(SceneRenderer&);
+    void        notifyStyleChange() override;
+    void        addRenderNodes(SceneRenderer&) override;
 
 protected:
-    class BillboardRenderNode : public RenderNode
+    class BillboardRenderNode final : public RenderNode
     {
     public:
         BillboardRenderNode(const BillboardSceneNode*);

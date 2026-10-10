@@ -13,9 +13,7 @@
 #ifndef __JOYSTICKTESTMENU_H__
 #define __JOYSTICKTESTMENU_H__
 
-#include "common.h"
-
-/* common interface headers */
+// Inherits from
 #include "HUDDialog.h"
 
 /* local interface headers */
@@ -28,18 +26,18 @@
 
 /** this class provides a visual test of the joystick range
  */
-class JoystickTestMenu : public HUDDialog
+class JoystickTestMenu final : public HUDDialog
 {
 public:
     JoystickTestMenu();
     ~JoystickTestMenu() { };
 
-    HUDuiDefaultKey* getDefaultKey()
+    HUDuiDefaultKey* getDefaultKey() override
     {
         return MenuDefaultKey::getInstance();
     }
-    void execute() { };
-    void resize(int width, int height);
+    void execute() override { };
+    void resize(int width, int height) override;
 
 private:
     HUDuiLabel* titleLabel;

@@ -1023,7 +1023,7 @@ OpenGLGState::ContextInitializer*
 OpenGLGState::ContextInitializer::head = NULL;
 OpenGLGState::ContextInitializer*
 OpenGLGState::ContextInitializer::tail = NULL;
-int OpenGLGState::maxSamples = 1;
+unsigned int OpenGLGState::maxSamples = 1;
 bool OpenGLGState::executingFreeFuncs = false;
 bool OpenGLGState::executingInitFuncs = false;
 bool OpenGLGState::hasAnisotropicFiltering = false;
@@ -1213,7 +1213,7 @@ int OpenGLGState::getOpaqueStippleIndex()
 }
 
 
-int OpenGLGState::getMaxSamples()
+unsigned int OpenGLGState::getMaxSamples()
 {
     return maxSamples;
 }
@@ -1405,7 +1405,7 @@ bool OpenGLGState::initGLExtensions()
     {
         GLint sampleCount = 1;
         glGetIntegerv(GL_MAX_SAMPLES, &sampleCount);
-        maxSamples = sampleCount;
+        maxSamples = static_cast<unsigned int>(sampleCount);
     }
 
     return false;

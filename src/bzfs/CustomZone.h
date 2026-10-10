@@ -30,14 +30,14 @@ typedef std::vector<std::string> QualifierList;
 typedef std::map<FlagType*, int> ZoneFlagMap; // type, count
 
 
-class CustomZone : public WorldFileLocation
+class CustomZone final : public WorldFileLocation
 {
 public:
     CustomZone();
 
-    virtual bool read(const char *cmd, std::istream&);
-    virtual void writeToWorld(WorldInfo*) const;
-    virtual bool usesGroupDef()
+    bool read(const char *cmd, std::istream&) override;
+    void writeToWorld(WorldInfo*) const override;
+    bool usesGroupDef() override
     {
         return false;
     }

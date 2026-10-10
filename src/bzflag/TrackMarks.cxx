@@ -145,7 +145,7 @@ inline TrackEntry* TrackList::removeNode(TrackEntry* te)
 
 
 
-class TrackRenderNode : public RenderNode
+class TrackRenderNode final : public RenderNode
 {
 public:
     TrackRenderNode(const TrackEntry* te, TrackType type);
@@ -166,12 +166,12 @@ private:
 };
 
 
-class TrackSceneNode : public SceneNode
+class TrackSceneNode final : public SceneNode
 {
 public:
     TrackSceneNode(const TrackEntry*, TrackType, const OpenGLGState*);
     ~TrackSceneNode();
-    void addRenderNodes(SceneRenderer&);
+    void addRenderNodes(SceneRenderer&) override;
     void update(); // set the sphere properties
 
 private:

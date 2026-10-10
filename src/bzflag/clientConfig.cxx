@@ -128,7 +128,7 @@ static void copyConfigFile(const char *oldConfigName, std::string configName)
     unsigned char *temp = (unsigned char *)malloc(len);
     if (temp == NULL)
     {
-        printError("Unsufficient Memory");
+        printError("Insufficient Memory");
         fclose(fp);
         fclose(newFile);
         return;

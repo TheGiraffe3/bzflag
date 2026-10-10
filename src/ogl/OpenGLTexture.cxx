@@ -187,7 +187,7 @@ void OpenGLTexture::setupImage(const GLubyte* pixels)
         glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize);
 
         // hard limit, some drivers have problems with sizes greater
-        // then this (espeically if you are using glTexSubImage2D)
+        // then this (especially if you are using glTexSubImage2D)
         const GLint dbMaxTexSize = BZDB.evalInt("maxTextureSize");
         GLint bzMaxTexSize = 1;
         // align the max size to a power of two  (wasteful)

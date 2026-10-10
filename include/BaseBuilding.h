@@ -19,7 +19,7 @@
 
 #include "BoxBuilding.h"
 
-class BaseBuilding : public BoxBuilding
+class BaseBuilding final : public BoxBuilding
 {
 
     friend class ObstacleModifier;
@@ -30,27 +30,27 @@ public:
                  const float *size, int _team, bool ricochet);
     ~BaseBuilding();
 
-    Obstacle*   copyWithTransform(const MeshTransform&) const;
+    Obstacle*   copyWithTransform(const MeshTransform&) const override;
 
-    const char*     getType() const;
+    const char*     getType() const override;
     static const char*  getClassName(); // const
 
-    bool        inCylinder(const float* p, float radius, float height) const;
+    bool        inCylinder(const float* p, float radius, float height) const override;
     bool        inMovingBox(const float* oldP, float oldAngle,
                             const float *newP, float newAngle,
-                            float halfWidth, float halfBreadth, float height) const;
+                            float halfWidth, float halfBreadth, float height) const override;
     bool        isCrossing(const float* p, float angle,
                            float halfWidth, float halfBreadth, float height,
-                           float* plane) const;
+                           float* plane) const override;
 
     int         getTeam() const;
 
-    int packSize() const;
-    void *pack(void*) const;
-    const void *unpack(const void*);
+    int packSize() const override;
+    void *pack(void*) const override;
+    const void *unpack(const void*) override;
 
-    void print(std::ostream& out, const std::string& indent) const;
-    void printOBJ(std::ostream& out, const std::string& indent) const;
+    void print(std::ostream& out, const std::string& indent) const override;
+    void printOBJ(std::ostream& out, const std::string& indent) const override;
 
     std::string     userTextures[2];
 

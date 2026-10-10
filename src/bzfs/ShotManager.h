@@ -225,15 +225,15 @@ class ProjectileShotLogic: public FlightLogic
 public:
     virtual ~ProjectileShotLogic() {}
 
-    virtual bool Update ( Shot& shot );
+    bool Update ( Shot& shot ) override;
 };
 
-class GuidedMissileLogic: public ProjectileShotLogic
+class GuidedMissileLogic final: public ProjectileShotLogic
 {
 public:
     virtual ~GuidedMissileLogic() {}
 
-    virtual void End ( Shot& UNUSED(shot) );
+    void End ( Shot& UNUSED(shot) ) override;
 };
 
 class SuperBulletLogic: public ProjectileShotLogic
@@ -241,15 +241,15 @@ class SuperBulletLogic: public ProjectileShotLogic
 public:
 };
 
-class ShockwaveLogic: public FlightLogic
+class ShockwaveLogic final: public FlightLogic
 {
 public:
-    virtual void Setup(Shot& shot );
-    virtual bool Update ( Shot& shot );
+    void Setup(Shot& shot ) override;
+    bool Update ( Shot& shot ) override;
 
-    virtual bool CollideBox ( Shot& shot, fvec3& ecnter, fvec3& size, float rotation );
-    virtual bool CollideSphere ( Shot& shot, fvec3& center, float radius );
-    virtual bool CollideCylinder ( Shot& shot, fvec3& center, float height, float radius );
+    bool CollideBox ( Shot& shot, fvec3& center, fvec3& size, float rotation ) override;
+    bool CollideSphere ( Shot& shot, fvec3& center, float radius ) override;
+    bool CollideCylinder ( Shot& shot, fvec3& center, float height, float radius ) override;
 
 protected:
     bool PointInSphere ( fvec3& point, Shot& shot );

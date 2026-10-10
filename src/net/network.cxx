@@ -157,7 +157,7 @@ extern "C" {
         /* 10069 */{WSAEDQUOT,      "Undocumented WinSock error code"},
         /* 10070 */{WSAESTALE,      "Undocumented WinSock error code"},
         /* 10071 */{WSAEREMOTE,     "Undocumented WinSock error code"},
-        /* 10091 */{WSASYSNOTREADY, "Underlying network subsytem is not ready for network communication"},
+        /* 10091 */{WSASYSNOTREADY, "Underlying network subsystem is not ready for network communication"},
         /* 10092 */{WSAVERNOTSUPPORTED, "The version of WinSock API support requested is not provided in this implementation"},
         /* 10093 */{WSANOTINITIALISED,  "WinSock subsystem not properly initialized"},
         /* 10101 */{WSAEDISCON,     "Virtual circuit has gracefully terminated connection"},

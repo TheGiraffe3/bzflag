@@ -17,39 +17,38 @@
 #ifndef BZF_BSP_SCENE_DATABASE_H
 #define BZF_BSP_SCENE_DATABASE_H
 
-// common goes first
-#include "common.h"
+// Inherits from
+#include "SceneDatabase.h"
 
 // system headers
 #include <vector>
 
 // common implementation headers
 #include "bzfgl.h"
-#include "SceneDatabase.h"
 
 
-class BSPSceneDatabase : public SceneDatabase
+class BSPSceneDatabase final : public SceneDatabase
 {
 public:
     BSPSceneDatabase();
     ~BSPSceneDatabase();
 
     // returns true if the node would have been deleted
-    bool        addStaticNode(SceneNode*, bool dontFree);
-    void        addDynamicNode(SceneNode*);
-    void        addDynamicSphere(SphereSceneNode*);
-    void        finalizeStatics();
-    void        removeDynamicNodes();
-    void        removeAllNodes();
-    bool        isOrdered();
+    bool        addStaticNode(SceneNode*, bool dontFree) override;
+    void        addDynamicNode(SceneNode*) override;
+    void        addDynamicSphere(SphereSceneNode*) override;
+    void        finalizeStatics() override;
+    void        removeDynamicNodes() override;
+    void        removeAllNodes() override;
+    bool        isOrdered() override;
 
-    void        updateNodeStyles();
-    void        addLights(SceneRenderer& renderer);
-    void        addShadowNodes(SceneRenderer &renderer);
-    void        addRenderNodes(SceneRenderer& renderer);
-    void        renderRadarNodes(const ViewFrustum&);
+    void        updateNodeStyles() override;
+    void        addLights(SceneRenderer& renderer) override;
+    void        addShadowNodes(SceneRenderer &renderer) override;
+    void        addRenderNodes(SceneRenderer& renderer) override;
+    void        renderRadarNodes(const ViewFrustum&) override;
 
-    void        drawCuller();
+    void        drawCuller() override;
 
 private:
     class Node

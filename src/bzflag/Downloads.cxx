@@ -68,18 +68,18 @@ static void printAuthNotice();
 static bool checkAuthorizations(BzMaterialManager::TextureSet& set);
 
 
-class CachedTexture : cURLManager
+class CachedTexture final : cURLManager
 {
 public:
     CachedTexture(const std::string &texUrl);
 
-    virtual void finalization(char *data, unsigned int length, bool good);
+    void finalization(char *data, unsigned int length, bool good) override;
 
     static void  setParams(bool check, long timeout);
     static int   activeTransfer();
 private:
 
-    virtual void collectData(char* ptr, int len);
+    void collectData(char* ptr, int len) override;
 
     std::string          url;
     static bool          checkForCache;

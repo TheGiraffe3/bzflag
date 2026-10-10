@@ -13,45 +13,45 @@
 #ifndef __QUITMENU_H__
 #define __QUITMENU_H__
 
-/* system interface headers */
+// Inherits from
+#include "MenuDefaultKey.h"
+#include "HUDDialog.h"
 
 /* common interface headers */
 #include "BzfEvent.h"
 #include "CommandsStandard.h"
 
 /* local interface headers */
-#include "MenuDefaultKey.h"
-#include "HUDDialog.h"
 #include "HUDuiDefaultKey.h"
 
 
-class QuitMenuDefaultKey : public MenuDefaultKey
+class QuitMenuDefaultKey final : public MenuDefaultKey
 {
 public:
     QuitMenuDefaultKey() {}
     ~QuitMenuDefaultKey() {}
 
-    bool keyPress(const BzfKeyEvent&);
-    bool keyRelease(const BzfKeyEvent&);
+    bool keyPress(const BzfKeyEvent&) override;
+    bool keyRelease(const BzfKeyEvent&) override;
 
 };
 
 
-class QuitMenu : public HUDDialog
+class QuitMenu final : public HUDDialog
 {
 public:
     QuitMenu();
     ~QuitMenu();
 
-    HUDuiDefaultKey* getDefaultKey()
+    HUDuiDefaultKey* getDefaultKey() override
     {
         return &defaultKey;
     }
-    void execute()
+    void execute() override
     {
         CommandsStandard::quit();
     }
-    void resize(int width, int height);
+    void resize(int width, int height) override;
 
 private:
     QuitMenuDefaultKey defaultKey;

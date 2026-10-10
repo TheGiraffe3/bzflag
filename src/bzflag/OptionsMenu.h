@@ -13,10 +13,10 @@
 #ifndef __OPTIONSMENU_H__
 #define __OPTIONSMENU_H__
 
-#include "common.h"
+// Inherits from
+#include "HUDDialog.h"
 
 /* local interface headers */
-#include "HUDDialog.h"
 #include "MenuDefaultKey.h"
 #include "HUDuiDefaultKey.h"
 #include "HUDuiControl.h"
@@ -27,18 +27,18 @@
 #include "InputMenu.h"
 #include "DisplayMenu.h"
 
-class OptionsMenu : public HUDDialog
+class OptionsMenu final : public HUDDialog
 {
 public:
     OptionsMenu();
     ~OptionsMenu();
 
-    HUDuiDefaultKey* getDefaultKey()
+    HUDuiDefaultKey* getDefaultKey() override
     {
         return MenuDefaultKey::getInstance();
     }
-    void      execute();
-    void      resize(int width, int height);
+    void      execute() override;
+    void      resize(int width, int height) override;
 
     static void   callback(HUDuiControl* w, const void* data);
 

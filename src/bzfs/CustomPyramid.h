@@ -23,7 +23,7 @@
 #include "WorldInfo.h"
 
 
-class CustomPyramid : public WorldFileObstacle
+class CustomPyramid final : public WorldFileObstacle
 {
 public:
     CustomPyramid();

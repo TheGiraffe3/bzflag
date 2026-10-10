@@ -43,7 +43,7 @@ class ViewFrustum;
 class RenderNode;
 
 
-class MeshSceneNode : public SceneNode
+class MeshSceneNode final : public SceneNode
 {
 public:
     MeshSceneNode(const MeshObstacle* mesh);
@@ -51,16 +51,16 @@ public:
 
     // virtual functions from SceneNode
 
-    void notifyStyleChange();
+    void notifyStyleChange() override;
 
-    bool cull(const ViewFrustum&) const;
-    bool inAxisBox(const Extents& exts) const;
+    bool cull(const ViewFrustum&) const override;
+    bool inAxisBox(const Extents& exts) const override;
 
-    void addShadowNodes(SceneRenderer&);
-    void addRenderNodes(SceneRenderer&);
-    void renderRadar();
+    void addShadowNodes(SceneRenderer&) override;
+    void addRenderNodes(SceneRenderer&) override;
+    void renderRadar() override;
 
-    void getRenderNodes(std::vector<RenderSet>& rnodes);
+    void getRenderNodes(std::vector<RenderSet>& rnodes) override;
 
     void makeXFormList();
 

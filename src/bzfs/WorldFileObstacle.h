@@ -12,21 +12,18 @@
 #ifndef __WORLDFILEOBSTACLE_H__
 #define __WORLDFILEOBSTACLE_H__
 
-// 1st
-#include "common.h"
+// Inherits from
+#include "WorldFileLocation.h"
 
 // system headers
 #include <iostream>
-
-// bzfs-specific headers
-#include "WorldFileLocation.h"
 
 
 class WorldFileObstacle : public WorldFileLocation
 {
 public:
     WorldFileObstacle();
-    virtual bool read(const char *cmd, std::istream&);
+    bool read(const char *cmd, std::istream&) override;
 
 protected:
     bool driveThrough;

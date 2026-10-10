@@ -153,6 +153,8 @@ void ControlPanelMessage::breakLines(float maxLength, int fontFace, float fontSi
 
         if (lastWhitespace > 0)
             n = lastWhitespace;
+        else if (n == 0)
+            n = 1;
 
         // message
         lines.push_back(previousANSICodes + std::string(msg,n));

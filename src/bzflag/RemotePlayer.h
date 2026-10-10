@@ -13,9 +13,7 @@
 #ifndef __REMOTEPLAYER_H__
 #define __REMOTEPLAYER_H__
 
-#include "common.h"
-
-/* interface header */
+// Inherits from
 #include "Player.h"
 
 /* common interface headers */
@@ -26,7 +24,7 @@
 #include "ShotPath.h"
 
 
-class RemotePlayer : public Player
+class RemotePlayer final : public Player
 {
 public:
     RemotePlayer(const PlayerId&, TeamColor team,
@@ -35,11 +33,11 @@ public:
     ~RemotePlayer();
 
     void addShot(const FiringInfo&);
-    ShotPath* getShot(int index) const;
+    ShotPath* getShot(int index) const override;
     void updateShots(float dt);
 
 private:
-    bool doEndShot(int index, bool isHit, float* pos);
+    bool doEndShot(int index, bool isHit, float* pos) override;
 
 private:
     int numShots;

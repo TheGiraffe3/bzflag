@@ -19,12 +19,12 @@
 #include <string>
 #include "Address.h"
 
-class ServerCommandKey : public HUDuiDefaultKey
+class ServerCommandKey final : public HUDuiDefaultKey
 {
 public:
     ServerCommandKey();
-    bool      keyPress(const BzfKeyEvent&);
-    bool      keyRelease(const BzfKeyEvent&);
+    bool      keyPress(const BzfKeyEvent&) override;
+    bool      keyRelease(const BzfKeyEvent&) override;
     void      init();
     void      adminInit();
     void      nonAdminInit();

@@ -453,9 +453,9 @@ bz_ePlayerDeathReason getDeathReason (bz_PlayerDieEventData_V1* data)
     return eGotKilled;
 }
 
-class BotEventHandler : public bz_EventHandler
+class BotEventHandler final : public bz_EventHandler
 {
-    virtual void process ( bz_EventData *eventData )
+    void process ( bz_EventData *eventData ) override
     {
         std::vector<bz_ServerSidePlayerHandler*>::iterator itr = serverSidePlayer.begin();
         while (itr != serverSidePlayer.end())
