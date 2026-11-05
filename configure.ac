@@ -1005,6 +1005,7 @@ AC_CONFIG_FILES([
 	package/win32/nsis/Makefile
 	plugins/ActuallyUselessFlag/Makefile
 	plugins/BattleCombatStrategy/Makefile
+	plugins/BHSP/Makefile
 	plugins/CascadeFlag/Makefile
 	plugins/CustomBZDBZones/Makefile
 	plugins/CustomZoneSample/Makefile

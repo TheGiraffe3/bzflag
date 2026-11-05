@@ -6,6 +6,7 @@ SUBDIRS = \
 	autoFlagReset \
 	avengerFlag \
 	BattleCombatStrategy \
+	BHSP \
 	bountyHunter \
 	bzfscron \
 	CascadeFlag \
