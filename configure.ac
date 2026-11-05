@@ -1003,90 +1003,40 @@ AC_CONFIG_FILES([
 	package/rpm/Makefile
 	package/win32/Makefile
 	package/win32/nsis/Makefile
-	plugins/ActuallyUselessFlag/Makefile
-	plugins/BattleCombatStrategy/Makefile
-	plugins/BHSP/Makefile
-	plugins/CascadeFlag/Makefile
-	plugins/CustomBZDBZones/Makefile
-	plugins/CustomZoneSample/Makefile
-	plugins/DeathBlossomFlag/Makefile
-	plugins/DemilitarizedZones/Makefile
-	plugins/FiftyPlugin/Makefile
-	plugins/GunGame/Makefile
-	plugins/GunGametankatek/Makefile
 	plugins/HoldTheFlag/Makefile
 	plugins/Makefile
-	plugins/MessageZones/Makefile
-	plugins/OneVsOne/Makefile
 	plugins/Phoenix/Makefile
-	plugins/PointLessSelfKills/Makefile
-	plugins/RemoteDetonationFlag/Makefile
-	plugins/Retroreflector/Makefile
 	plugins/RogueGenocide/Makefile
 	plugins/SAMPLE_PLUGIN/Makefile
-	plugins/SandybeesServerAdministration/Makefile
-	plugins/ScoreRestorer/Makefile
-	plugins/SeerRadar/Makefile
-	plugins/SHPlugin/Makefile
-	plugins/ShockwaveCenterFlag/Makefile
-	plugins/ShootingGallery/Makefile
-	plugins/SimpleMinePlugin/Makefile
-	plugins/SimpleRogueG/Makefile
-	plugins/SMinePlugin/Makefile
-	plugins/SpawnWithRandomFlag/Makefile
-	plugins/StationCollaborationPlugin/Makefile
-	plugins/SuperBulletBackwardsFlag/Makefile
-	plugins/TronPlugin/Makefile
-	plugins/VortexPlugin/Makefile
-	plugins/UGPlugin/Makefile
-	plugins/UselessMine/Makefile
-	plugins/WhackyWeapons/Makefile
-	plugins/WingsFlagOnSpawn/Makefile
 	plugins/airspawn/Makefile
 	plugins/autoFlagReset/Makefile
-	plugins/avengerFlag/Makefile
-	plugins/bountyHunter/Makefile
 	plugins/bzfscron/Makefile
 	plugins/chathistory/Makefile
-	plugins/ctfOverseer/Makefile
 	plugins/customflagsample/Makefile
 	plugins/customPollTypeSample/Makefile
-	plugins/doublePoint/Makefile
+	plugins/CustomZoneSample/Makefile
 	plugins/fairCTF/Makefile
 	plugins/fastmap/Makefile
 	plugins/flagStay/Makefile
-	plugins/genoonce/Makefile
-	plugins/givePoint/Makefile
-	plugins/gruesomeKillerFlag/Makefile
-	plugins/incrementPoint/Makefile
 	plugins/keepaway/Makefile
 	plugins/killall/Makefile
 	plugins/koth/Makefile
 	plugins/logDetail/Makefile
-	plugins/mapchange/Makefile
-	plugins/mappedDeathZones/Makefile
 	plugins/nagware/Makefile
-	plugins/neutralZones/Makefile
 	plugins/playHistoryTracker/Makefile
 	plugins/plugin_utils/Makefile
 	plugins/rabbitTimer/Makefile
 	plugins/rabidRabbit/Makefile
 	plugins/recordmatch/Makefile
 	plugins/regFlag/Makefile
-	plugins/riskygeno/Makefile
 	plugins/serverControl/Makefile
 	plugins/serverSidePlayerSample/Makefile
-	plugins/shieldOnSpawn/Makefile
 	plugins/shockwaveDeath/Makefile
-	plugins/spawnAtBase/Makefile
-	plugins/spawnFacingCenter/Makefile
 	plugins/superUser/Makefile
-	plugins/teamflaggeno/Makefile
 	plugins/teamflagreset/Makefile
 	plugins/thiefControl/Makefile
 	plugins/timedctf/Makefile
 	plugins/TimeLimit/Makefile
-	plugins/tripleBarrelFlag/Makefile
 	plugins/wwzones/Makefile
 	src/3D/Makefile
 	src/Makefile
