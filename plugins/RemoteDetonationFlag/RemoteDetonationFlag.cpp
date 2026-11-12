@@ -24,7 +24,7 @@ BZ_PLUGIN(RemoteDetonationFlag)
 
 void RemoteDetonationFlag::Init(const char*)
 {
-	bz_RegisterCustomFlag("RD", "Remote Detonation", "Firing detonates a shock wave four hundred and fifty world units ahead of you.", 0, eGoodFlag);
+	bz_RegisterCustomFlag("RD", "Remote Detonation", "Firing detonates a shock wave some distance ahead of you.", 0, eGoodFlag);
 	bz_registerCustomBZDBDouble("_remoteDetonationDistance", 450.0);
 	bz_registerCustomBZDBDouble("_remoteDetonationHeight", 50.0);
 	Register(bz_eShotFiredEvent);
